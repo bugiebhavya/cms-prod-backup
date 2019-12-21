@@ -1,0 +1,120 @@
+
+    <a class="navbar-brand d-md-none" href="index.html"> <img src="images/logo.png" alt="Logo" /> </a>
+    <div class="search-option">
+      <div class="share-popup-backdrop d-md-none"></div>
+      <form method="get" action="{% url 'search' %}" class="search-form">
+        <input type="text" placeholder="Buscar..." class="form-control" name="search", id="search">
+        <button type="submit" class="search-icon"><i class="far fa-search"></i></button>
+        <a href="javascript:void(0);" class="close-search d-md-none"><i class="fal fa-long-arrow-left"></i></a>
+      </form>
+    </div>
+    <div class="right-option d-flex justify-content-end">
+      <ul class="list-inline mb-0 d-flex align-items-center">
+        <li class="list-inline-item">
+          <button class="open-search d-md-none"><i class="fal fa-search"></i></button>
+        </li>
+        <li class="list-inline-item dropleft d-none d-md-block">
+          <a href="javascript:void(0);" class="grid-icon dropdown-toggle" id="links" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"><i class="fal fa-ellipsis-v"></i><i
+              class="fal fa-ellipsis-v"></i><i class="fal fa-ellipsis-v"></i></a>
+          <div class="dropdown-menu" aria-labelledby="links">
+            <div class="user-link">
+              <a href="#"><i class="fal fa-book-user"></i> Create a channel</a>
+              <a href="#"><i class="fal fa-portrait"></i> Switch Account</a>
+              <a href="#"><i class="fas fa-usd-circle"></i> Paid Membership</a>
+              <!-- <a href="#"><i class="fal fa-sign-out"></i> Logout</a> -->
+            </div>
+          </div>
+        </li>
+        <li class="list-inline-item notification dropleft">
+          <button type="button" class="dropdown-toggle" id="notificationBtn" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"><span><i class="far fa-bell"></i></span>
+            <span class="notification-count">26</span></button>
+          <div class="dropdown-menu" aria-labelledby="notificationBtn">
+            <h3>Notification</h3>
+            <div class="notification-list">
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  <strong>dropdown</strong> menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  <strong>dropdown</strong> menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  <strong>dropdown</strong> menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  <strong>dropdown</strong> menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  <strong>dropdown</strong> menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  dropdown menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  dropdown menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  dropdown menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  dropdown menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  dropdown menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  dropdown menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  dropdown menu within</div>
+              </a>
+              <a href="#" class="notification-block">
+                <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="User"></div>
+                <div class="notification-text">Wrap the dropdown’s toggle (your button or link) and the
+                  dropdown menu within</div>
+              </a>
+            </div>
+          </div>
+
+        </li>
+        <li class="list-inline-item user-menu dropleft">
+          <a href="javascript:void(0);" class="dropdown-toggle" id="profileBtn" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"><img class="profile-pic" src="images/user.jpg" alt="{{ request.user.username }}"></a>
+          <div class="dropdown-menu" aria-labelledby="profileBtn">
+            <div class="user-info">
+              <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="{{ request.user.username }}"></div>
+              <div class="user-details"><span>{{ request.user.username }}</span> <span class="email">{{ request.user.email }}</span> <a href="#">Manage your account</a></div>
+            </div>
+            <div class="user-link">
+              <a href="#"><i class="fal fa-book-user"></i> Create a channel</a>
+              <a href="#"><i class="fal fa-portrait"></i> Switch Account</a>
+              <a href="#"><i class="fas fa-usd-circle"></i> Paid Membership</a>
+              <a href="{% url 'user-logout' %}"><i class="fal fa-sign-out"></i> Logout</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>

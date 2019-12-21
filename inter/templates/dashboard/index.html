@@ -1,0 +1,418 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+{% load duration_field %}
+{% block header %}
+<header class="login-header d-flex align-items-center">
+  {% include 'dashboard_header.html' %}
+</header>
+{% endblock %}
+
+
+{% block body  %}    
+    {% include 'dashboard_sidebar.html' %}
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>
+            <div class="icon"><img src="images/user.jpg" alt="User"></div> {{request.user.username}}
+          </h2>
+          <div class="video-slider w-100">
+            {% for video in videos %}
+            <a href="{% url 'video_detail' video.slug %}" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="{{ video.thumbnail.url }}" alt="img">
+                <span class="video-time">{{ video.duration|duration_field }}</span>
+              </div>
+              <div class="video-detail">
+                <p class="vidTitle">{{ video.title|safe}}</p>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">{{ video.created_at|timesince }} ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+            <!-- <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a> -->
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <h2>Recomendados</h2>
+          <div class="recomendado-slider w-100">
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <h2>
+            <div class="icon"><img src="images/user.jpg" alt="User"></div> Lista de Favoritos
+          </h2>
+          <div class="video-slider w-100">
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            <a href="single.html" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+                <span class="video-time">5.00</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">5 month ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

@@ -1,0 +1,19 @@
+{% load static %}
+ <div class="sidebar-menu">
+    <button class="menu-btn d-none d-md-block"><i class="fal fa-bars"></i></button>
+    <a class="navbar-brand d-none d-md-block" href="index.html"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
+    <ul class="menu">
+      <li><a href="{% url 'dashboard' %}"> <i class="fal fa-home-lg-alt"></i> Inicio</a></li>
+      <li><a href="{% url 'trending' %}"> <i class="fal fa-fire"></i> Tendencia</a></li>
+      <li><a href="#"> <i class="fal fa-album-collection"></i> Canales</a></li>
+      <li class="d-md-none"><a href="#" class="active"> <i class="fal fa-folder"></i> Libreria</a></li>
+    </ul>
+    <ul class="menu d-none d-md-block">
+      <li><a href="{% url 'history' %}" class="active"> <i class="fal fa-folder"></i> Libreria</a></li>
+    </ul>
+    <ul class="menu d-none d-md-block">
+      <li><a href="#"> <i class="fal fa-alarm-clock"></i> Ver Después</a></li>
+      <li><a href="#"> <i class="fal fa-star"></i> Favoritos</a></li>
+    </ul>
+    <a href="#" class="setting d-none d-md-block"><i class="fal fa-cog"></i> Configuración</a>
+  </div>

@@ -1,0 +1,164 @@
+{% extends 'home_base.html' %}
+{% load hitcount_tags %}
+{% load static %}
+{% block header %}
+
+{% include 'home_header.html' %}
+
+{% endblock %}
+
+{% block body %}
+
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-9 single-video-page">
+          <video class="video-js" controls preload="auto" poster="{{ video.thumbnail.url }}" data-setup="{}">
+            <source src="{{ video.url }}" type="video/mp4">
+          </video>
+          <h1> {% get_hit_count for video %} Views</h1>
+          {% with comments.count as comments_count %}
+          <h2>{{comments_count}} Comment{{comments_count|pluralize}}</h2>
+          {% endwith %}
+          {% if comments %}
+              {% for comment in comments %}
+                <p id="ch">Comment {{forloop.counter}} by {{comment.name}} on 
+                {{comment.created}}</p>
+                <div class="cb">{{comment.body|linebreaks}}</div>
+              {% endfor %}
+            <hr>
+            {% else %}
+            <p> There are no comments Yet</p>
+          {% endif %}
+          {% if comment_submit %}
+           <h2> Your Comment Added Successfully </h2>
+             {% else %}
+             <h2>Plz Submit your Valuable Comment </h2>
+             <form method="post">
+                {{ form.name }}<br>
+                {{ form.email }}<br>
+                {{ form.body }}<br>
+                {% csrf_token %}
+                <input type=submit class="btn btn-success btn-lg" value="Submit Comment">  
+             </form>
+          {% endif %} 
+        </div>
+        <div class="col-lg-3 sidebar-right">
+          <a href="#" class="video-block">
+            <div class="video-part">
+              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+              <span class="video-time">5.00</span>
+            </div>
+            <div class="video-detail">
+              <h3>Informacion General 2019</h3>
+              <div class="video-meta">
+                <span class="postby">Gussie French</span>
+                <span class="total-views">34k views</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="video-block">
+            <div class="video-part">
+              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+              <span class="video-time">5.00</span>
+            </div>
+            <div class="video-detail">
+              <h3>Informacion General 2019</h3>
+              <div class="video-meta">
+                <span class="postby">Gussie French</span>
+                <span class="total-views">34k views</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="video-block">
+            <div class="video-part">
+              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+              <span class="video-time">5.00</span>
+            </div>
+            <div class="video-detail">
+              <h3>Informacion General 2019</h3>
+              <div class="video-meta">
+                <span class="postby">Gussie French</span>
+                <span class="total-views">34k views</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="video-block">
+            <div class="video-part">
+              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+              <span class="video-time">5.00</span>
+            </div>
+            <div class="video-detail">
+              <h3>Informacion General 2019</h3>
+              <div class="video-meta">
+                <span class="postby">Gussie French</span>
+                <span class="total-views">34k views</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="video-block">
+            <div class="video-part">
+              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+              <span class="video-time">5.00</span>
+            </div>
+            <div class="video-detail">
+              <h3>Informacion General 2019</h3>
+              <div class="video-meta">
+                <span class="postby">Gussie French</span>
+                <span class="total-views">34k views</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="video-block">
+            <div class="video-part">
+              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+              <span class="video-time">5.00</span>
+            </div>
+            <div class="video-detail">
+              <h3>Informacion General 2019</h3>
+              <div class="video-meta">
+                <span class="postby">Gussie French</span>
+                <span class="total-views">34k views</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="video-block">
+            <div class="video-part">
+              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
+              <span class="video-time">5.00</span>
+            </div>
+            <div class="video-detail">
+              <h3>Informacion General 2019</h3>
+              <div class="video-meta">
+                <span class="postby">Gussie French</span>
+                <span class="total-views">34k views</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  <script>
+      console.log("Hello");
+      let name = "{{request.user.username}}"
+
+      if("{{request.user.username}}") {
+        var nome = "{{request.user.username}}"
+        var eomil = "{{request.user.email}}"
+        document.getElementById('id_name').value = nome;
+        document.getElementById('id_email').value = eomil;
+        document.getElementById('id_name').style.display = "none";
+        document.getElementById('id_email').style.display = "none";
+      }
+      else {
+        document.getElementById("id_name").style.display = "none";
+        document.getElementById("id_email").style.display = "none";
+        document.getElementById("id_body").disabled = true;
+      }
+   </script> 
+{% endblock %}

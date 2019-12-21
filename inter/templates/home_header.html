@@ -1,0 +1,45 @@
+{% load static %}
+
+{% if request.user.is_authenticated %}
+<header class="login-header d-flex align-items-center site-header">
+  <a class="navbar-brand" href="index.html"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
+
+   {% include 'dashboard_header.html' %}
+{% else %}
+<header class="site-header">
+   <a class="navbar-brand" href="index.html"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
+    <div class="header-top d-flex w-100">
+      <form class="login-form" action="{% url 'us-login' %}" id="loginForm" method="post">
+         {% csrf_token %}
+        <h4>Acceso Asociados</h4>
+        <div class="form-field d-flex">
+          <input type="email" id="email" placeholder="Usuario" name="email" class="form-control">
+          <input type="password" id="password"  name="password" placeholder="contraseña" class="form-control">
+          <button type="submit" class="btn">Ingresar</button>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div id="message_container" class="alert alert-danger">
+                <strong >{{ message|escape }}</strong>
+            </div>
+            {% endfor %}
+        {% endif %}
+      </form>
+    </div>
+    <div class="header-bottom d-flex w-100">
+      <ul class="list-inline mb-0 ml-auto">
+        <li class="list-inline-item">
+            {% if settings.site_settings.SocialMediaSettings.facebook %}
+          <a href="{{ settings.site_settings.SocialMediaSettings.facebook }}" class="social-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        </li>
+        {% endif %}
+        <li class="list-inline-item">
+          {% if settings.site_settings.SocialMediaSettings.twitter %}
+          <a href="{{ settings.site_settings.SocialMediaSettings.twitter }}" class="social-icon" target="_blank"><i class="fab fa-twitter"></i></a>
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  
+{% endif %}
+</header>

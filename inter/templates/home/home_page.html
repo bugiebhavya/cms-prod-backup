@@ -1,0 +1,47 @@
+{% extends 'home_base.html' %}
+{% load static %}
+{% load duration_field %}
+{% block header %}
+
+{% include 'home_header.html' %}
+
+{% endblock %}
+
+
+{% block body %}
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <aside class="col-lg-3 col-md-4 twitter-sidebar">
+          <div class="twitter-holder">
+            <a class="twitter-timeline" href="https://twitter.com/interejecutivos?ref_src=twsrc%5Etfw">Tweets by
+              interejecutivos</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          </div>
+        </aside>
+        <div class="col-lg-9 col-md-8">
+          <h2>Información Pública</h2>
+          <div class="row">
+            {% for video in product %}
+            <a href="{% url 'video_detail' video.id %}" class="col-md-6 video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="{{ video.thumbnail.url }}" alt="img">
+                <span class="video-time">{{ video.duration|duration_field }}</span>
+              </div>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="total-views">34k views</span>
+                  <span class="post-date">{{ video.created_at|timesince }} ago</span>
+                  <span class="postby">Gussie French</span>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}  
