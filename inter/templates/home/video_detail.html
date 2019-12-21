@@ -44,7 +44,22 @@
           {% endif %} 
         </div>
         <div class="col-lg-3 sidebar-right">
-          <a href="#" class="video-block">
+          {% for cat_video in category_videos %}
+          <a href="{% url 'video_detail' cat_video.id %}" class="video-block">
+            <div class="video-part">
+              <img class="thumbnail" src="{{ cat_video.thumbnail.url }}" alt="img">
+              <span class="video-time">5.00</span>
+            </div>
+            <div class="video-detail">
+              <h3>Informacion General 2019</h3>
+              <div class="video-meta">
+                <span class="postby">Gussie French</span>
+                <span class="total-views">34k views</span>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+         <!--  <a href="#" class="video-block">
             <div class="video-part">
               <img class="thumbnail" src="images/poster-img.jpg" alt="img">
               <span class="video-time">5.00</span>
@@ -121,20 +136,7 @@
                 <span class="total-views">34k views</span>
               </div>
             </div>
-          </a>
-          <a href="#" class="video-block">
-            <div class="video-part">
-              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
-              <span class="video-time">5.00</span>
-            </div>
-            <div class="video-detail">
-              <h3>Informacion General 2019</h3>
-              <div class="video-meta">
-                <span class="postby">Gussie French</span>
-                <span class="total-views">34k views</span>
-              </div>
-            </div>
-          </a>
+          </a> -->
         </div>
       </div>
     </div>

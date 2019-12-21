@@ -18,6 +18,8 @@ from hitcount.views import HitCountDetailView
 def video_detail_view(request, videoid):
 	print("Helo")
 	video = get_object_or_404(Video, id=videoid, scope="PUBLIC")
+	get_channel = video.channel
+	category_videos = Video.objects.filter(channel=get_channel)
 	count_hit = True
 	comments = video.comments.filter(active=True)
 	comment_submit = False 
@@ -30,7 +32,7 @@ def video_detail_view(request, videoid):
 			comment_submit = True
 	else:
 		form = CommentForm
-	return render(request, 'home/video_detail.html', {'video': video, 'form': form, 'comment_submit': comment_submit, 'comments': comments})
+	return render(request, 'home/video_detail.html', {'video': video, 'form': form, 'comment_submit': comment_submit, 'comments': comments, 'category_videos': category_videos})
 
 
 
