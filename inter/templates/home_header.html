@@ -2,12 +2,12 @@
 
 {% if request.user.is_authenticated %}
 <header class="login-header d-flex align-items-center site-header">
-  <a class="navbar-brand" href="index.html"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
+  <a class="navbar-brand" href="/"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
 
    {% include 'dashboard_header.html' %}
 {% else %}
 <header class="site-header">
-   <a class="navbar-brand" href="index.html"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
+   <a class="navbar-brand" href="/"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
     <div class="header-top d-flex w-100">
       <form class="login-form" action="{% url 'us-login' %}" id="loginForm" method="post">
          {% csrf_token %}

@@ -14,7 +14,6 @@ draftjs-exporter==2.1.7
 html5lib==1.0.1
 idna==2.8
 Pillow==6.2.1
-pkg-resources==0.0.0
 pytz==2019.3
 requests==2.22.0
 six==1.13.0
@@ -23,6 +22,6 @@ Unidecode==1.1.1
 urllib3==1.25.7
 wagtail==2.7
 wagtailmedia==0.4.0
-wagtailvideos==2.4.1
+git+https://github.com/ManojDatt/wagtailvideos.git@development
 webencodings==0.5.1
 Willow==1.3

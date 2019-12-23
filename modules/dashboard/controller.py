@@ -46,10 +46,3 @@ class TrendingView(LoginRequiredMixin, TemplateView):
 class HistoryView(LoginRequiredMixin, TemplateView):
 	template_name = 'dashboard/history.html'
 
-
-
-
-class SearchView(View):
-	def get(request):
-		print(request)
-		pass
