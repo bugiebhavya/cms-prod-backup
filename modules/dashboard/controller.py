@@ -45,19 +45,3 @@ class TrendingView(LoginRequiredMixin, TemplateView):
 
 class HistoryView(LoginRequiredMixin, TemplateView):
 	template_name = 'dashboard/history.html'
-
-# def searchMatch(query, item):
-# 	if query in query in item.title.lower():
-# 		return True
-# 	return False
-
-# def SearchView(request):
-# 	query = request.GET.get('search')
-# 	videotemp = Video.objects.all()
-# 	videos = [item for item in videotemp if searchMatch(query, item)]
-# 	if len(videos) == 0:
-# 		message = "No Results found, Try Different KeyWord"
-# 		messages.info(request, message)
-# 	return render(request, 'search/search.html', {'videos': videos, 'messages': messages})
-
-

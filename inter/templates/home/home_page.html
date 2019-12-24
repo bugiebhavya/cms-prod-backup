@@ -23,7 +23,7 @@
           <h2>Información Pública</h2>
           <div class="row">
             {% for video in product %}
-            <a href="{% url 'video_detail' video.id %}" class="col-md-6 video-block">
+            <a href="/watch/{{video.id}}/" class="col-md-6 video-block">
               <div class="video-part">
                 <img class="thumbnail" src="{{ video.thumbnail.url }}" alt="img">
                 <span class="video-time">{{ video.duration|duration_field }}</span>

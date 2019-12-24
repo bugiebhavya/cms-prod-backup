@@ -30,10 +30,8 @@
             {% else %}
             <p> There are no comments Yet</p>
           {% endif %}
-          {% if comment_submit %}
-           <h2> Your Comment Added Successfully </h2>
-             {% else %}
-             <h2>Plz Submit your Valuable Comment </h2>
+          {% if commentable and request.user and request.user.is_authenticated %}
+             <span class="btn btn-info">Please post your valuable comment  ...</span>
              <form method="post">
                 {{ form.name }}<br>
                 {{ form.email }}<br>
@@ -41,11 +39,13 @@
                 {% csrf_token %}
                 <input type=submit class="btn btn-success btn-lg" value="Submit Comment">  
              </form>
+          {% else %}
+              <span class="btn btn-info">Please login to post a comments ...</span>
           {% endif %} 
         </div>
         <div class="col-lg-3 sidebar-right">
           {% for cat_video in category_videos %}
-          <a href="{% url 'video_detail' cat_video.id %}" class="video-block">
+          <a href="/watch/{{cat_video.id}}/" class="video-block">
             <div class="video-part">
               <img class="thumbnail" src="{{ cat_video.thumbnail.url }}" alt="img">
               <span class="video-time">5.00</span>
@@ -59,84 +59,6 @@
             </div>
           </a>
           {% endfor %}
-         <!--  <a href="#" class="video-block">
-            <div class="video-part">
-              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
-              <span class="video-time">5.00</span>
-            </div>
-            <div class="video-detail">
-              <h3>Informacion General 2019</h3>
-              <div class="video-meta">
-                <span class="postby">Gussie French</span>
-                <span class="total-views">34k views</span>
-              </div>
-            </div>
-          </a>
-          <a href="#" class="video-block">
-            <div class="video-part">
-              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
-              <span class="video-time">5.00</span>
-            </div>
-            <div class="video-detail">
-              <h3>Informacion General 2019</h3>
-              <div class="video-meta">
-                <span class="postby">Gussie French</span>
-                <span class="total-views">34k views</span>
-              </div>
-            </div>
-          </a>
-          <a href="#" class="video-block">
-            <div class="video-part">
-              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
-              <span class="video-time">5.00</span>
-            </div>
-            <div class="video-detail">
-              <h3>Informacion General 2019</h3>
-              <div class="video-meta">
-                <span class="postby">Gussie French</span>
-                <span class="total-views">34k views</span>
-              </div>
-            </div>
-          </a>
-          <a href="#" class="video-block">
-            <div class="video-part">
-              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
-              <span class="video-time">5.00</span>
-            </div>
-            <div class="video-detail">
-              <h3>Informacion General 2019</h3>
-              <div class="video-meta">
-                <span class="postby">Gussie French</span>
-                <span class="total-views">34k views</span>
-              </div>
-            </div>
-          </a>
-          <a href="#" class="video-block">
-            <div class="video-part">
-              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
-              <span class="video-time">5.00</span>
-            </div>
-            <div class="video-detail">
-              <h3>Informacion General 2019</h3>
-              <div class="video-meta">
-                <span class="postby">Gussie French</span>
-                <span class="total-views">34k views</span>
-              </div>
-            </div>
-          </a>
-          <a href="#" class="video-block">
-            <div class="video-part">
-              <img class="thumbnail" src="images/poster-img.jpg" alt="img">
-              <span class="video-time">5.00</span>
-            </div>
-            <div class="video-detail">
-              <h3>Informacion General 2019</h3>
-              <div class="video-meta">
-                <span class="postby">Gussie French</span>
-                <span class="total-views">34k views</span>
-              </div>
-            </div>
-          </a> -->
         </div>
       </div>
     </div>
@@ -146,21 +68,11 @@
 
 {% block script %}
   <script>
-      console.log("Hello");
-      let name = "{{request.user.username}}"
-
-      if("{{request.user.username}}") {
+      {% if commentable and request.user and request.user.is_authenticated %}
         var nome = "{{request.user.username}}"
         var eomil = "{{request.user.email}}"
         document.getElementById('id_name').value = nome;
         document.getElementById('id_email').value = eomil;
-        document.getElementById('id_name').style.display = "none";
-        document.getElementById('id_email').style.display = "none";
-      }
-      else {
-        document.getElementById("id_name").style.display = "none";
-        document.getElementById("id_email").style.display = "none";
-        document.getElementById("id_body").disabled = true;
-      }
+      {% endif %}
    </script> 
 {% endblock %}

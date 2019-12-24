@@ -35,10 +35,10 @@ INSTALLED_APPS = [
     'wagtailvideos',
     'hitcount',
     'wagtail.contrib.settings',
+    'wagtail.contrib.routable_page',
     'wagtail.contrib.forms',
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.redirects',
-    
     'wagtail.embeds',
     'wagtail.sites',
     'wagtail.users',
@@ -173,8 +173,13 @@ WAGTAIL_SITE_NAME = "inter"
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
 
+
 LOGIN_URL = '/us-login/'
 
 
-WAGTAILDOCS_DOCUMENT_MODEL = 'documents.CustomDocument'
 
+WAGTAIL_FRONTEND_LOGIN_URL = '/'
+
+WAGTAILDOCS_DOCUMENT_MODEL = 'documents.CustomDocument'
+WAGTAILVIDEOS_VIDEO_MODEL = 'videos.CustomVideo'
+WAGTAIL_APPEND_SLASH = False

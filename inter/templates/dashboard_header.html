@@ -2,7 +2,7 @@
     <a class="navbar-brand d-md-none" href="index.html"> <img src="images/logo.png" alt="Logo" /> </a>
     <div class="search-option">
       <div class="share-popup-backdrop d-md-none"></div>
-      <form method="get" action="{% url 'search' %}" class="search-form">
+      <form method="get" action="/users/search" class="search-form">
         <input type="text" placeholder="Buscar..." class="form-control" name="search", id="search">
         <button type="submit" class="search-icon"><i class="far fa-search"></i></button>
         <a href="javascript:void(0);" class="close-search d-md-none"><i class="fal fa-long-arrow-left"></i></a>
@@ -19,8 +19,7 @@
               class="fal fa-ellipsis-v"></i><i class="fal fa-ellipsis-v"></i></a>
           <div class="dropdown-menu" aria-labelledby="links">
             <div class="user-link">
-              <a href="#"><i class="fal fa-book-user"></i> Create a channel</a>
-              <a href="#"><i class="fal fa-portrait"></i> Switch Account</a>
+              <a href="/users/channels"><i class="fal fa-album-collection"></i> Channels</a>
               <a href="#"><i class="fas fa-usd-circle"></i> Paid Membership</a>
               <!-- <a href="#"><i class="fal fa-sign-out"></i> Logout</a> -->
             </div>
@@ -109,9 +108,8 @@
               <div class="user-details"><span>{{ request.user.username }}</span> <span class="email">{{ request.user.email }}</span> <a href="#">Manage your account</a></div>
             </div>
             <div class="user-link">
-              <a href="#"><i class="fal fa-book-user"></i> Create a channel</a>
-              <a href="#"><i class="fal fa-portrait"></i> Switch Account</a>
-              <a href="#"><i class="fas fa-usd-circle"></i> Paid Membership</a>
+              <a href="/users/dashboard"><i class="fas fa-tachometer"></i> Dashboard</a>
+              <a href="#"><i class="fas fa-user"></i> Profile</a>
               <a href="{% url 'user-logout' %}"><i class="fal fa-sign-out"></i> Logout</a>
             </div>
           </div>

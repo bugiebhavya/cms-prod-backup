@@ -42,11 +42,8 @@ def video_detail_view(request, videoid):
 
 class LoginView(View):
 	def post(self, request):
-		print(request)
 		email = request.POST.get('email',None)
 		password = request.POST.get('password',None)
-		print(email)
-		print(password)
 		if email and password:
 			if "@" in email:
 				users = User.objects.filter(email__iexact=email)
@@ -56,7 +53,7 @@ class LoginView(View):
 				user_obj = users.first()
 				login(request, user_obj)
 				messages.success(request, "Login Successfully")
-				return HttpResponseRedirect(reverse('dashboard'))
+				return HttpResponseRedirect('/')
 			else:
 				message = "Unable to login with given credentials"
 				messages.info(request, message)
