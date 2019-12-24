@@ -174,9 +174,7 @@ WAGTAIL_SITE_NAME = "inter"
 BASE_URL = 'http://example.com'
 
 LOGIN_URL = '/us-login/'
-# AUTH_USER_MODEL = 'dashboard.Customer'
-# WAGTAIL_USER_EDIT_FORM = 'dashboard.forms.CustomUserEditForm'
-# WAGTAIL_USER_CREATION_FORM = 'dashboard.forms.CustomUserCreationForm'
-# WAGTAIL_USER_CUSTOM_FIELDS = ['avatar',]
+
+
 WAGTAILDOCS_DOCUMENT_MODEL = 'documents.CustomDocument'
-WAGTAILVIDEOS_VIDEO_MODEL = 'videos.CustomVideo'
+
