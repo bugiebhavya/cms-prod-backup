@@ -28,9 +28,3 @@ class CustomDocument(AbstractDocument):
         # Add your custom model fields into this list,
         # if you want to display them in the Wagtail admin UI.
     )
-
-# Receive the post_delete signal and delete the file associated with the model instance.
-@receiver(post_delete, sender=CustomDocument)
-def document_delete(sender, instance, **kwargs):
-    # Pass false so FileField doesn't save the model.
-    instance.file.delete(False)

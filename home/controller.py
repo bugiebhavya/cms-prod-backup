@@ -13,14 +13,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import pdb 
 from django.views.generic import DetailView
 from hitcount.views import HitCountDetailView
+from django.db.models import F
+# from modules.mostviews.models import MostView
 
 
 def video_detail_view(request, videoid):
-	print("Helo")
-	video = get_object_or_404(Video, id=videoid, scope="PUBLIC")
+	video = get_object_or_404(Video, id=videoid)
 	get_channel = video.channel
 	category_videos = Video.objects.filter(channel=get_channel)
 	count_hit = True
+
+	# MostViewobjects.filter(pk=video.pk).update(count=F('count') + 1)
+
 	comments = video.comments.filter(active=True)
 	comment_submit = False 
 	if request.method == 'POST':
