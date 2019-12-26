@@ -14,4 +14,5 @@ class CommentForm(forms.ModelForm):
 		widgets = {
 			'name': forms.HiddenInput(),
 			'email': forms.HiddenInput(),
+			'body': forms.Textarea(attrs={'rows': '1', 'class': 'comment-field', 'placeholder': 'commenting publicly'})
 		}
