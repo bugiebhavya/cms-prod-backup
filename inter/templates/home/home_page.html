@@ -1,6 +1,7 @@
 {% extends 'home_base.html' %}
 {% load static %}
 {% load duration_field %}
+
 {% block header %}
 
 {% include 'home_header.html' %}
@@ -22,7 +23,8 @@
         <div class="col-lg-9 col-md-8">
           <h2>Información Pública</h2>
           <div class="row">
-            {% for video in product %}
+            {% for loop_cycle in self.carousel_videos.all %}
+            {% with loop_cycle.carousel_video as video %}
             <a href="/watch/{{video.id}}/" class="col-md-6 video-block">
               <div class="video-part">
                 <img class="thumbnail" src="{{ video.thumbnail.url }}" alt="img">
@@ -37,6 +39,7 @@
                 </div>
               </div>
             </a>
+            {% endwith %}
             {% endfor %}
 
           </div>

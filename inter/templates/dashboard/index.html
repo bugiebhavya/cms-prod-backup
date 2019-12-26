@@ -18,7 +18,8 @@
             <div class="icon"><img src="images/user.jpg" alt="User"></div> {{request.user.username}}
           </h2>
           <div class="video-slider w-100">
-            {% for video in videos %}
+            {% for loop_cycle in self.carousel_videos.all %}
+            {% with loop_cycle.carousel_video as video %}
             <a href="/watch/{{video.id}}/" class="video-block">
               <div class="video-part">
                 <img class="thumbnail" src="{{ video.thumbnail.url }}" alt="img">
@@ -33,6 +34,7 @@
                 </div>
               </div>
             </a>
+            {% endwith %}
             {% endfor %}
           </div>
         </div>

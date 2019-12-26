@@ -1,21 +1,48 @@
 from django.db import models
 from django.shortcuts import render
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Orderable
+from modelcluster.fields import ParentalKey 
 from wagtailvideos.models import Video 
 import pdb
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel , MultiFieldPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from django.http import HttpResponse, HttpResponseRedirect
+from wagtailvideos.edit_handlers import VideoChooserPanel
 
+class HomePageCarouselVideos(Orderable):
+	'''Between 1 and 5 imagges for the home carousel '''
+	page = ParentalKey("home.HomePage", related_name="carousel_videos")
+	carousel_video = models.ForeignKey(
+		"wagtailvideos.Video",
+		null = True, 
+		blank = False,
+		on_delete= models.SET_NULL,
+		related_name = "+" 
+		)
+	
+
+	panels = [
+			VideoChooserPanel("carousel_video")
+	]
 
 class HomePage(RoutablePageMixin, Page):
+	content_panels = Page.content_panels + [
+			
+			MultiFieldPanel([
+
+					InlinePanel("carousel_videos", min_num=1, label="Video"),
+
+				], heading="Carousel Videos"),
+
+	]
 	def get_videos(self):
 		self.videos = Video.objects
 		return self.videos
 
-	def get_context(self, request):
-		context = super(HomePage, self).get_context(request)
-		context['product'] = self.get_videos().filter(scope=Video.PUBLIC)
-		return context
+	# def get_context(self, request):
+	# 	context = super(HomePage, self).get_context(request)
+	# 	context['product'] = self.get_videos().filter(scope=Video.PUBLIC)
+	# 	return context
 
 	# def serve(self, request):
 	# 	print(request.META.get('PATH_INFO'))
@@ -49,6 +76,8 @@ class HomePage(RoutablePageMixin, Page):
 		else:
 			form = CommentForm()
 		return render(request, 'home/video_detail.html', {'video': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
+
+
 
 class Comment(models.Model):
 	video = models.ForeignKey(Video, related_name="comments", on_delete=62)

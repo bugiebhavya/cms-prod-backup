@@ -12,7 +12,7 @@ from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Orderable
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -28,18 +28,40 @@ from wagtail.admin.edit_handlers import (
 )
 
 from wagtailvideos.models import Video
+from wagtailvideos.edit_handlers import VideoChooserPanel
+
+
+class DashboardPageCarouselVideos(Orderable):
+    '''Between 1 and 5 imagges for the home carousel '''
+    page = ParentalKey("dashboard.DashboardPage", related_name="carousel_videos")
+    carousel_video = models.ForeignKey(
+        "wagtailvideos.Video",
+        null = True, 
+        blank = False,
+        on_delete= models.SET_NULL,
+        related_name = "+" 
+        )
+
+
+    panels = [
+            VideoChooserPanel("carousel_video")
+    ]
 
 class DashboardPage(RoutablePageMixin, Page):
     template = 'dashboard/index.html'
-    description = models.CharField(max_length=255, blank=True,)
     content_panels = Page.content_panels + [
-        FieldPanel('description', classname="full")
-    ]
+            
+            MultiFieldPanel([
 
-    def get_context(self, request, *args, **kwargs):
-        context = super(DashboardPage, self).get_context(request, *args, **kwargs)
-        context['videos'] = self.get_videos()
-        return context
+                    InlinePanel("carousel_videos", min_num=1, label="Video"),
+
+                ], heading="Carousel Videos"),
+
+    ]
+    # def get_context(self, request, *args, **kwargs):
+    #     context = super(DashboardPage, self).get_context(request, *args, **kwargs)
+    #     context['videos'] = self.get_videos()
+    #     return context
 
     def get_videos(self):
         self.videos = Video.objects.all()
