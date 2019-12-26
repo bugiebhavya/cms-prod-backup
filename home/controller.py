@@ -24,6 +24,7 @@ def video_detail_view(request, videoid):
 	count_hit = True
 
 	# MostViewobjects.filter(pk=video.pk).update(count=F('count') + 1)
+	
 
 	comments = video.comments.filter(active=True)
 	comment_submit = False 
@@ -53,7 +54,7 @@ class LoginView(View):
 				user_obj = users.first()
 				login(request, user_obj)
 				messages.success(request, "Login Successfully")
-				return HttpResponseRedirect('/')
+				return HttpResponseRedirect('/users/dashboard')
 			else:
 				message = "Unable to login with given credentials"
 				messages.info(request, message)

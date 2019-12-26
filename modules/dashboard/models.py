@@ -1,10 +1,11 @@
 from django import forms
 from django.db import models
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.utils.dateformat import DateFormat
 from django.utils.formats import date_format
 from django.shortcuts import render
 import wagtail
+import pdb 
 from wagtail.admin.edit_handlers import (FieldPanel, FieldRowPanel,
                                          InlinePanel, MultiFieldPanel,
                                          PageChooserPanel, StreamFieldPanel)
@@ -29,7 +30,11 @@ from wagtail.admin.edit_handlers import (
 
 from wagtailvideos.models import Video
 from wagtailvideos.edit_handlers import VideoChooserPanel
-
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from wagtailvideos.models import Channels
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 class DashboardPageCarouselVideos(Orderable):
     '''Between 1 and 5 imagges for the home carousel '''
@@ -47,6 +52,7 @@ class DashboardPageCarouselVideos(Orderable):
             VideoChooserPanel("carousel_video")
     ]
 
+
 class DashboardPage(RoutablePageMixin, Page):
     template = 'dashboard/index.html'
     content_panels = Page.content_panels + [
@@ -58,13 +64,54 @@ class DashboardPage(RoutablePageMixin, Page):
                 ], heading="Carousel Videos"),
 
     ]
-    # def get_context(self, request, *args, **kwargs):
-    #     context = super(DashboardPage, self).get_context(request, *args, **kwargs)
-    #     context['videos'] = self.get_videos()
-    #     return context
-
-    def get_videos(self):
-        self.videos = Video.objects.all()
-        return self.videos
-
     
+    @route(r'^history/$', name="history")
+    def user_history(self, request, *args, **kwargs):
+        return render(request, 'dashboard/history.html')
+
+
+    @route(r'^logout/$', name='user-logout')
+    def logout(self, request, *args, **kwargs):
+        logout(request)
+        messages.success(request, 'Successfully logout, Please login.')
+        return HttpResponseRedirect('/')
+
+
+class ChannelPageCarouselVideos(Orderable):
+    '''Between 1 and 5 imagges for the home carousel '''
+    page = ParentalKey("dashboard.ChannelPage", related_name="channels")
+    channel = models.ForeignKey(
+        "wagtailvideos.Channels",
+        null = True, 
+        blank = False,
+        on_delete= models.SET_NULL,
+        related_name = "+" 
+        )
+
+
+    panels = [
+            FieldPanel("channel")
+    ]
+
+
+class ChannelPage(RoutablePageMixin,Page):
+    template = 'channel/index.html'
+    
+
+    content_panels = Page.content_panels + [
+            
+            MultiFieldPanel([
+
+                    InlinePanel("channels", min_num=1, label="Channels"),
+
+                ], heading="Channels"),
+
+    ]
+    
+
+
+class MediaView(models.Model):
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+    views = models.IntegerField()
