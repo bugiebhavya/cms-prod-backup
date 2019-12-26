@@ -1,0 +1,50 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+{% load duration_field %}
+{% block header %}
+<header class="login-header d-flex align-items-center">
+  {% include 'dashboard_header.html' %}
+</header>
+{% endblock %}
+
+
+{% block body  %}    
+    {% include 'dashboard_sidebar.html' %}
+    
+  <div class="main-content profile-page">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-6 col-md-8 border-box">
+          <div class="row">
+            <div class="col-sm-12 d-flex mb-4">
+              <div class="profile-img d-flex align-items-center justify-content-center">
+                <i class="fal fa-user"></i>
+              </div>
+            </div>
+            <div class="col-sm-12 d-flex my-2">
+              <label for="staticEmail" class="col-form-label p-0"><strong>Username:</strong></label>
+              {{request.user.username}}
+            </div>
+            <div class="col-sm-12 d-flex my-2">
+              <label for="staticEmail" class="col-form-label p-0"><strong>Email:</strong></label>
+              {{request.user.email}}
+            </div>
+            <div class="col-sm-12 d-flex my-2">
+              <label for="staticEmail" class="col-form-label p-0"><strong>Fisrt Name:</strong></label>
+              {{request.user.first_name}}
+            </div>
+            <div class="col-sm-12 d-flex my-2">
+              <label for="staticEmail" class="col-form-label p-0"><strong>Last Name:</strong></label>
+              {{request.user.last_name}}
+            </div>
+            <div class="col-sm-12 d-flex my-2">
+              <label for="staticEmail" class="col-form-label p-0"><strong>D.O.J.:</strong></label>
+              {{ request.user.date_joined }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+</div>
+  {% endblock %}

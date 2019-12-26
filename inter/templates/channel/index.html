@@ -1,0 +1,38 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+{% load duration_field %}
+{% block header %}
+<header class="login-header d-flex align-items-center">
+  {% include 'dashboard_header.html' %}
+</header>
+{% endblock %}
+{% block body  %}    
+    {% include 'dashboard_sidebar.html' %}
+    <div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 trending-page">
+          <h2>Channels</h2>
+          <div class="row">
+            {% for page in self.channels.all%}
+            {% with page.channel as channel %}
+            <a href="/users/watch/{{channel.id}}/" class="col-sm-12 video-block">
+              <div class="video-detail">
+                <h3>{{ channel.title|safe}}</h3>
+                <div class="video-meta">
+                  <span class="total-views">{{channel.video_set.count}} media</span>
+                </div>
+                <div class="video-desc">
+                  <p>{{channel.description}}</p>
+                </div>
+              </div>
+            </a>
+            {% endwith %}
+            {% endfor %}
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

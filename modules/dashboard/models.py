@@ -64,7 +64,11 @@ class DashboardPage(RoutablePageMixin, Page):
                 ], heading="Carousel Videos"),
 
     ]
-    
+
+    @route(r'^profile/$', name="profile")
+    def user_profile(self, request, *args, **kwargs):
+        return render(request, 'dashboard/profile.html')
+
     @route(r'^history/$', name="history")
     def user_history(self, request, *args, **kwargs):
         return render(request, 'dashboard/history.html')

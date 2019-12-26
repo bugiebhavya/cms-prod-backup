@@ -1118,3 +1118,31 @@ aside.twitter-sidebar .twitter-holder{
 .vidTitle {
   word-break: break-all;
 }
+
+.profile-page label{
+  width: 120px;
+  min-width: 120px;
+}
+.border-box{
+  border: 1px solid #ddd;
+  padding: 30px;
+}
+.profile-page .profile-img{
+  width: 120px;
+  height: 120px;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  font-size: 60px;
+}
+.profile-page .profile-img img{
+  object-fit: cover;
+  object-position: top cover;
+  width: 120px;
+  height: 120px;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+}

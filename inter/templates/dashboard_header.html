@@ -1,4 +1,4 @@
-
+{% load static %}
     <a class="navbar-brand d-md-none" href="index.html"> <img src="images/logo.png" alt="Logo" /> </a>
     <div class="search-option">
       <div class="share-popup-backdrop d-md-none"></div>
@@ -101,15 +101,15 @@
         </li>
         <li class="list-inline-item user-menu dropleft">
           <a href="javascript:void(0);" class="dropdown-toggle" id="profileBtn" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false"><img class="profile-pic" src="images/user.jpg" alt="{{ request.user.username }}"></a>
+          aria-haspopup="true" aria-expanded="false"><img class="profile-pic" src="{% static 'images/user.png' %}" alt="{{ request.user.username }}"></a>
           <div class="dropdown-menu" aria-labelledby="profileBtn">
             <div class="user-info">
-              <div class="icon"><img class="profile-pic" src="images/user.jpg" alt="{{ request.user.username }}"></div>
+              <div class="icon"><img class="profile-pic" src="{% static 'images/user.png' %}" alt="{{ request.user.username }}"></div>
               <div class="user-details"><span>{{ request.user.username }}</span> <span class="email">{{ request.user.email }}</span> <a href="#">Manage your account</a></div>
             </div>
             <div class="user-link">
               <a href="/users/dashboard"><i class="fas fa-tachometer"></i> Dashboard</a>
-              <a href="#"><i class="fas fa-user"></i> Profile</a>
+              <a href="/users/dashboard/profile"><i class="fas fa-user"></i> Profile</a>
               <a href="/users/dashboard/logout"><i class="fal fa-sign-out"></i> Logout</a>
             </div>
           </div>
