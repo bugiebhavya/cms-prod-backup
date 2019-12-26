@@ -18,7 +18,7 @@
           <p id="notfound"></p>
           <div class="row">
             {% for video in videos%}
-            <a href="{% url 'video_detail' video.id %}" class="col-sm-12 video-block">
+            <a href="/users/watch/{{video.id}}/" class="col-sm-12 video-block">
               <div class="video-part">
                 <img class="thumbnail" src="{{video.thumbnail.url}}" alt="img">
                 <span class="video-time">5.00</span>

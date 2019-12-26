@@ -66,3 +66,5 @@ class DashboardPage(RoutablePageMixin, Page):
     def get_videos(self):
         self.videos = Video.objects.all()
         return self.videos
+
+    

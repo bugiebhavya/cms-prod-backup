@@ -47,16 +47,19 @@ class HomePage(RoutablePageMixin, Page):
 	# def serve(self, request):
 	# 	print(request.META.get('PATH_INFO'))
 	# 	return render(request, self.template, self.get_context(request))
-
-	
+	@route(r'^trending/$')
+	def trending_media(self, request, *args, **kwargs):
+		self.videos = self.get_videos().all()
+		return render(request, 'dashboard/trending.html', {'videos': self.videos})
+		
 	@route(r'^search/$', name='search')
 	def search_media(self, request, *args, **kwargs):
-		self.videos = self.get_videos().filter(title__icontains=request.GET.get('search'))
+		self.videos = self.get_videos().filter(title__icontains=request.GET.get('q'))
 		return render(request, 'home/search_results.html', {'videos': self.videos})
 
 
 	@route(r'^watch/(?P<media_id>[-\w]+)/$', name='video_detail')
-	def search_media(self, request, media_id,  *args, **kwargs):
+	def watch_media(self, request, media_id,  *args, **kwargs):
 		from .forms import CommentForm
 		media = self.get_videos().get(id=media_id)
 		comments = media.comments.filter(active=True)
