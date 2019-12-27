@@ -20,11 +20,11 @@
             <div class="tags">
               <a href="#">#today</a> <a href="#">#latestvideo</a>
             </div>
-            <h1>Informacion General 2019</h1>
+            <h1>{{video.title}}</h1>
             <div class="info">
               <div class="info-text">
                 <span class="count">3,443,773 views </span>
-                <span class="date">4 Dec 2019</span>
+                <span class="date">{{ video.created_at }}</span>
               </div>
               <div class="info-menu">
                 <div class="like-action">
@@ -64,11 +64,11 @@
                 </div>
                 <div class="video-other-info">
                   <ul>
-                    <li><label>Song</label> Informacion General</li>
-                    <li><label>Artist</label> Testing User</li>
-                    <li><label>Album</label> Testing User</li>
+                    <li><label>Title</label> {{ video.channel.title }}</li>
+                    <li><label>Created At</label> {{ video.channel.created_at }}</li>
+                    <!-- <li><label>Album</label> Testing User</li>
                     <li><label>Licensed to YouTube by</label> Believe Music (on behalf of White Hill Music); venus_pub,
-                      and 1 music rights societies</li>
+                      and 1 music rights societies</li> -->
                   </ul>
                 </div>
               </div>
