@@ -39,7 +39,7 @@ from django.contrib import messages
 
 class DashboardPageCarouselVideos(Orderable):
     '''Between 1 and 5 imagges for the home carousel '''
-    page = ParentalKey("dashboard.DashboardPage", related_name="carousel_videos")
+    page = ParentalKey("dashboard.DashboardPage", related_name="carousel_media")
     carousel_video = models.ForeignKey(
         "wagtailvideos.Video",
         null = True, 
@@ -68,9 +68,9 @@ class DashboardPage(RoutablePageMixin, Page):
             
             MultiFieldPanel([
 
-                    InlinePanel("carousel_videos", min_num=1, label="Video"),
+                    InlinePanel("carousel_media", min_num=1, label="Media"),
 
-                ], heading="Carousel Videos"),
+                ], heading="Carousel Media"),
 
     ]
 

@@ -10,10 +10,14 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from django.http import HttpResponse, HttpResponseRedirect
 from wagtailvideos.edit_handlers import VideoChooserPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class HomePageCarouselVideos(Orderable):
 	'''Between 1 and 5 imagges for the home carousel '''
-	page = ParentalKey("home.HomePage", related_name="carousel_videos")
+	page = ParentalKey("home.HomePage", related_name="carousel_media")
 	carousel_video = models.ForeignKey(
 		"wagtailvideos.Video",
 		null = True, 
@@ -42,11 +46,16 @@ class HomePage(RoutablePageMixin, Page):
 			
 			MultiFieldPanel([
 
-					InlinePanel("carousel_videos", min_num=1, label="Media"),
+					InlinePanel("carousel_media", min_num=1, label="Media"),
 
 				], heading="Carousel Media"),
 
 	]
+	
+	
+
+class ReferenceUrlPage(RoutablePageMixin, Page):
+
 	def get_videos(self):
 		self.videos = Video.objects
 		return self.videos
@@ -78,7 +87,7 @@ class HomePage(RoutablePageMixin, Page):
 	def watch_media(self, request, media_id,  *args, **kwargs):
 		from .forms import CommentForm
 		media = self.get_videos().get(id=media_id)
-		comments = media.comments.filter(active=True)
+		comments = media.comments.all()
 		commentable = True
 		category_videos = Video.objects.filter(channel=media.channel).exclude(id=media.id)
 
@@ -86,11 +95,11 @@ class HomePage(RoutablePageMixin, Page):
 			form = CommentForm(request.POST)
 			if form.is_valid():
 				new_comment = form.save(commit=False)
-				new_comment.media = media 
+				new_comment.content_object = media
+				new_comment.user = request.user 
 				new_comment.save()
 
-				return HttpResponseRedirect('/watch/%s/'%media.id)
-			print(form.errors)
+				return HttpResponseRedirect('/users/watch/%s/'%media.id)
 			return render(request, 'home/video_detail.html', {'video': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
 		else:
 			form = CommentForm()
@@ -100,41 +109,40 @@ class HomePage(RoutablePageMixin, Page):
 	def document_detail(self, request, media_id,  *args, **kwargs):
 		from .forms import CommentForm
 		media = self.get_documents().get(id=media_id)
-		comments = None#media.comments.filter(active=True)
+		comments = media.comments.all()
 		commentable = True
 		category_documents = Document.objects.filter(tags__in=media.tags.all()).exclude(id=media.id)
 
 		if request.method == 'POST':
-		# 	form = CommentForm(request.POST)
-		# 	if form.is_valid():
-		# 		new_comment = form.save(commit=False)
-		# 		new_comment.media = media 
-		# 		new_comment.save()
+			form = CommentForm(request.POST)
+			if form.is_valid():
+				new_comment = form.save(commit=False)
+				new_comment.content_object = media
+				new_comment.user = request.user 
+				new_comment.save()
 
-		# 		return HttpResponseRedirect('/doc-watch/%s/'%media.id)
-		# 	print(form.errors)
+				return HttpResponseRedirect('/users/doc-watch/%s/'%media.id)
+			print(form.errors)
 			return render(request, 'home/document_detail.html', {'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
 		else:
 			form = CommentForm()
 		return render(request, 'home/document_detail.html', {'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
 
-
 	@route(r'^doc-render/$')
 	def document_viewer(self, request, *args, **kwargs):
 		return render(request, 'home/document_viewer.html',{})
 
-
 class Comment(models.Model):
-	video = models.ForeignKey(Video, related_name="comments", on_delete=62)
-	name = models.CharField(max_length=100)
-	email = models.EmailField()
+	content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+	object_id = models.PositiveIntegerField()
+	content_object = GenericForeignKey('content_type','object_id')
+	user = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
 	body = models.TextField()
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
-	active = models.BooleanField(default=True)
 
 	class Meta:
 		ordering = ('-created',)
 
 	def __str__(self):
-		return 'Commented by {} on {}'.format(self.name, self.video)
+		return 'Commented by {} on {}'.format(self.user.username, self.content_object.title)

@@ -1,57 +1,161 @@
-{% extends 'home_base.html' %}
+{% extends 'dashboard_base.html' %}
 {% load hitcount_tags %}
 {% load static %}
+{% load file_size %}
+{% load i18n %}
+
 {% block header %}
-
-{% include 'home_header.html' %}
-
+<header class="login-header d-flex align-items-center">
+  {% include 'dashboard_header.html' %}
+</header>
 {% endblock %}
 
 {% block body %}
+{% include 'dashboard_sidebar.html' %}
 
 <div class="main-content">
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-9 single-video-page">
           <iframe src = "/users/doc-render/#{{document.file.url}}" width='400' height='500' allowfullscreen webkitallowfullscreen></iframe>
-          {% with comments.count as comments_count %}
-          <h2>{{comments_count}} Comment{{comments_count|pluralize}}</h2>
-          {% endwith %}
-          {% if comments %}
-              {% for comment in comments %}
-                <p id="ch">Comment {{forloop.counter}} by {{comment.name}} on 
-                {{comment.created}}</p>
-                <div class="cb">{{comment.body|linebreaks}}</div>
+          <div class="video-information">
+            <div class="tags">
+              {% for tag in document.tags.all %}
+                <a href="#">#{{tag.name}}</a>
               {% endfor %}
-            <hr>
-            {% else %}
-            <p> There are no comments Yet</p>
-          {% endif %}
-          {% if commentable and request.user and request.user.is_authenticated %}
-             <span class="btn btn-info">Please post your valuable comment  ...</span>
-             <form method="post">
-                {{ form.name }}<br>
-                {{ form.email }}<br>
-                {{ form.body }}<br>
-                {% csrf_token %}
-                <input type=submit class="btn btn-success btn-lg" value="Submit Comment">  
-             </form>
-          {% else %}
-              <span class="btn btn-info">Please login to post a comments ...</span>
-          {% endif %} 
+            </div>
+            <h1>{{document.title}}</h1>
+            <div class="info">
+              <div class="info-text">
+                <span class="count">3,443,773 views </span>
+                <span class="date">{{ document.created_at }}</span>
+              </div>
+              <div class="info-menu">
+                <div class="like-action">
+                  <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
+                  <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
+                </div>
+                <div class="share-option">
+                  <button type="button" class="video-share"><i class="fas fa-share"></i> Share</button>
+                  <div class="share-popup">
+                    <div class="share-popup-backdrop"></div>
+                    <div class="share-box">
+                      <h4>Share <button class="close-share"><i class="fal fa-times"></i></button></h4>
+                      <div class="copy-link"><span id="url-text"
+                          class="url-text">file:///D:/Mahendra%20Saini/Project/GIT/Interejecutivos/interejecutivos-html/single.html</span>
+                        <button class="copy-btn" type="button"><i class="fal fa-copy"></i></button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="channel-information">
+            <a href="#" class="icon"><img class="thumbnail" src="{% static 'images/clapperboard.png' %}" alt="img"></a>
+            <div class="channel-details">
+              <div class="channel-name">
+                <a href="#">{{ document.channel.title }}</a>
+                <span>514K subscribers</span>
+              </div>
+              <div class="channel-subscribe">
+                <button type="button" class="btn">Subscribe</button>
+              </div>
+              <div id="video-full-desp" class="video-full-desp">
+                <div class="video-description">
+                  <p>{{ document.channel.description }}</p>
+                </div>
+                <div class="video-other-info">
+                  <ul>
+                    <li><label>Title</label> {{ document.channel.title }}</li>
+                    <li><label>Created At</label> {{ document.channel.created_at }}</li>
+                    <li><label>Album</label> Testing User</li>
+                    <li><label>Licensed by</label> Believe Music (on behalf of White Hill Music); venus_pub,
+                      and 1 music rights societies</li>
+                  </ul>
+                </div>
+              </div>
+              <a href="javascript:void(0);" class="readmore"><span class="more">Read More</span> <span class="less">Read
+                  Less</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="comment-block">
+            {% with comments.count as comments_count %}
+              <div class="comment-meta">{{comments_count}} Comment{{comments_count|pluralize}}
+                  <button type="button" class="dropdown-toggle" id="commentSorting"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort"></i> Sort
+                  By</button>
+                <div class="sorting-menu dropdown-menu" aria-labelledby="commentSorting">
+                  <a href="#">Top Comments</a>
+                  <a href="#">Newest First</a>
+                </div>
+              </div>
+            {% endwith %}
+            <div class="comment-box">
+              <div class="comment-user-icon">
+                <img src="#" alt="">
+              </div>
+              <div class="comment-detail">
+               {% if commentable and request.user and request.user.is_authenticated %}
+                  <form method="post">
+                    {% csrf_token %}
+                    {{ form.body }}<br>
+                    <div class="button-group text-right">
+                      <button type="submit" class="btn red">Comment</button>
+                    </div>
+                  </form>
+               {% else %}
+                <span class="btn btn-info">Please login to post a comments ...</span>
+               {% endif %} 
+              </div>
+            </div>
+            <ul class="comment-list">
+              {% if comments %}
+                  {% for comment in comments %}
+                    <li class="comment-box">
+                      <div class="comment-user-icon">
+                        <img src="{% static 'images/user.png' %}" alt="user">
+                      </div>
+
+                      <div class="comment-detail">
+                        
+                        
+                        <h5><a href="#">{{comment.name}}</a> <span>{{comment.created}}</span></h5>
+                        {{comment.body|linebreaks}}
+
+                        <div class="comment-action">
+                          <div class="like-action">
+                            <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
+                            <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  {% endfor %}
+              {% else %}
+                <p> There are no comments Yet</p>
+              {% endif %}
+            </ul>
+          </div>
+
         </div>
         <div class="col-lg-3 sidebar-right">
+          {% if category_documents.count > 0 %}
+           <h3>Next</h3>
+          {% else %}
+            <h3>No Next Content..</h3>
+          {% endif %}
           {% for cat_document in category_documents %}
           <a href="/doc-watch/{{cat_document.id}}/" class="video-block">
             <div class="video-part">
               <img class="thumbnail" src="{{ cat_document.thumbnail.url }}" alt="img">
-              <span class="video-time">{{cat_document.file_size }}</span>
+              <span class="video-time">{{ cat_document.file_size |convert_size}}</span>
             </div>
             <div class="video-detail">
               <h3>{{ cat_document.title |safe}}</h3>
-              <div class="video-meta">
-                <span class="postby">{{cat_document.tags}}</span>
-              </div>
+              <span class="total-views">34k views</span>
             </div>
           </a>
           {% endfor %}
@@ -63,12 +167,5 @@
 {% endblock %}
 
 {% block script %}
-  <script>
-      {% if commentable and request.user and request.user.is_authenticated %}
-        var nome = "{{request.user.username}}"
-        var eomil = "{{request.user.email}}"
-        document.getElementById('id_name').value = nome;
-        document.getElementById('id_email').value = eomil;
-      {% endif %}
-   </script> 
+
 {% endblock %}

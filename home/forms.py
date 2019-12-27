@@ -10,9 +10,7 @@ class AdminLoginForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
 	class Meta:
 		model = Comment
-		fields = ('name', 'email', 'body')
+		fields = ('body',)
 		widgets = {
-			'name': forms.HiddenInput(),
-			'email': forms.HiddenInput(),
 			'body': forms.Textarea(attrs={'rows': '1', 'class': 'comment-field', 'placeholder': 'commenting publicly'})
 		}

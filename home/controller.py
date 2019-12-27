@@ -17,30 +17,6 @@ from django.db.models import F
 # from modules.mostviews.models import MostView
 
 
-def video_detail_view(request, videoid):
-	video = get_object_or_404(Video, id=videoid)
-	get_channel = video.channel
-	category_videos = Video.objects.filter(channel=get_channel)
-	count_hit = True
-
-	# MostViewobjects.filter(pk=video.pk).update(count=F('count') + 1)
-	
-
-	comments = video.comments.filter(active=True)
-	comment_submit = False 
-	if request.method == 'POST':
-		form = CommentForm(request.POST)
-		if form.is_valid():
-			new_comment = form.save(commit=False)
-			new_comment.video = video 
-			new_comment.save()
-			comment_submit = True
-	else:
-		form = CommentForm
-	return render(request, 'home/video_detail.html', {'video': video, 'form': form, 'comment_submit': comment_submit, 'comments': comments, 'category_videos': category_videos})
-
-
-
 class LoginView(View):
 	def post(self, request):
 		email = request.POST.get('email',None)
