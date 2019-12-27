@@ -3,6 +3,7 @@ from django.shortcuts import render
 from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey 
 from wagtailvideos.models import Video 
+from modules.documents.models import CustomDocument as Document
 import pdb
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel , MultiFieldPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -39,6 +40,10 @@ class HomePage(RoutablePageMixin, Page):
 		self.videos = Video.objects
 		return self.videos
 
+	def get_documents(self):
+		self.documents = Document.objects
+		return self.documents
+
 	# def get_context(self, request):
 	# 	context = super(HomePage, self).get_context(request)
 	# 	context['product'] = self.get_videos().filter(scope=Video.PUBLIC)
@@ -70,7 +75,7 @@ class HomePage(RoutablePageMixin, Page):
 			form = CommentForm(request.POST)
 			if form.is_valid():
 				new_comment = form.save(commit=False)
-				new_comment.video = media 
+				new_comment.media = media 
 				new_comment.save()
 
 				return HttpResponseRedirect('/watch/%s/'%media.id)
@@ -80,6 +85,32 @@ class HomePage(RoutablePageMixin, Page):
 			form = CommentForm()
 		return render(request, 'home/video_detail.html', {'video': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
 
+	@route(r'^doc-watch/(?P<media_id>[-\w]+)/$', name='document_detail')
+	def document_detail(self, request, media_id,  *args, **kwargs):
+		from .forms import CommentForm
+		media = self.get_documents().get(id=media_id)
+		comments = None#media.comments.filter(active=True)
+		commentable = True
+		category_documents = Document.objects.filter(tags__in=media.tags.all()).exclude(id=media.id)
+
+		if request.method == 'POST':
+		# 	form = CommentForm(request.POST)
+		# 	if form.is_valid():
+		# 		new_comment = form.save(commit=False)
+		# 		new_comment.media = media 
+		# 		new_comment.save()
+
+		# 		return HttpResponseRedirect('/doc-watch/%s/'%media.id)
+		# 	print(form.errors)
+			return render(request, 'home/document_detail.html', {'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
+		else:
+			form = CommentForm()
+		return render(request, 'home/document_detail.html', {'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
+
+
+	@route(r'^doc-render/$')
+	def document_viewer(self, request, *args, **kwargs):
+		return render(request, 'home/document_viewer.html',{})
 
 
 class Comment(models.Model):

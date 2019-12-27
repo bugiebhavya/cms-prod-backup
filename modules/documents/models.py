@@ -12,7 +12,6 @@ ACCESS = (
 
     )
 class CustomDocument(AbstractDocument):
-    # Add your custom model fields here
     thumbnail = models.FileField(upload_to='documents', blank=True, verbose_name=('thumbnail'), default='documents/logo.png')
     access = models.CharField(verbose_name=('Access Type'), default="PUBLIC", choices=ACCESS, max_length=50, blank=True, null=True)
     
@@ -24,7 +23,4 @@ class CustomDocument(AbstractDocument):
         'tags',
         'thumbnail',
         'access'
-
-        # Add your custom model fields into this list,
-        # if you want to display them in the Wagtail admin UI.
     )

@@ -1,0 +1,74 @@
+{% extends 'home_base.html' %}
+{% load hitcount_tags %}
+{% load static %}
+{% block header %}
+
+{% include 'home_header.html' %}
+
+{% endblock %}
+
+{% block body %}
+
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-9 single-video-page">
+          <iframe src = "/users/doc-render/#{{document.file.url}}" width='400' height='500' allowfullscreen webkitallowfullscreen></iframe>
+          {% with comments.count as comments_count %}
+          <h2>{{comments_count}} Comment{{comments_count|pluralize}}</h2>
+          {% endwith %}
+          {% if comments %}
+              {% for comment in comments %}
+                <p id="ch">Comment {{forloop.counter}} by {{comment.name}} on 
+                {{comment.created}}</p>
+                <div class="cb">{{comment.body|linebreaks}}</div>
+              {% endfor %}
+            <hr>
+            {% else %}
+            <p> There are no comments Yet</p>
+          {% endif %}
+          {% if commentable and request.user and request.user.is_authenticated %}
+             <span class="btn btn-info">Please post your valuable comment  ...</span>
+             <form method="post">
+                {{ form.name }}<br>
+                {{ form.email }}<br>
+                {{ form.body }}<br>
+                {% csrf_token %}
+                <input type=submit class="btn btn-success btn-lg" value="Submit Comment">  
+             </form>
+          {% else %}
+              <span class="btn btn-info">Please login to post a comments ...</span>
+          {% endif %} 
+        </div>
+        <div class="col-lg-3 sidebar-right">
+          {% for cat_document in category_documents %}
+          <a href="/doc-watch/{{cat_document.id}}/" class="video-block">
+            <div class="video-part">
+              <img class="thumbnail" src="{{ cat_document.thumbnail.url }}" alt="img">
+              <span class="video-time">{{cat_document.file_size }}</span>
+            </div>
+            <div class="video-detail">
+              <h3>{{ cat_document.title |safe}}</h3>
+              <div class="video-meta">
+                <span class="postby">{{cat_document.tags}}</span>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  <script>
+      {% if commentable and request.user and request.user.is_authenticated %}
+        var nome = "{{request.user.username}}"
+        var eomil = "{{request.user.email}}"
+        document.getElementById('id_name').value = nome;
+        document.getElementById('id_email').value = eomil;
+      {% endif %}
+   </script> 
+{% endblock %}
