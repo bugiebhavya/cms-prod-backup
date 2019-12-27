@@ -9,6 +9,7 @@ from wagtail.admin.edit_handlers import FieldPanel, InlinePanel , MultiFieldPane
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from django.http import HttpResponse, HttpResponseRedirect
 from wagtailvideos.edit_handlers import VideoChooserPanel
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 
 class HomePageCarouselVideos(Orderable):
 	'''Between 1 and 5 imagges for the home carousel '''
@@ -22,8 +23,18 @@ class HomePageCarouselVideos(Orderable):
 		)
 	
 
+	carousel_document = models.ForeignKey(
+		"documents.CustomDocument",
+		null = True, 
+		blank = True,
+		on_delete= models.SET_NULL,
+		related_name = "+" 
+	)
+
+
 	panels = [
-			VideoChooserPanel("carousel_video")
+		VideoChooserPanel("carousel_video"),
+		DocumentChooserPanel("carousel_document")
 	]
 
 class HomePage(RoutablePageMixin, Page):
@@ -31,9 +42,9 @@ class HomePage(RoutablePageMixin, Page):
 			
 			MultiFieldPanel([
 
-					InlinePanel("carousel_videos", min_num=1, label="Video"),
+					InlinePanel("carousel_videos", min_num=1, label="Media"),
 
-				], heading="Carousel Videos"),
+				], heading="Carousel Media"),
 
 	]
 	def get_videos(self):
@@ -44,10 +55,10 @@ class HomePage(RoutablePageMixin, Page):
 		self.documents = Document.objects
 		return self.documents
 
-	# def get_context(self, request):
-	# 	context = super(HomePage, self).get_context(request)
-	# 	context['product'] = self.get_videos().filter(scope=Video.PUBLIC)
-	# 	return context
+	def get_context(self, request):
+		context = super(HomePage, self).get_context(request)
+		pdb.set_trace()
+		return context
 
 	# def serve(self, request):
 	# 	print(request.META.get('PATH_INFO'))

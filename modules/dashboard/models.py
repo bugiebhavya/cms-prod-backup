@@ -17,6 +17,7 @@ from wagtail.core.models import Page, Orderable
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.snippets.models import register_snippet
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -42,14 +43,22 @@ class DashboardPageCarouselVideos(Orderable):
     carousel_video = models.ForeignKey(
         "wagtailvideos.Video",
         null = True, 
-        blank = False,
+        blank = True,
+        on_delete= models.SET_NULL,
+        related_name = "+" 
+        )
+    carousel_document = models.ForeignKey(
+        "documents.CustomDocument",
+        null = True, 
+        blank = True,
         on_delete= models.SET_NULL,
         related_name = "+" 
         )
 
 
     panels = [
-            VideoChooserPanel("carousel_video")
+            VideoChooserPanel("carousel_video"),
+            DocumentChooserPanel("carousel_document")
     ]
 
 
