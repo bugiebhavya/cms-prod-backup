@@ -9,6 +9,7 @@ import os
 from preview_generator.manager import PreviewManager
 from django.core.files.base import File
 
+
 class CustomDocument(AbstractDocument):
     PUBLIC = 'PUBLIC'
     PRIVATE = 'PRIVATE'
@@ -17,6 +18,7 @@ class CustomDocument(AbstractDocument):
         (PRIVATE, _('Private')),)
 
     comments = GenericRelation("home.Comment", related_query_name='comments')
+    media_views = GenericRelation("dashboard.MediaView", related_query_name='media_views')
     thumbnail = models.FileField(upload_to='documents', blank=True, verbose_name=('thumbnail'), default='documents/logo.png')
     access = models.CharField(verbose_name=('Access Type'), default="PUBLIC", choices=SCOPE, max_length=50, blank=True, null=True)
     channel = models.ForeignKey(Channels, related_name="documents", on_delete=models.SET_NULL, null=True, blank=True)
@@ -30,6 +32,18 @@ class CustomDocument(AbstractDocument):
         'thumbnail',
         'access',
     )
+
+    
+    def update_views(self):
+        if self.media_views.exists():
+            obj = self.media_views.last()
+            obj.views +=1
+            obj.save()
+        else:
+            from modules.dashboard.models import MediaView
+            obj = MediaView(content_object=self, views=0)
+            obj.views = 1
+            obj.save()
 
 def add_thumbnail(sender, instance, created, **kwargs):
     if instance.file.name.split('.')[-1] in ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'pdf']:

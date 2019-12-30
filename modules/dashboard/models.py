@@ -126,5 +126,10 @@ class ChannelPage(RoutablePageMixin,Page):
 class MediaView(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey()
-    views = models.IntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    views = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.views)

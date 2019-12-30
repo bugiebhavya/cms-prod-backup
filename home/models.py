@@ -92,6 +92,7 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	@route(r'^watch/(?P<media_id>[-\w]+)/$', name='video_detail')
 	def watch_media(self, request, media_id,  *args, **kwargs):
 		from .forms import CommentForm
+		print("-----------------------")
 		media = self.get_videos().get(id=media_id)
 		if media.scope == Video.PRIVATE and request.user.is_anonymous:
 			messages.warning(request, 'Please login to view this media.')
@@ -118,12 +119,13 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	@route(r'^doc-watch/(?P<media_id>[-\w]+)/$', name='document_detail')
 	def document_detail(self, request, media_id,  *args, **kwargs):
 		from .forms import CommentForm
+		print("-----------------------")
 		media = self.get_documents().get(id=media_id)
 		if media.access == Document.PRIVATE and request.user.is_anonymous:
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
 
-		
+		media.update_views()
 		comments = media.comments.all()
 		commentable = True
 		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)

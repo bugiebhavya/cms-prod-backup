@@ -55,8 +55,6 @@ INSTALLED_APPS = [
     'modules.dashboard.apps.DashboardConfig',
     'modules.site_settings.apps.SiteSettingsConfig',
     'modules.documents.apps.DocumentsConfig',
-    # 'modules.mostviews.apps.MostviewsConfig',
-    # 'modules.videos.apps.VideosConfig',
     
 ]
 
