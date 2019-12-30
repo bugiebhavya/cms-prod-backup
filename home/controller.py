@@ -17,6 +17,7 @@ from django.db.models import F
 # from modules.mostviews.models import MostView
 
 
+
 def video_detail_view(request, videoid):
 	video = get_object_or_404(Video, id=videoid)
 	get_channel = video.channel

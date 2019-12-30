@@ -15,7 +15,6 @@ urlpatterns = [
     url(r'^search/', search_views.search, name='search'),
     url('us-login', controller.LoginView.as_view(), name="us-login"), 
     url('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
-    # url('logout/', include('modules.dashboard.urls'), name="user-logout"),
     url(r'', include(wagtail_urls)),
 ]
 

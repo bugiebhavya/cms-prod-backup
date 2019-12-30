@@ -1,14 +1,16 @@
-{% extends 'home_base.html' %}
+{% extends 'dashboard_base.html' %}
 {% load hitcount_tags %}
 {% load static %}
+{% load i18n %}
+
 {% block header %}
-
-{% include 'home_header.html' %}
-
+<header class="login-header d-flex align-items-center">
+  {% include 'dashboard_header.html' %}
+</header>
 {% endblock %}
 
 {% block body %}
-
+{% include 'dashboard_sidebar.html' %}
 <div class="main-content">
     <div class="container-fluid">
       <div class="row">
@@ -18,7 +20,9 @@
           </video>
           <div class="video-information">
             <div class="tags">
-              <a href="#">#today</a> <a href="#">#latestvideo</a>
+              {% for tag in video.tags.all %}
+                <a href="#">#{{tag.name}}</a>
+              {% endfor %}
             </div>
             <h1>{{video.title}}</h1>
             <div class="info">
@@ -46,7 +50,7 @@
               </div>
             </div>
           </div>
-           <div class="channel-information">
+          <div class="channel-information">
             <a href="#" class="icon"><img class="thumbnail" src="{% static 'images/clapperboard.png' %}" alt="img"></a>
             <div class="channel-details">
               <div class="channel-name">
@@ -59,350 +63,102 @@
               <div id="video-full-desp" class="video-full-desp">
                 <div class="video-description">
                   <p>{{ video.channel.description }}</p>
-                  
-                  
                 </div>
                 <div class="video-other-info">
                   <ul>
                     <li><label>Title</label> {{ video.channel.title }}</li>
                     <li><label>Created At</label> {{ video.channel.created_at }}</li>
-                    <!-- <li><label>Album</label> Testing User</li>
-                    <li><label>Licensed to YouTube by</label> Believe Music (on behalf of White Hill Music); venus_pub,
-                      and 1 music rights societies</li> -->
+                    <li><label>Album</label> Testing User</li>
+                    <li><label>Licensed by</label> Believe Music (on behalf of White Hill Music); venus_pub,
+                      and 1 music rights societies</li>
                   </ul>
                 </div>
               </div>
               <a href="javascript:void(0);" class="readmore"><span class="more">Read More</span> <span class="less">Read
-                  Less</span></a>
+                  Less</span>
+              </a>
             </div>
           </div>
           <div class="comment-block">
             {% with comments.count as comments_count %}
-            <div class="comment-meta">{{comments_count}} Comment{{comments_count|pluralize}} <button type="button" class="dropdown-toggle" id="commentSorting"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort"></i> Sort
-                By</button>
-              <div class="sorting-menu dropdown-menu" aria-labelledby="commentSorting">
-                <a href="#">Top Comments</a>
-                <a href="#">Newest First</a>
+              <div class="comment-meta">{{comments_count}} Comment{{comments_count|pluralize}}
+                  <button type="button" class="dropdown-toggle" id="commentSorting"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort"></i> Sort
+                  By</button>
+                <div class="sorting-menu dropdown-menu" aria-labelledby="commentSorting">
+                  <a href="#">Top Comments</a>
+                  <a href="#">Newest First</a>
+                </div>
               </div>
-            </div>
             {% endwith %}
             <div class="comment-box">
               <div class="comment-user-icon">
                 <img src="#" alt="">
               </div>
               <div class="comment-detail">
-
-
-                
-              
-             {% if commentable and request.user and request.user.is_authenticated %}
-             <span class="btn btn-info">Please post your valuable comment  ...</span>
-                <form method="post">
-                  {{ form.name }}<br>
-                  {{ form.email }}<br>
-                  {{ form.body }}<br>
-                  {% csrf_token %}
-                  <div class="button-group text-right">
-                    <a href="#" class="comment-cancel">Cancel</a>
-                    <button type="submit" class="btn red">Comment</button>
-                  </div>
-                </form>
-             {% else %}
-              <span class="btn btn-info">Please login to post a comments ...</span>
-             {% endif %} 
+               {% if commentable and request.user and request.user.is_authenticated %}
+                  <form method="post">
+                    {% csrf_token %}
+                    {{ form.body }}<br>
+                    <div class="button-group text-right">
+                      <button type="submit" class="btn red">Comment</button>
+                    </div>
+                  </form>
+               {% else %}
+                <span class="btn btn-info">Please login to post a comments ...</span>
+               {% endif %} 
               </div>
             </div>
             <ul class="comment-list">
               {% if comments %}
-              {% for comment in comments %}
-              <li class="comment-box">
-                <div class="comment-user-icon">
-                  <img src="{% static 'images/user.png' %}" alt="user">
-                </div>
+                  {% for comment in comments %}
+                    <li class="comment-box">
+                      <div class="comment-user-icon">
+                        <img src="{% static 'images/user.png' %}" alt="user">
+                      </div>
 
-                <div class="comment-detail">
-                  
-                  
-                  <h5><a href="#">{{comment.name}}</a> <span>{{comment.created}}</span></h5>
-                  {{comment.body|linebreaks}}
+                      <div class="comment-detail">
+                        
+                        
+                        <h5><a href="#">{{comment.name}}</a> <span>{{comment.created}}</span></h5>
+                        {{comment.body|linebreaks}}
 
-                  <div class="comment-action">
-                    <div class="like-action">
-                      <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                      <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                    </div>
-                    <!-- <a href="#">Reply</a> -->
-                  </div>
+                        <div class="comment-action">
+                          <div class="like-action">
+                            <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
+                            <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
                   {% endfor %}
-                  {% else %}
-            <p> There are no comments Yet</p>
-          {% endif %}
-                  <!-- <div class="more-reply">
-                    <a class="reply-more-btn" href="javascript:void(0);">View Replies</a>
-                    <ul class="reply-block">
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div> -->
-                </div>
-              </li>
-              <!-- <li class="comment-box">
-                <div class="comment-user-icon">
-                  <img src="images/user.jpg" alt="user">
-                </div>
-                <div class="comment-detail">
-                  <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                  totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-                  sunt explicabo.
-                  <div class="comment-action">
-                    <div class="like-action">
-                      <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                      <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                    </div>
-                    <a href="#">Reply</a>
-                  </div>
-                  <div class="more-reply">
-                    <a class="reply-more-btn" href="javascript:void(0);">View Replies</a>
-                    <ul class="reply-block">
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="comment-box">
-                        <div class="comment-user-icon">
-                          <img src="images/user.jpg" alt="user">
-                        </div>
-                        <div class="comment-detail">
-                          <h5><a href="#">Mahendra Saini</a> <span>1 week ago</span></h5>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                          laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
-                          vitae dicta
-                          sunt explicabo.
-                          <div class="comment-action">
-                            <div class="like-action">
-                              <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                              <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li> -->
+              {% else %}
+                <p> There are no comments Yet</p>
+              {% endif %}
             </ul>
           </div>
-          <!-- <h1> {% get_hit_count for video %} Views</h1>
-          {% with comments.count as comments_count %}
-          <h2>{{comments_count}} Comment{{comments_count|pluralize}}</h2>
-          {% endwith %}
-          {% if commentable and request.user and request.user.is_authenticated %}
-             <span class="btn btn-info">Please post your valuable comment  ...</span>
-             <form method="post">
-                {{ form.name }}<br>
-                {{ form.email }}<br>
-                {{ form.body }}<br>
-                {% csrf_token %}
-                <input type=submit class="btn btn-success btn-lg" value="Submit Comment">  
-             </form>
-          {% else %}
-              <span class="btn btn-info">Please login to post a comments ...</span>
-          {% endif %} 
-          {% if comments %}
-              {% for comment in comments %}
-                <p id="ch">Comment {{forloop.counter}} by {{comment.name}} on 
-                {{comment.created}}</p>
-                <div class="cb">{{comment.body|linebreaks}}</div>
-              {% endfor %}
-            <hr>
-            {% else %}
-            <p> There are no comments Yet</p>
-          {% endif %} -->
           
         </div>
         <div class="col-lg-3 sidebar-right">
+          {% if category_videos.count > 0 %}
+           <h3>Next</h3>
+          {% else %}
+            <h3>No Next Content..</h3>
+          {% endif %}
           {% for cat_video in category_videos %}
-          <a href="/watch/{{cat_video.id}}/" class="video-block">
-            <div class="video-part">
-              <img class="thumbnail" src="{{ cat_video.thumbnail.url }}" alt="img">
-              <span class="video-time">5.00</span>
-            </div>
-            <div class="video-detail">
-              <h3>Informacion General 2019</h3>
-              <div class="video-meta">
-                <span class="postby">Gussie French</span>
-                <span class="total-views">34k views</span>
+            <a href="/users/watch/{{cat_video.id}}/" class="video-block">
+              <div class="video-part">
+                <img class="thumbnail" src="{{ cat_video.thumbnail.url }}" alt="img">
+                <span class="video-time">5.00</span>
               </div>
-            </div>
-          </a>
+              <div class="video-detail">
+                <h3>Informacion General 2019</h3>
+                <div class="video-meta">
+                  <span class="postby">Gussie French</span>
+                  <span class="total-views">34k views</span>
+                </div>
+              </div>
+            </a>
           {% endfor %}
         </div>
       </div>
@@ -412,12 +168,4 @@
 {% endblock %}
 
 {% block script %}
-  <script>
-      {% if commentable and request.user and request.user.is_authenticated %}
-        var nome = "{{request.user.username}}"
-        var eomil = "{{request.user.email}}"
-        document.getElementById('id_name').value = nome;
-        document.getElementById('id_email').value = eomil;
-      {% endif %}
-   </script> 
 {% endblock %}

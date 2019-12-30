@@ -1,7 +1,7 @@
 {% extends 'home_base.html' %}
 {% load static %}
 {% load duration_field %}
-
+{% load file_size %}
 {% block header %}
 
 {% include 'home_header.html' %}
@@ -23,26 +23,47 @@
         <div class="col-lg-9 col-md-8">
           <h2>Información Pública</h2>
           <div class="row">
-            {% for loop_cycle in self.carousel_videos.all %}
-            {% with loop_cycle.carousel_video as video %}
-            <a href="/watch/{{video.id}}/" class="col-md-6 video-block">
-              <div class="video-part">
-                <img class="thumbnail" src="{{ video.thumbnail.url }}" alt="img">
-                <span class="video-time">{{ video.duration|duration_field }}</span>
-              </div>
-              <div class="video-detail">
-                <h3>Informacion General 2019</h3>
-                <div class="video-meta">
-                  <span class="total-views">34k views</span>
-                  <span class="post-date">{{ video.created_at|timesince }} ago</span>
-                  <span class="postby">Gussie French</span>
-                </div>
-              </div>
-            </a>
-            {% endwith %}
-            {% endfor %}
+            <div class="video-slider w-100">
+            {% for loop_cycle in self.carousel_media.all %}
+              {% if loop_cycle.carousel_video %}
+                {% with loop_cycle.carousel_video as video %}
+                <a href="/users/watch/{{video.id}}/" class="video-block">
+                  <div class="video-part">
+                    <img class="thumbnail" src="{{ video.thumbnail.url }}" alt="img">
+                    <span class="video-time">{{ video.duration|duration_field }}</span>
+                  </div>
+                  <div class="video-detail">
+                    <p class="vidTitle"><i class="fa fa-video"></i>  {{ video.title|safe}}</p>
+                    <div class="video-meta">
+                      <span class="total-views">34k views</span>
+                      <span class="post-date">{{ video.created_at|timesince }} ago</span>
+                    </div>
+                  </div>
+                </a>
+                {% endwith %}
+              {% endif %}
+              {% if loop_cycle.carousel_document %}
+                {% with loop_cycle.carousel_document as document %}
+                <a href="/users/doc-watch/{{document.id}}/" class="video-block">
+                  <div class="video-part">
+                    <img class="thumbnail" src="{{ document.thumbnail.url }}" alt="img">
+                    <span class="video-time">{{ document.file_size |convert_size}}</span>
+                  </div>
+                  <div class="video-detail">
+                    <p class="vidTitle"><i class="fa fa-file"></i> {{ document.title|safe}}</p>
+                    <div class="video-meta">
+                      <span class="total-views">34k views</span>
+                      <span class="post-date">{{ document.created_at|timesince }} ago</span>
+                    </div>
+                  </div>
+                </a>
+                {% endwith %}
+              {% endif %}
 
+            {% endfor %}
           </div>
+          </div>
+          
         </div>
       </div>
     </div>
