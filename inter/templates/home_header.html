@@ -17,13 +17,7 @@
           <input type="password" id="password"  name="password" placeholder="contraseña" class="form-control">
           <button type="submit" class="btn">Ingresar</button>
         </div>
-        {% if messages %}
-            {% for message in messages %}
-                <div id="message_container" class="alert alert-danger">
-                <strong >{{ message|escape }}</strong>
-            </div>
-            {% endfor %}
-        {% endif %}
+        
       </form>
     </div>
     <div class="header-bottom d-flex w-100">

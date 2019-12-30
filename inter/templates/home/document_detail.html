@@ -17,7 +17,12 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-9 single-video-page">
-          <iframe src = "/users/doc-render/#{{document.file.url}}" width='400' height='500' allowfullscreen webkitallowfullscreen></iframe>
+          <!-- <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=&embedded=true" frameborder="0"  width='400' height='500' allowfullscreen webkitallowfullscreen> -->
+<!-- </iframe> -->
+      
+          <iframe id="docs" src="https://docs.google.com/viewer?url={{base_url}}{{document.file.url}}&embedded=true" frameborder="0"  width='400' height='500' allowfullscreen webkitallowfullscreen>
+
+          </iframe>
           <div class="video-information">
             <div class="tags">
               {% for tag in document.tags.all %}
@@ -148,7 +153,7 @@
             <h3>No Next Content..</h3>
           {% endif %}
           {% for cat_document in category_documents %}
-          <a href="/doc-watch/{{cat_document.id}}/" class="video-block">
+          <a href="/users/doc-watch/{{cat_document.id}}/" class="video-block">
             <div class="video-part">
               <img class="thumbnail" src="{{ cat_document.thumbnail.url }}" alt="img">
               <span class="video-time">{{ cat_document.file_size |convert_size}}</span>
@@ -167,5 +172,9 @@
 {% endblock %}
 
 {% block script %}
-
+  <style type="text/css">
+    .ndfHFb-c4YZDc-Wrql6b {
+      display: none !important;
+    }
+  </style>
 {% endblock %}
