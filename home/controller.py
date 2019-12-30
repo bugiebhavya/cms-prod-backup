@@ -32,7 +32,7 @@ def video_detail_view(request, videoid):
 		form = CommentForm(request.POST)
 		if form.is_valid():
 			new_comment = form.save(commit=False)
-			new_comment.video = video 
+			new_comment.media = media 
 			new_comment.save()
 			comment_submit = True
 	else:

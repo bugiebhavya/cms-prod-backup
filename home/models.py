@@ -55,10 +55,9 @@ class HomePage(RoutablePageMixin, Page):
 		self.documents = Document.objects
 		return self.documents
 
-	def get_context(self, request):
-		context = super(HomePage, self).get_context(request)
-		pdb.set_trace()
-		return context
+	# def get_context(self, request):
+	# 	context = super(HomePage, self).get_context(request)
+	# 	return context
 
 	# def serve(self, request):
 	# 	print(request.META.get('PATH_INFO'))
@@ -81,12 +80,12 @@ class HomePage(RoutablePageMixin, Page):
 		comments = media.comments.filter(active=True)
 		commentable = True
 		category_videos = Video.objects.filter(channel=media.channel).exclude(id=media.id)
-
+		
 		if request.method == 'POST':
 			form = CommentForm(request.POST)
 			if form.is_valid():
 				new_comment = form.save(commit=False)
-				new_comment.media = media 
+				new_comment.video = media 
 				new_comment.save()
 
 				return HttpResponseRedirect('/watch/%s/'%media.id)
