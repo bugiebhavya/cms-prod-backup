@@ -46,15 +46,16 @@ class CustomDocument(AbstractDocument):
             obj.save()
 
 def add_thumbnail(sender, instance, created, **kwargs):
-    if instance.file.name.split('.')[-1] in ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'pdf']:
-        cache_path = '/tmp/preview_cache'
-        file_to_preview_path = instance.file.path
-        manager = PreviewManager(cache_path, create_folder= True)
-        print(file_to_preview_path)
-        doc_path = manager.get_jpeg_preview(file_to_preview_path, width=300, height=400)
-        instance.thumbnail.save(os.path.basename(doc_path), File(open(doc_path, 'rb')), save=True)
-        os.remove(doc_path)
-    else:
-        instance.delete()
+    if created:
+        if instance.file.name.split('.')[-1] in ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'pdf']:
+            cache_path = '/tmp/preview_cache'
+            file_to_preview_path = instance.file.path
+            manager = PreviewManager(cache_path, create_folder= True)
+            print(file_to_preview_path)
+            doc_path = manager.get_jpeg_preview(file_to_preview_path, width=300, height=400)
+            instance.thumbnail.save(os.path.basename(doc_path), File(open(doc_path, 'rb')), save=True)
+            os.remove(doc_path)
+        else:
+            instance.delete()
 
 post_save.connect(add_thumbnail, CustomDocument)
