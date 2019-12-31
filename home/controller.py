@@ -14,31 +14,11 @@ import pdb
 from django.views.generic import DetailView
 from hitcount.views import HitCountDetailView
 from django.db.models import F
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Comment
+from modules.documents.models import CustomDocument as Document
 # from modules.mostviews.models import MostView
-
-
-
-def video_detail_view(request, videoid):
-	video = get_object_or_404(Video, id=videoid)
-	get_channel = video.channel
-	category_videos = Video.objects.filter(channel=get_channel)
-	count_hit = True
-
-	# MostViewobjects.filter(pk=video.pk).update(count=F('count') + 1)
-	
-
-	comments = video.comments.filter(active=True)
-	comment_submit = False 
-	if request.method == 'POST':
-		form = CommentForm(request.POST)
-		if form.is_valid():
-			new_comment = form.save(commit=False)
-			new_comment.media = media 
-			new_comment.save()
-			comment_submit = True
-	else:
-		form = CommentForm
-	return render(request, 'home/video_detail.html', {'video': video, 'form': form, 'comment_submit': comment_submit, 'comments': comments, 'category_videos': category_videos})
 
 
 
@@ -64,3 +44,18 @@ class LoginView(View):
 			message = "Invalid login details."
 			messages.error(request, message)
 			return HttpResponseRedirect('/')
+
+class CommentView(LoginRequiredMixin,APIView):
+	def post(self, request, *args, **Kwargs):
+		user = request.user
+		try:
+			if request.data.get('content_type') == 'Video':
+				media = Video.objects.get(id=request.data.get('object_id'))
+			else:
+				media = Document.objects.get(id=request.data.get('object_id'))
+
+			comment = Comment.objects.create(content_object=media, user=user, body=request.data.get('body'))
+			return Response({'message': 'Your comment posted successfully', 'code': 200, 'data': {'username': user.username.title(), 'body': comment.body, 'created': comment.created.strftime('%b. %d, %Y, %I:%M %P.')}})
+		except Exception as ex:
+			return Response({'code': 500, 'message': str(ex)})
+	

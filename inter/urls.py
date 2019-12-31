@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search/', search_views.search, name='search'),
     url('us-login', controller.LoginView.as_view(), name="us-login"), 
+    url(r'^comment/$', controller.CommentView.as_view(), name="comment-view"),
     url('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
     #url(r'^media/watch/(?P<pk>[0-9]+)', MediaDetailView.as_view()),
     url(r'', include(wagtail_urls)),

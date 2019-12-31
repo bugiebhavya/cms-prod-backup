@@ -88,7 +88,8 @@
 
           <div class="comment-block">
             {% with comments.count as comments_count %}
-              <div class="comment-meta">{{comments_count}} Comment{{comments_count|pluralize}}
+              <div class="comment-meta">
+                <span class="comment_counter" data-count="{{comments_count}}">Comment(s) {{comments_count}}</span>
                   <button type="button" class="dropdown-toggle" id="commentSorting"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort"></i> Sort
                   By</button>
@@ -99,14 +100,14 @@
               </div>
             {% endwith %}
             <div class="comment-box">
-              <div class="comment-user-icon">
-                <img src="#" alt="">
-              </div>
+              
               <div class="comment-detail">
                {% if commentable and request.user and request.user.is_authenticated %}
-                  <form method="post">
+                  <form action="" method="post"  id="commentForm">
                     {% csrf_token %}
-                    {{ form.body }}<br>
+                    <textarea rows="1" class="comment-field" name="body" placeholder="Post Your Comment" required></textarea>
+                    <input type="hidden"  name="content_type" value="Document">
+                    <input type="hidden"  name="object_id" value="{{document.id}}">
                     <div class="button-group text-right">
                       <button type="submit" class="btn red">Comment</button>
                     </div>
@@ -140,7 +141,7 @@
                     </li>
                   {% endfor %}
               {% else %}
-                <p> There are no comments Yet</p>
+                <p> </p>
               {% endif %}
             </ul>
           </div>
@@ -177,4 +178,47 @@
       display: none !important;
     }
   </style>
+
+  <script>
+  $(document).ready(function(){
+    var commensts_html = '<li class="comment-box">\
+                      <div class="comment-user-icon">\
+                        <img src="/static/images/user.png" alt="user">\
+                      </div>\
+                      <div class="comment-detail">\
+                        <h5><a href="#">{0}</a> <span>{1}</span></h5>\
+                        {2}\
+                        <div class="comment-action">\
+                          <div class="like-action">\
+                            <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>\
+                            <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>\
+                          </div>\
+                        </div>\
+                      </div>\
+                    </li>'
+    
+    $('#commentForm').submit(function(e){
+      e.preventDefault()
+      let formData = new FormData($(this)[0])
+      $.ajax({
+        url: '/comment/',
+        data: formData,
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        success: function(response){
+          console.log(response)
+          if(response.code == 200){
+            $(".comment-list").prepend(commensts_html.f(response.data.username, response.data.created, response.data.body))
+            $('.comment-field').val('')
+            var comments = parseInt($('.comment_counter').attr('data-count'))+1
+            $('.comment_counter').text("Comment(s) "+comments)
+          }
+        }
+      })
+    })
+  })
+  
+
+ </script> 
 {% endblock %}

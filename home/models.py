@@ -96,27 +96,11 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		if media.scope == Video.PRIVATE and request.user.is_anonymous:
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
-
 		comments = media.comments.all()
 		commentable = True
-
 		category_videos = Video.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)
-
-
-		if request.method == 'POST':
-			form = CommentForm(request.POST)
-			if form.is_valid():
-				new_comment = form.save(commit=False)
-				new_comment.video = media 
-				new_comment.content_object = media
-				new_comment.user = request.user 
-				new_comment.save()
-
-				return HttpResponseRedirect('/users/watch/%s/'%media.id)
-			return render(request, 'home/video_detail.html', {'video': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
-		else:
-			form = CommentForm()
-		return render(request, 'home/video_detail.html', {'video': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
+		
+		return render(request, 'home/video_detail.html', {'video': media, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
 
 	@route(r'^doc-watch/(?P<media_id>[-\w]+)/$', name='document_detail')
 	def document_detail(self, request, media_id,  *args, **kwargs):
@@ -126,36 +110,22 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		if media.access == Document.PRIVATE and request.user.is_anonymous:
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
-
 		media.update_views()
 		comments = media.comments.all()
 		commentable = True
 		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)
-
-		if request.method == 'POST':
-			form = CommentForm(request.POST)
-			if form.is_valid():
-				new_comment = form.save(commit=False)
-				new_comment.content_object = media
-				new_comment.user = request.user 
-				new_comment.save()
-
-				return HttpResponseRedirect('/users/doc-watch/%s/'%media.id)
-			print(form.errors)
-			return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
-		else:
-			form = CommentForm()
-		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
+		
+		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
 
 	# @route(r'^doc-render/$')
 	# def document_viewer(self, request, *args, **kwargs):
 	# 	return render(request, 'home/document_viewer.html',{})
 
 class Comment(models.Model):
-	content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-	object_id = models.PositiveIntegerField()
+	content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)
+	object_id = models.PositiveIntegerField(null=True)
 	content_object = GenericForeignKey('content_type','object_id')
-	user = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
+	user = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE, null=True)
 	body = models.TextField()
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
