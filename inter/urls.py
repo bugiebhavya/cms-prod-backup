@@ -7,6 +7,7 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from home import controller 
 from search import views as search_views
+from modules.documents.views import MediaDetailView
 
 urlpatterns = [
     url(r'^django-admin/', admin.site.urls),
@@ -15,6 +16,7 @@ urlpatterns = [
     url(r'^search/', search_views.search, name='search'),
     url('us-login', controller.LoginView.as_view(), name="us-login"), 
     url('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
+    #url(r'^media/watch/(?P<pk>[0-9]+)', MediaDetailView.as_view()),
     url(r'', include(wagtail_urls)),
 ]
 

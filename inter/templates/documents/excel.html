@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>SheetJS Live Grid Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" type="image/png" href="{% static 'plugin/excel/assets/img/logo.png' %}" />
+    <link rel="stylesheet" href="{% static 'plugin/excel/assets/css/sheetjs.css' %}">
+  </head>
+  <body>
+   
+<!-- https://sheetjs.com/demos/table.html -->
+    <link rel="stylesheet" media="screen" href="{% static 'plugin/excel/assets/vendor/samples.css' %}">
+    <link rel="stylesheet" media="screen" href="{% static 'plugin/excel/assets/vendor/alertify.css' %}">
+
+    <div id="body">
+      <div id="left">
+        <div id="logo">
+          <a href="http://sheetjs.com"><img src="{% static 'plugin/excel/assets/img/logo.png' %}" class="logo" alt="SheetJS Logo" width=128px height=128px /></a>
+        </div>
+      <div id="drop">Drop a file here</div>
+      <input type="file" id="file" value=""/><label for="file">... or click here to select a file</label>
+      
+    </div>
+    <div id="right">
+      <div id="header">
+        <pre id="out"></pre>
+        <h2>SheetJS In-Browser Live Grid Demo</h2>
+        
+      </div>
+      <div id="grid"></div>
+      <h3> Choose a worksheet:</h3>
+      <div id="buttons"></div>
+    </div>
+    <script type="text/javascript">
+      var gurl = "/media/documents/formula_stress_test1.xlsx"
+    </script>
+    <script src="{% static 'plugin/excel/assets/js/xlsx.full.min.js' %}"></script>
+    <script src="{% static 'plugin/excel/assets/vendor/alertify.js' %}"></script>
+    <script src="{% static 'plugin/excel/assets/js/canvas-datagrid.js' %}"></script>
+    <script src="{% static 'plugin/excel/assets/js/shim.js' %}"></script>
+    
+    <script src="{% static 'plugin/excel/assets/js/dropsheet.js' %}"></script>
+    <script src="{% static 'plugin/excel/assets/js/main.js' %}"></script>
+
+    <script src="{% static 'plugin/excel/assets/vendor/spin.js' %}"></script>
+
+  </body>
+</html>

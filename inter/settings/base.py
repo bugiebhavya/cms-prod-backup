@@ -55,8 +55,6 @@ INSTALLED_APPS = [
     'modules.dashboard.apps.DashboardConfig',
     'modules.site_settings.apps.SiteSettingsConfig',
     'modules.documents.apps.DocumentsConfig',
-    # 'modules.mostviews.apps.MostviewsConfig',
-    # 'modules.videos.apps.VideosConfig',
     
 ]
 
@@ -171,7 +169,7 @@ WAGTAIL_SITE_NAME = "inter"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://example.com'
+BASE_URL = 'http://50dc1aa9.ngrok.io'
 
 
 LOGIN_URL = '/us-login/'
@@ -181,5 +179,4 @@ LOGIN_URL = '/us-login/'
 WAGTAIL_FRONTEND_LOGIN_URL = '/'
 
 WAGTAILDOCS_DOCUMENT_MODEL = 'documents.CustomDocument'
-WAGTAILVIDEOS_VIDEO_MODEL = 'videos.CustomVideo'
 WAGTAIL_APPEND_SLASH = False

@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.shortcuts import render
 from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey 
@@ -13,6 +14,9 @@ from wagtail.documents.edit_handlers import DocumentChooserPanel
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.contrib import messages
+
 User = get_user_model()
 
 class HomePageCarouselVideos(Orderable):
@@ -52,7 +56,9 @@ class HomePage(RoutablePageMixin, Page):
 
 	]
 	
-	
+	# @route(r'^excel-watch/$')
+	# def trending_media(self, request, *args, **kwargs):
+	# 	return render(request, 'documents/excel.html', {})
 
 class ReferenceUrlPage(RoutablePageMixin, Page):
 
@@ -85,11 +91,18 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	@route(r'^watch/(?P<media_id>[-\w]+)/$', name='video_detail')
 	def watch_media(self, request, media_id,  *args, **kwargs):
 		from .forms import CommentForm
+		print("-----------------------")
 		media = self.get_videos().get(id=media_id)
+		if media.scope == Video.PRIVATE and request.user.is_anonymous:
+			messages.warning(request, 'Please login to view this media.')
+			return HttpResponseRedirect('/')
+
 		comments = media.comments.all()
 		commentable = True
-		category_videos = Video.objects.filter(channel=media.channel).exclude(id=media.id)
-		
+
+		category_videos = Video.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)
+
+
 		if request.method == 'POST':
 			form = CommentForm(request.POST)
 			if form.is_valid():
@@ -108,10 +121,16 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	@route(r'^doc-watch/(?P<media_id>[-\w]+)/$', name='document_detail')
 	def document_detail(self, request, media_id,  *args, **kwargs):
 		from .forms import CommentForm
+		print("-----------------------")
 		media = self.get_documents().get(id=media_id)
+		if media.access == Document.PRIVATE and request.user.is_anonymous:
+			messages.warning(request, 'Please login to view this media.')
+			return HttpResponseRedirect('/')
+
+		media.update_views()
 		comments = media.comments.all()
 		commentable = True
-		category_documents = Document.objects.filter(tags__in=media.tags.all()).exclude(id=media.id)
+		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)
 
 		if request.method == 'POST':
 			form = CommentForm(request.POST)
@@ -123,14 +142,14 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 
 				return HttpResponseRedirect('/users/doc-watch/%s/'%media.id)
 			print(form.errors)
-			return render(request, 'home/document_detail.html', {'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
+			return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
 		else:
 			form = CommentForm()
-		return render(request, 'home/document_detail.html', {'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
+		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'form': form, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
 
-	@route(r'^doc-render/$')
-	def document_viewer(self, request, *args, **kwargs):
-		return render(request, 'home/document_viewer.html',{})
+	# @route(r'^doc-render/$')
+	# def document_viewer(self, request, *args, **kwargs):
+	# 	return render(request, 'home/document_viewer.html',{})
 
 class Comment(models.Model):
 	content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
