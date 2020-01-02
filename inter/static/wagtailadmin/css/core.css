@@ -6008,3 +6008,7 @@ body.reordering {
     vertical-align: middle;
     font-size: 14px;
 }
+
+form .objects {
+    padding-top: 2em;
+}
