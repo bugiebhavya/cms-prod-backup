@@ -30,7 +30,7 @@
                   <div class="video-detail">
                     <p class="vidTitle"><i class="fa fa-video"></i> {{ video.title|safe}}</p>
                     <div class="video-meta">
-                      <span class="total-views">34k views</span>
+                      <span class="total-views">{{video.media_views.last.iviews}} views</span>
                       <span class="post-date">{{ video.created_at|timesince }} ago</span>
                     </div>
                   </div>
@@ -47,7 +47,7 @@
                   <div class="video-detail">
                     <p class="vidTitle"><i class="fa fa-file"></i> {{ document.title|safe}}</p>
                     <div class="video-meta">
-                      <span class="total-views">34k views</span>
+                      <span class="total-views">{{document.media_views.last.iviews}} views</span>
                       <span class="post-date">{{ document.created_at|timesince }} ago</span>
                     </div>
                   </div>

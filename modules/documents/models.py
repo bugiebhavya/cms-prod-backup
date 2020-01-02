@@ -6,8 +6,77 @@ from wagtailvideos.models import Channels
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 import os
+from datetime import datetime
+"""
+Preview generator:
+# https://pypi.org/project/preview-generator-ivc/
+# https://pypi.org/project/preview-generator/
+"""
 from preview_generator.manager import PreviewManager
 from django.core.files.base import File
+
+class Area(models.Model):
+    class Meta:
+        verbose_name = _('Area')
+        verbose_name_plural = _('Area')
+    name = models.CharField(max_length=100, verbose_name=_('Area name'))
+    notes = models.TextField(verbose_name=_('Notes'), default="")
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class Subject(models.Model):
+    class Meta:
+        verbose_name = _('Subject')
+        verbose_name_plural = _('Subject')
+    name = models.CharField(max_length=100, verbose_name=_('Subject name'))
+    notes = models.TextField(verbose_name=_('Notes'), default="")
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.name)
+
+class Topic(models.Model):
+    class Meta:
+        verbose_name = _('Topic')
+        verbose_name_plural = _('Topic')
+    name = models.CharField(max_length=100, verbose_name=_('Topic name'))
+    notes = models.TextField(verbose_name=_('Notes'), default="")
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class SubTopic(models.Model):
+    class Meta:
+        verbose_name = _('SubTopic')
+        verbose_name_plural = _('SubTopic')
+    name = models.CharField(max_length=100, verbose_name=_('Subtopic name'))
+    notes = models.TextField(verbose_name=_('Notes'), default="")
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.name)
+
+class Natures(models.Model):
+    class Meta:
+        verbose_name = _('Nature')
+        verbose_name_plural = _('Nature')
+    name = models.CharField(max_length=100, verbose_name=_('Nature name'))
+    notes = models.TextField(verbose_name=_('Notes'), default="")
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.name)
+
 
 
 class CustomDocument(AbstractDocument):
@@ -16,34 +85,51 @@ class CustomDocument(AbstractDocument):
     SCOPE = (
         (PUBLIC, _('Public')),
         (PRIVATE, _('Private')),)
+    area = models.ForeignKey(Area, related_name="srea", verbose_name=_('Area'), on_delete=models.SET_NULL, null=True, blank=True)
+    subject = models.ForeignKey(Subject, related_name="subject", verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True, blank=True)
+    topic = models.ForeignKey(Topic, related_name="topic", verbose_name=_('Topic'), on_delete=models.SET_NULL, null=True, blank=True)
+    subtopic = models.ForeignKey(SubTopic, related_name="subtopic", verbose_name=_('SubTopic'), on_delete=models.SET_NULL, null=True, blank=True)
+    nature = models.ForeignKey(Natures, related_name="natures", verbose_name=_('Natures'), on_delete=models.SET_NULL, null=True, blank=True)
 
     comments = GenericRelation("home.Comment", related_query_name='comments')
     media_views = GenericRelation("dashboard.MediaView", related_query_name='media_views')
     thumbnail = models.FileField(upload_to='documents', blank=True, verbose_name=('thumbnail'), default='documents/logo.png')
     access = models.CharField(verbose_name=('Access Type'), default="PUBLIC", choices=SCOPE, max_length=50, blank=True, null=True)
     channel = models.ForeignKey(Channels, related_name="documents", on_delete=models.SET_NULL, null=True, blank=True)
+    # new fields
+    author = models.CharField(max_length=100, verbose_name=_('Author'),  null=True, blank=True)
+    author_profession = models.CharField(max_length=200, verbose_name=_('Author Profession'),  null=True, blank=True)
+    validity_start = models.DateField(verbose_name=_('Validity Start'), default=datetime.now)
+    validity_end = models.DateField(verbose_name=_('Validity End'), default=datetime.now)
+    synthesis = models.TextField(verbose_name=_('Synthesis'), default="")
+    publication_at = models.DateTimeField(verbose_name=_('Publish At'), default=datetime.now)
+    expiration_at = models.DateField(verbose_name=_('Publish End'), default=datetime.now)
+    republication_at = models.DateTimeField(verbose_name=_('Republish At'), default=datetime.now)
+    created_at = models.DateTimeField(verbose_name=_('created at'), auto_now_add=True, db_index=True)
 
     admin_form_fields = (
         'channel',
         'title',
+         'area',
+        'subject',
+        'topic',
+        'subtopic',
+        'nature',
         'file',
         'collection',
         'tags',
         'thumbnail',
         'access',
+        'author',
+        'author_profession',
+        'validity_start',
+        'validity_end',
+        'synthesis',
+        'publication_at',
+        'expiration_at',
+        'republication_at',
     )
 
-    
-    def update_views(self):
-        if self.media_views.exists():
-            obj = self.media_views.last()
-            obj.views +=1
-            obj.save()
-        else:
-            from modules.dashboard.models import MediaView
-            obj = MediaView(content_object=self, views=0)
-            obj.views = 1
-            obj.save()
 
 def add_thumbnail(sender, instance, created, **kwargs):
     if created:

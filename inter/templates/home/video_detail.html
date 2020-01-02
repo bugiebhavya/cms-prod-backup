@@ -27,7 +27,7 @@
             <h1>{{video.title}}</h1>
             <div class="info">
               <div class="info-text">
-                <span class="count">3,443,773 views </span>
+                <span class="count">{{video.media_views.last.iviews}} views </span>
                 <span class="date">{{ video.created_at }}</span>
               </div>
               <div class="info-menu">
@@ -42,7 +42,7 @@
                     <div class="share-box">
                       <h4>Share <button class="close-share"><i class="fal fa-times"></i></button></h4>
                       <div class="copy-link"><span id="url-text"
-                          class="url-text">file:///D:/Mahendra%20Saini/Project/GIT/Interejecutivos/interejecutivos-html/single.html</span>
+                          class="url-text">{{video.file.url}}</span>
                         <button class="copy-btn" type="button"><i class="fal fa-copy"></i></button></div>
                     </div>
                   </div>
@@ -150,13 +150,13 @@
             <a href="/users/watch/{{cat_video.id}}/" class="video-block">
               <div class="video-part">
                 <img class="thumbnail" src="{{ cat_video.thumbnail.url }}" alt="img">
-                <span class="video-time">5.00</span>
+                <span class="video-time">{{cat_video.duration}}</span>
               </div>
               <div class="video-detail">
-                <h3>Informacion General 2019</h3>
+                <h3>{{cat_video.title|safe}}</h3>
                 <div class="video-meta">
-                  <span class="postby">Gussie French</span>
-                  <span class="total-views">34k views</span>
+                  <span class="postby">{{cat_video.author|title}}</span>
+                  <span class="total-views">{{cat_video.media_views.last.iviews}} views</span>
                 </div>
               </div>
             </a>

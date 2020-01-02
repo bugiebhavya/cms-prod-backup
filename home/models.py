@@ -16,7 +16,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib import messages
-
+from datetime import timedelta, datetime
 User = get_user_model()
 
 class HomePageCarouselVideos(Orderable):
@@ -61,6 +61,16 @@ class HomePage(RoutablePageMixin, Page):
 	# 	return render(request, 'documents/excel.html', {})
 
 class ReferenceUrlPage(RoutablePageMixin, Page):
+	def update_views(self, obj):
+		if obj.media_views.exists():
+			obj = obj.media_views.last()
+			obj.views +=1
+			obj.save()
+		else:
+			from modules.dashboard.models import MediaView
+			obj = MediaView(content_object=obj, views=0)
+			obj.views = 1
+			obj.save()
 
 	def get_videos(self):
 		self.videos = Video.objects
@@ -79,8 +89,12 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	# 	return render(request, self.template, self.get_context(request))
 	@route(r'^trending/$')
 	def trending_media(self, request, *args, **kwargs):
-		self.videos = self.get_videos().all()
-		return render(request, 'dashboard/trending.html', {'videos': self.videos})
+		videos = self.get_videos().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).order_by('-media_views__views')
+		documents = self.get_documents().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).order_by('-media_views__views')
+		from itertools import chain
+		media = list(chain(documents, videos))
+		media_list = sorted(media, key=lambda x: x.media_views.last().views, reverse=True) 
+		return render(request, 'dashboard/trending.html', {'medias': media_list})
 		
 	@route(r'^search/$', name='search')
 	def search_media(self, request, *args, **kwargs):
@@ -91,11 +105,11 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	@route(r'^watch/(?P<media_id>[-\w]+)/$', name='video_detail')
 	def watch_media(self, request, media_id,  *args, **kwargs):
 		from .forms import CommentForm
-		print("-----------------------")
 		media = self.get_videos().get(id=media_id)
 		if media.scope == Video.PRIVATE and request.user.is_anonymous:
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
+		self.update_views(media)
 		comments = media.comments.all()
 		commentable = True
 		category_videos = Video.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)
@@ -105,12 +119,11 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	@route(r'^doc-watch/(?P<media_id>[-\w]+)/$', name='document_detail')
 	def document_detail(self, request, media_id,  *args, **kwargs):
 		from .forms import CommentForm
-		print("-----------------------")
 		media = self.get_documents().get(id=media_id)
 		if media.access == Document.PRIVATE and request.user.is_anonymous:
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
-		media.update_views()
+		self.update_views(media)
 		comments = media.comments.all()
 		commentable = True
 		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)

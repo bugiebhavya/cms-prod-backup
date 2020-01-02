@@ -32,7 +32,7 @@
             <h1>{{document.title}}</h1>
             <div class="info">
               <div class="info-text">
-                <span class="count">3,443,773 views </span>
+                <span class="count">{{document.media_views.last.iviews}} views </span>
                 <span class="date">{{ document.created_at }}</span>
               </div>
               <div class="info-menu">
@@ -124,13 +124,9 @@
                       <div class="comment-user-icon">
                         <img src="{% static 'images/user.png' %}" alt="user">
                       </div>
-
                       <div class="comment-detail">
-                        
-                        
                         <h5><a href="#">{{comment.name}}</a> <span>{{comment.created}}</span></h5>
                         {{comment.body|linebreaks}}
-
                         <div class="comment-action">
                           <div class="like-action">
                             <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
@@ -160,8 +156,9 @@
               <span class="video-time">{{ cat_document.file_size |convert_size}}</span>
             </div>
             <div class="video-detail">
-              <h3>{{ cat_document.title |safe}}</h3>
-              <span class="total-views">34k views</span>
+              <h3>{{ cat_document.title|safe}}</h3>
+              <span class="postby">{{cat_document.author|title}}</span>
+              <span class="total-views">{{cat_document.media_views.last.iviews}} views</span>
             </div>
           </a>
           {% endfor %}

@@ -1,40 +1,26 @@
 from django import forms
 from django.db import models
-from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.utils.dateformat import DateFormat
 from django.utils.formats import date_format
 from django.shortcuts import render
-import wagtail
 import pdb 
-from wagtail.admin.edit_handlers import (FieldPanel, FieldRowPanel,
-                                         InlinePanel, MultiFieldPanel,
-                                         PageChooserPanel, StreamFieldPanel)
+from django.utils.translation import ugettext_lazy as _
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page, Orderable
-from wagtail.embeds.blocks import EmbedBlock
-from wagtail.images.blocks import ImageChooserBlock
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
-from wagtail.snippets.models import register_snippet
 
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from modelcluster.tags import ClusterTaggableManager
+from modelcluster.fields import ParentalKey
 from taggit.models import Tag as TaggitTag
 from taggit.models import TaggedItemBase
-from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel,
-    InlinePanel, MultiFieldPanel,
-)
+from wagtail.admin.edit_handlers import (InlinePanel, MultiFieldPanel,FieldPanel,)
 
 from wagtailvideos.models import Video
 from wagtailvideos.edit_handlers import VideoChooserPanel
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from wagtailvideos.models import Channels
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 class DashboardPageCarouselVideos(Orderable):
@@ -124,12 +110,23 @@ class ChannelPage(RoutablePageMixin,Page):
 
 
 class MediaView(models.Model):
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    class Meta:
+        verbose_name = _('Media Views')
+        verbose_name_plural = _('Media Views')
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name=_('Content Type'))
+    object_id = models.PositiveIntegerField(verbose_name=_('Content ID'))
     content_object = GenericForeignKey('content_type', 'object_id')
-    views = models.IntegerField(default=0)
+    views = models.PositiveIntegerField(default=0, verbose_name=_('Total Views'), null=False)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.views)
+
+    @property
+    def iviews(self):
+        print('-- %s'%self.views)
+        if self.views:
+            return self.views
+        return 0
+    
