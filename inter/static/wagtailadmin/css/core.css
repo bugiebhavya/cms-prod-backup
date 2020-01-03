@@ -2250,7 +2250,7 @@ body.ready .help {
 }
 
 .button:hover {
-    color: #f74301
+    color: #f74301;
 }
 
 .button.yes {

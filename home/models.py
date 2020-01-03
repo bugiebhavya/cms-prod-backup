@@ -61,6 +61,7 @@ class HomePage(RoutablePageMixin, Page):
 	# 	return render(request, 'documents/excel.html', {})
 
 class ReferenceUrlPage(RoutablePageMixin, Page):
+	settings_panels = []
 	def update_views(self, obj):
 		if obj.media_views.exists():
 			obj = obj.media_views.last()

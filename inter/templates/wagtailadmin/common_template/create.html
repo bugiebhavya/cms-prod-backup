@@ -1,0 +1,37 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% load file_size %}
+{% block titletag %}{% class_name form %}{% endblock %}
+{% block content %}
+
+    {% class_name form as add_user_str %}
+    {% include "wagtailadmin/shared/header.html" with title=add_user_str merged=1 tabbed=1 icon="user" %}
+    
+    <form action="" method="POST" novalidate{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+        <div class="tab-content">
+            {% csrf_token %}
+            <section class="active nice-padding">
+                <ul class="fields">
+                    {% block fields %}
+                        {% for field in form %}
+                            {% include "wagtailadmin/shared/field_as_li.html" with field=field %}
+                        {% endfor %}
+                    {% endblock fields %}
+
+                    <li><button class="button">{% trans "Save" %}</button></li>
+                </ul>
+            </section>
+        </div>
+    </form>
+{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    {% include "wagtailadmin/pages/_editor_css.html" %}
+    {{ form.media.css }}
+{% endblock %}
+{% block extra_js %}
+    {{ block.super }}
+    {% include "wagtailadmin/pages/_editor_js.html" %}
+    {{ form.media.js }}
+{% endblock %}

@@ -7,17 +7,17 @@ from django.contrib import admin
 
 from taggit.models import Tag, TaggedItem
 
-class TagAdmin(ModelAdmin):
+class TagViewAdmin(ModelAdmin):
+    create_template_name = 'wagtailadmin/common_template/create.html'
+    edit_template_name = 'wagtailadmin/common_template/edit.html'
     model = Tag
-    menu_label = 'Keyword'
-    list_display = ["name", "slug"]
-    ordering = ["name", "slug"]
-    search_fields = ["name"]
-    form_fields_exclude = ["slug"]
-    menu_icon = "tag"
+    menu_icon = 'folder'
     menu_order = 290
-    add_to_settings_menu = False
-    exclude_from_explorer = False
+    add_to_settings_menu = True
+    list_display = ("name", "id",)
+
+modeladmin_register(TagViewAdmin)
+
 
 class ModelPermissionHelper(PermissionHelper):
     def user_can_create(self, user):
@@ -38,4 +38,3 @@ class MediaViewAdmin(ModelAdmin):
     permission_helper_class = ModelPermissionHelper
 
 modeladmin_register(MediaViewAdmin) 
-modeladmin_register(TagAdmin) 
