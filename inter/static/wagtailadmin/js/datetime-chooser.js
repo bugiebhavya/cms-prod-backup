@@ -95,4 +95,10 @@ function DateTimeChooser(id, opts) {
 $(document).ready(function(){
     $('.date_time_input').each(function(){ var ids = $(this).find('input').attr('id'); DateTimeChooser(ids, {"dayOfWeekStart": 0, "format": "Y-m-d H:i:s"});})
     $('.date_input').each(function(){ var ids = $(this).find('input').attr('id'); DateChooser(ids, {"dayOfWeekStart": 0, "format": "Y-m-d"});})
+    setInterval(function(){
+        if($('.upload-complete')[0] != undefined){
+            $('.date_time_input').each(function(){ var ids = $(this).find('input').attr('id'); DateTimeChooser(ids, {"dayOfWeekStart": 0, "format": "Y-m-d H:i:s"});})
+            $('.date_input').each(function(){ var ids = $(this).find('input').attr('id'); DateChooser(ids, {"dayOfWeekStart": 0, "format": "Y-m-d"});}) 
+        }
+    }, 1000)
 })
