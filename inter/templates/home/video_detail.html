@@ -30,21 +30,8 @@
                 <span class="date">{{ video.created_at }}</span>
               </div>
               <div class="info-menu">
-                <div class="like-action">
-                  <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                  <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                </div>
-                <div class="share-option">
-                  <button type="button" class="video-share"><i class="fas fa-share"></i> Share</button>
-                  <div class="share-popup">
-                    <div class="share-popup-backdrop"></div>
-                    <div class="share-box">
-                      <h4>Share <button class="close-share"><i class="fal fa-times"></i></button></h4>
-                      <div class="copy-link"><span id="url-text"
-                          class="url-text">{{video.file.url}}</span>
-                        <button class="copy-btn" type="button"><i class="fal fa-copy"></i></button></div>
-                    </div>
-                  </div>
+                <div class="like-action channel-subscribe">
+                  <button type="button" class="btn"><i class="fas fa-heart"></i> Favorite</button>
                 </div>
               </div>
             </div>
@@ -55,9 +42,6 @@
               <div class="channel-name">
                 <a href="#">{{ video.channel.title }}</a>
                 <span>514K subscribers</span>
-              </div>
-              <div class="channel-subscribe">
-                <button type="button" class="btn">Subscribe</button>
               </div>
               <div id="video-full-desp" class="video-full-desp">
                 <div class="video-description">
