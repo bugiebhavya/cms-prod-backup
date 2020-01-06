@@ -54,7 +54,7 @@ class MediaView(models.Model):
         verbose_name = _('Media Views')
         verbose_name_plural = _('Media Views')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name=_('Content Type'))
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name=_('User'))
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name=_('User'), null=True, blank=True)
     object_id = models.PositiveIntegerField(verbose_name=_('Content ID'))
     content_object = GenericForeignKey('content_type', 'object_id')
     views = models.PositiveIntegerField(default=0, verbose_name=_('Total Views'), null=False)

@@ -66,7 +66,7 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
             except:
                 return 0
 
-	def update_views(self, obj):
+	def update_views(self, obj, user):
 		if obj.media_views.exists():
 			obj = obj.media_views.last()
 			obj.views +=1
@@ -75,6 +75,8 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 			from modules.dashboard.models import MediaView
 			obj = MediaView(content_object=obj, views=0)
 			obj.views = 1
+			if not user.is_anonymous:
+				obj.user = user
 			obj.save()
 
 	def get_videos(self):
@@ -137,7 +139,7 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		if media.scope == Video.PRIVATE and request.user.is_anonymous:
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
-		self.update_views(media)
+		self.update_views(media, request.user)
 		comments = media.comments.all()
 		commentable = True
 		category_videos = Video.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)
@@ -151,7 +153,7 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		if media.access == Document.PRIVATE and request.user.is_anonymous:
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
-		self.update_views(media)
+		self.update_views(media, request.user)
 		comments = media.comments.all()
 		commentable = True
 		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)
