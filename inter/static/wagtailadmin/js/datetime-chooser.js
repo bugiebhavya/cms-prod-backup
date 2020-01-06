@@ -101,4 +101,15 @@ $(document).ready(function(){
             $('.date_input').each(function(){ var ids = $(this).find('input').attr('id'); DateChooser(ids, {"dayOfWeekStart": 0, "format": "Y-m-d"});}) 
         }
     }, 1000)
+
+    // $('#id_area').change(function(){
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '',
+    //         data_type: 'json',
+    //         success: function(response){
+    //             console.log(response)
+    //         }
+    //     })
+    // })
 })

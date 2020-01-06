@@ -1,5 +1,6 @@
 {% extends 'dashboard_base.html' %}
 {% load static %}
+{% load url_resolver %}
 {% load duration_field %}
 {% load file_size %}
 {% block header %}
@@ -11,20 +12,19 @@
     {% include 'dashboard_sidebar.html' %}
     <div class="main-content">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-12 trending-page">
-          <h2><i class="fal fa-fire"></i> Trending</h2>
-          <hr>
-          <div class="row">
+      <div class="col-md-12">
+        <div class="row trending-page">
+          <h2><i class="fal fa-album-collection"></i> Channel {{channel.title}}</h2>
             {% for media in medias %}
+              <div class="col-md-6">
               {% if media.duration %}
-                <a href="/users/watch/{{media.id}}/" class="col-sm-12 video-block">
+                <a href="{% reverse_url homepage 'video_detail' media.id '/users/' %}" class="col-sm-12 video-block">
                   <div class="video-part">
                     <img class="thumbnail" src="{{ media.thumbnail.url }}" alt="img">
                     <span class="video-time">{{ media.duration|duration_field }}</span>
                   </div>
                   <div class="video-detail">
-                   <h3 class="vidTitle"><i class="fa fa-video"></i> {{ media.title|safe}}></h3>
+                    <h3 class="vidTitle"><i class="fa fa-video"></i> {{ media.title|safe}}></h3>
                     <div class="video-meta">
                       <span class="total-views">{{media.media_views.last.iviews}} views</span>
                       <span class="post-date">{{ media.created_at|timesince }} ago</span>
@@ -36,7 +36,7 @@
                   </div>
                 </a>
               {% else %}
-                <a href="/users/doc-watch/{{media.id}}/" class="col-sm-12 video-block">
+                <a href="{% reverse_url homepage 'document_detail' media.id '/users/' %}" class="col-sm-12 video-block">
                   <div class="video-part">
                     <img class="thumbnail" src="{{ media.thumbnail.url }}" alt="img">
                     <span class="video-time">{{ media.file_size |convert_size}}</span>
@@ -53,10 +53,10 @@
                   </div>
                 </a>
               {% endif %}
-            </a>
+            </div>
             {% endfor %}
             
-          </div>
+          
         </div>
       </div>
     </div>

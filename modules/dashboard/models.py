@@ -4,6 +4,7 @@ from django.utils.dateformat import DateFormat
 from django.utils.formats import date_format
 from django.shortcuts import render
 import pdb 
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -48,6 +49,29 @@ class DashboardPageCarouselVideos(Orderable):
     ]
 
 
+class MediaView(models.Model):
+    class Meta:
+        verbose_name = _('Media Views')
+        verbose_name_plural = _('Media Views')
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name=_('Content Type'))
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name=_('User'))
+    object_id = models.PositiveIntegerField(verbose_name=_('Content ID'))
+    content_object = GenericForeignKey('content_type', 'object_id')
+    views = models.PositiveIntegerField(default=0, verbose_name=_('Total Views'), null=False)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.views)
+
+    @property
+    def iviews(self):
+        print('-- %s'%self.views)
+        if self.views:
+            return self.views
+        return 0
+    
+
 class DashboardPage(RoutablePageMixin, Page):
     template = 'dashboard/index.html'
     content_panels = Page.content_panels + [
@@ -66,7 +90,17 @@ class DashboardPage(RoutablePageMixin, Page):
 
     @route(r'^history/$', name="history")
     def user_history(self, request, *args, **kwargs):
-        return render(request, 'dashboard/history.html')
+        medias=[]
+        if request.user and request.user.is_authenticated:
+            content_type_document = ContentType.objects.get(model='customdocument')
+            content_type_video = ContentType.objects.get(model='video')
+            videos = ContentType.objects.raw(f"SELECT vid.id, vid.title, vid.thumbnail, vid.created_at, vid.duration, mv.views, vid.author FROM dashboard_mediaview As mv LEFT OUTER JOIN wagtailvideos_video AS vid ON (mv.object_id = vid.id AND (mv.content_type_id = {content_type_video.id})) WHERE (mv.user_id = 1 AND vid.id IS NOT NULL)")
+            documents = ContentType.objects.raw(f"SELECT dc.id, dc.title, dc.thumbnail, dc.created_at, dc.file_size, mv.views, dc.author FROM dashboard_mediaview As mv LEFT OUTER JOIN documents_customdocument AS dc ON (mv.object_id = dc.id AND (mv.content_type_id = {content_type_document.id})) WHERE (mv.user_id = 1 AND dc.id IS NOT NULL)")
+            from itertools import chain
+            media = list(chain(videos, documents))
+            medias = sorted(media, key=lambda x: x.views, reverse=True)
+
+        return render(request, 'dashboard/history.html', {'medias': medias})
 
 
     @route(r'^logout/$', name='user-logout')
@@ -107,26 +141,23 @@ class ChannelPage(RoutablePageMixin,Page):
 
     ]
     
+    @route(r'^(?P<channel>[-\w]+)/media/$', name="channel_details")
+    def channel_details(self, request, *args, **kwargs):
+        # try:
+        def get_views(x):
+            try:
+                return x.media_views.last().views
+            except:
+                return 0
 
+        channel = Channels.objects.get(id=kwargs.get('channel'))
+        from itertools import chain
+        media = list(chain(channel.documents.all(), channel.video_set.all()))
+        media_list = sorted(media, key=lambda x: get_views(x), reverse=True)
+        from home.models import ReferenceUrlPage
+        homepage = ReferenceUrlPage(request)
+        return render(request, 'channel/details.html', {'medias': media_list, 'channel': channel, 'homepage': homepage})
+        # except Exception as ex:
+        #     messages.info(request, str(ex))
+        #     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-class MediaView(models.Model):
-    class Meta:
-        verbose_name = _('Media Views')
-        verbose_name_plural = _('Media Views')
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name=_('Content Type'))
-    object_id = models.PositiveIntegerField(verbose_name=_('Content ID'))
-    content_object = GenericForeignKey('content_type', 'object_id')
-    views = models.PositiveIntegerField(default=0, verbose_name=_('Total Views'), null=False)
-    created = models.DateTimeField(auto_now_add=True, null=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return str(self.views)
-
-    @property
-    def iviews(self):
-        print('-- %s'%self.views)
-        if self.views:
-            return self.views
-        return 0
-    

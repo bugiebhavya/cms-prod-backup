@@ -1,4 +1,5 @@
 {% load static %}
+{% load url_resolver %}
  <div class="sidebar-menu">
     <button class="menu-btn d-none d-md-block"><i class="fal fa-bars"></i></button>
     <a class="navbar-brand d-none d-md-block" href="/"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
@@ -6,7 +7,32 @@
       <li><a href="/users/dashboard"> <i class="fal fa-home-lg-alt"></i> Inicio</a></li>
       <li><a href="/users/trending"> <i class="fal fa-fire"></i> Tendencia</a></li>
       <li><a href="/users/channels"> <i class="fal fa-album-collection"></i> Canales</a></li>
-      <li class="d-md-none"><a href="#" class="active"> <i class="fal fa-folder"></i> Libreria</a></li>
+      <li><a href="#"> <i class="fal fa-book-alt"></i> Libreria</a>
+        <ul class="sub-menu">
+          {% area_list as areas %}
+            {% for area in areas %}
+              <li><a href="/users/library/area/{{area.id}}"> {{area.name|title}}</a>
+                <ul class="sub-menu">
+                  {% for subject in area.subject_set.all %}
+                    <li><a href="/users/library/subject/{{subject.id}}">{{subject.name|title}}</a>
+                      <ul class="sub-menu">
+                        {% for topic in subject.topic_set.all %}
+                          <li><a href="/users/library/topic/{{topic.id}}"> {{topic.name|title}}</a>
+                            <ul class="sub-menu">
+                              {% for subtopic in topic.subtopic_set.all %}
+                                <li><a href="/users/library/subtopic/{{subtopic.id}}"> {{subtopic.name|title}}</a></li>
+                              {% endfor %}
+                            </ul>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endfor %}
+        </ul>
+      </li>
     </ul>
     <ul class="menu d-none d-md-block">
       <li><a href="/users/dashboard/history"> <i class="fal fa-folder"></i> History</a></li>
@@ -17,3 +43,7 @@
     </ul>
     <a href="#" class="setting d-none d-md-block"><i class="fal fa-cog"></i> Configuración</a>
   </div>
+
+  <script type="text/javascript">
+    
+  </script>

@@ -8,16 +8,17 @@ def get_expiry_date():
 	return datetime.now()+timedelta(days=30)
 
 class AssociatesLevel(models.Model):
-	class Meta:
-		verbose_name = _('Associate Level')
-		verbose_name_plural = _('Associate Levels')
-	title = models.CharField(verbose_name=_('Level Title'),max_length=100)
-	notes = models.TextField(verbose_name=_('Notes'), default="")
-	created = models.DateTimeField(auto_now_add=True, null=True)
-	updated = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = _('Associate Level')
+        verbose_name_plural = _('Associate Levels')
+    title = models.CharField(verbose_name=_('Level Title'),max_length=100)
+    allowed_users = models.PositiveIntegerField(default=0, verbose_name=_('Allowed users'))
+    notes = models.TextField(verbose_name=_('Notes'), default="")
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
 
-	def __str__(self):
-		return str(self.title)
+    def __str__(self):
+        return str(self.title)
 
 
 class Associate(models.Model):

@@ -1,4 +1,5 @@
 {% extends 'dashboard_base.html' %}
+{% load url_resolver %}
 {% load static %}
 {% load duration_field %}
 {% block header %}
@@ -16,7 +17,7 @@
           <div class="row">
             {% for page in self.channels.all%}
             {% with page.channel as channel %}
-            <a href="/users/watch/{{channel.id}}/" class="col-sm-12 video-block">
+            <a href="{% reverse_url self 'channel_details' channel.id %}" class="col-sm-12 video-block">
               <div class="video-detail">
                 <h3>{{ channel.title|safe}}</h3>
                 <div class="video-meta">

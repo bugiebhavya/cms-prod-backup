@@ -15,9 +15,8 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-9 single-video-page">
-          <video class="video-js" controls preload="auto" poster="{{ video.thumbnail.url }}" data-setup="{}">
-            <source src="{{ video.url }}" type="video/mp4">
-          </video>
+          <video-js autoplay class="video-js" id="video-js" preload="auto" controls class="video-js vjs-default-skin" poster="{{ video.thumbnail.url }}">
+          </video-js>
           <div class="video-information">
             <div class="tags">
               {% for tag in video.tags.all %}
@@ -206,6 +205,22 @@
         }
       })
     })
+
+
+    var myPlayer = videojs('video-js').ready(function () {
+        let player = this
+        $.ajax({
+          url: '{{ video.url }}',
+          type: 'GET',
+          xhrFields: { responseType: 'blob' },
+          success: function (data, textStatus, jqXHR) {
+            var src = window.URL.createObjectURL(data);
+            player.src({src:src, type: "video/mp4"});
+            player.load();
+          }
+        });
+    });
+
   })
   
 

@@ -25,7 +25,6 @@ class MediaDetailView(LoginRequiredMixin, DetailView):
 		return context
 
 	def get(self, request, pk):
-		print("------------------------")
 		media = Document.objects.get(id=pk)
 		if media.access == Document.PRIVATE and request.user.is_anonymous:
 			messages.warning(request, 'Please login to view this media.')

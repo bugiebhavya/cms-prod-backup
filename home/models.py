@@ -56,12 +56,16 @@ class HomePage(RoutablePageMixin, Page):
 
 	]
 	
-	# @route(r'^excel-watch/$')
-	# def trending_media(self, request, *args, **kwargs):
-	# 	return render(request, 'documents/excel.html', {})
+
 
 class ReferenceUrlPage(RoutablePageMixin, Page):
 	settings_panels = []
+	def get_views(self, x):
+            try:
+                return x.media_views.last().views
+            except:
+                return 0
+
 	def update_views(self, obj):
 		if obj.media_views.exists():
 			obj = obj.media_views.last()
@@ -85,22 +89,45 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	# 	context = super(HomePage, self).get_context(request)
 	# 	return context
 
-	# def serve(self, request):
-	# 	print(request.META.get('PATH_INFO'))
-	# 	return render(request, self.template, self.get_context(request))
 	@route(r'^trending/$')
 	def trending_media(self, request, *args, **kwargs):
 		videos = self.get_videos().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).order_by('-media_views__views')
 		documents = self.get_documents().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).order_by('-media_views__views')
 		from itertools import chain
 		media = list(chain(documents, videos))
-		media_list = sorted(media, key=lambda x: x.media_views.last().views, reverse=True) 
+		media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True) 
 		return render(request, 'dashboard/trending.html', {'medias': media_list})
 		
 	@route(r'^search/$', name='search')
 	def search_media(self, request, *args, **kwargs):
 		self.videos = self.get_videos().filter(title__icontains=request.GET.get('q'))
 		return render(request, 'home/search_results.html', {'videos': self.videos})
+
+	@route(r'^library/(?P<type>[-\w]+)/(?P<id>[-\w]+)/$', name="user_library")
+	def user_library(self, request, *args, **kwargs):
+		from modules.documents.models import SubTopic, Topic, Subject, Area
+		if kwargs.get('type') == 'subtopic':
+			obj = SubTopic.objects.get(id=kwargs.get('id'))
+			documents = obj.subtopic_documents.all()
+		elif kwargs.get('type') == 'topic':
+			obj = Topic.objects.get(id=kwargs.get('id'))
+			documents = obj.topic_documents.all()
+
+		elif kwargs.get('type') == 'subject':
+			obj = Subject.objects.get(id=kwargs.get('id'))
+			documents = obj.subject_documents.all()
+
+		elif kwargs.get('type') == 'area':
+			obj = Area.objects.get(id=kwargs.get('id'))
+			documents = obj.area_documents.all()
+		
+		videos = obj.video_set.all()
+
+		from itertools import chain
+		media = list(chain(documents, videos))
+		media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True)
+
+		return render(request, 'dashboard/library.html', {'medias': media_list, 'object': obj})
 
 
 	@route(r'^watch/(?P<media_id>[-\w]+)/$', name='video_detail')
@@ -131,9 +158,6 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		
 		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
 
-	# @route(r'^doc-render/$')
-	# def document_viewer(self, request, *args, **kwargs):
-	# 	return render(request, 'home/document_viewer.html',{})
 
 class Comment(models.Model):
 	content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)

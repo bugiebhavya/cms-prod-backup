@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from wagtailvideos.models import Video 
 from django.views.generic import View 
 from .forms import AdminLoginForm, CommentForm
-from django.contrib.auth.models import User
+from modules.users.models import User
 from django.shortcuts import render, reverse 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages 

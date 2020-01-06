@@ -1190,3 +1190,37 @@ aside.twitter-sidebar .twitter-holder{
   top: 10px;
   position: relative;
 }
+
+
+.sidebar-menu ul li .sub-menu{
+  padding-left: 10px;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+.sidebar-menu ul li .sub-menu li:last-child{
+  margin-bottom: 0;
+}
+.sidebar-menu ul li .submenu-btn{
+  cursor: pointer;
+  transition: all 0.4s;
+}
+.sidebar-menu ul li .submenu-btn.submenu-opened{
+  transform: rotate(180deg);
+}
+.sidebar-menu ul li.hassub .sub-menu{
+  display: none;
+}
+.sidebar-menu ul li.hassub{
+  position: relative;
+}
+.sidebar-menu ul li.hassub .submenu-btn{
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.sidebar-menu ul li.hassub > a{
+  padding-right: 25px;
+}
+.sidebar-menu ul li.hassub .sub-menu a{
+  font-size: 14px;
+}

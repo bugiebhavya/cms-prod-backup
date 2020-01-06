@@ -18,7 +18,7 @@
           <link href="{% static 'css/animate.css' %}" rel="stylesheet" type="text/css">
           <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
           <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/InterEjecutivos.css' %}">
+          <link href="{% static 'css/video-js.css' %}" rel="stylesheet" type="text/css">
         <style type="text/css">
           .site-header .navbar-brand img {
             max-height: 70px !important;
@@ -40,6 +40,7 @@
     <script type="text/javascript" src="{% static 'js/wow.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/video.js' %}"></script>
     <script>
       String.prototype.format = String.prototype.f = function() {
           var s = this,
@@ -78,8 +79,36 @@
            } 
       });
 
+      $('ul.menu li:has(ul)').addClass('hassub');
+      $(".hassub").prepend('<span class="submenu-btn"><i class="fal fa-chevron-down"></i></span>');
+
+      $(".hassub .submenu-btn").click(function(){
+        $(this).toggleClass('submenu-opened');
+           if ($(this).siblings('ul').hasClass('open')) {
+             $(this).siblings('ul').removeClass('open').slideToggle();
+           }
+           else {
+             $(this).siblings('ul').addClass('open').slideToggle();
+           }
+      });
+
+      
       </script>
-  {% block script %} 
+        
+    {% block script %}
+      {% if messages %}
+            {% for message in messages %}
+                <div id="message_container" class="alert alert-danger">
+                <strong >{{ message|escape }}</strong>
+            </div>
+            {% endfor %}
+        {% endif %}
+        <script type="text/javascript">
+          var message_ele = document.getElementById("message_container");
+          setTimeout(function(){ 
+           message_ele.style.display = "none"; 
+          }, 3000);
+        </script>
     {% endblock %}
 </body>
 

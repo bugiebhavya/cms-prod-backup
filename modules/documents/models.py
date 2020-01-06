@@ -34,6 +34,7 @@ class Subject(models.Model):
         verbose_name_plural = _('Subject')
     name = models.CharField(max_length=100, verbose_name=_('Subject name'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
+    area = models.ForeignKey(Area, verbose_name=_('Area'), on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -46,6 +47,7 @@ class Topic(models.Model):
         verbose_name_plural = _('Topic')
     name = models.CharField(max_length=100, verbose_name=_('Topic name'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
+    subject = models.ForeignKey(Subject, verbose_name=_('Subject'), on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -59,6 +61,7 @@ class SubTopic(models.Model):
         verbose_name_plural = _('SubTopic')
     name = models.CharField(max_length=100, verbose_name=_('Subtopic name'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
+    topic = models.ForeignKey(Topic,  verbose_name=_('Topic'), on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -85,14 +88,14 @@ class CustomDocument(AbstractDocument):
     SCOPE = (
         (PUBLIC, _('Public')),
         (PRIVATE, _('Private')),)
-    area = models.ForeignKey(Area, related_name="srea", verbose_name=_('Area'), on_delete=models.SET_NULL, null=True, blank=True)
-    subject = models.ForeignKey(Subject, related_name="subject", verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True, blank=True)
-    topic = models.ForeignKey(Topic, related_name="topic", verbose_name=_('Topic'), on_delete=models.SET_NULL, null=True, blank=True)
-    subtopic = models.ForeignKey(SubTopic, related_name="subtopic", verbose_name=_('SubTopic'), on_delete=models.SET_NULL, null=True, blank=True)
-    nature = models.ForeignKey(Natures, related_name="natures", verbose_name=_('Natures'), on_delete=models.SET_NULL, null=True, blank=True)
+    area = models.ForeignKey(Area, related_name="area_documents", verbose_name=_('Area'), on_delete=models.SET_NULL, null=True, blank=True)
+    subject = models.ForeignKey(Subject, related_name="subject_documents", verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True, blank=True)
+    topic = models.ForeignKey(Topic, related_name="topic_documents", verbose_name=_('Topic'), on_delete=models.SET_NULL, null=True, blank=True)
+    subtopic = models.ForeignKey(SubTopic, related_name="subtopic_documents", verbose_name=_('SubTopic'), on_delete=models.SET_NULL, null=True, blank=True)
+    nature = models.ForeignKey(Natures, related_name="nature_documents", verbose_name=_('Natures'), on_delete=models.SET_NULL, null=True, blank=True)
 
     comments = GenericRelation("home.Comment", related_query_name='comments')
-    media_views = GenericRelation("dashboard.MediaView", related_query_name='media_views')
+    media_views = GenericRelation("dashboard.MediaView", related_query_name='document_media_views')
     thumbnail = models.FileField(upload_to='documents', blank=True, verbose_name=('thumbnail'), default='documents/logo.png')
     access = models.CharField(verbose_name=('Access Type'), default="PUBLIC", choices=SCOPE, max_length=50, blank=True, null=True)
     channel = models.ForeignKey(Channels, related_name="documents", on_delete=models.SET_NULL, null=True, blank=True)
