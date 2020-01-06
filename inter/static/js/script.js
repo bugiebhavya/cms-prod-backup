@@ -101,15 +101,7 @@ $( ".close-share, .share-popup-backdrop" ).click(function() {
   $('.share-popup').removeClass( "active" );
 });
 
-var textarea = document.querySelector('.comment-field');
-textarea.addEventListener('keydown', autosize);
-function autosize(){
-  var el = this;
-  setTimeout(function(){
-    el.style.cssText = 'height:auto';
-    el.style.cssText = 'height:' + el.scrollHeight + 'px';
-  },0);
-}
+
 
 $( ".reply-more-btn" ).click(function() {
   $(this).toggleClass( "active" ); 
@@ -119,3 +111,17 @@ $( ".readmore" ).click(function() {
   $(this).toggleClass( "active" );
   $('#video-full-desp').toggleClass( "active" ); 
 });
+
+try{
+  var textarea = document.querySelector('.comment-field');
+  textarea.addEventListener('keydown', autosize);
+  function autosize(){
+    var el = this;
+    setTimeout(function(){
+      el.style.cssText = 'height:auto';
+      el.style.cssText = 'height:' + el.scrollHeight + 'px';
+    },0);
+  }
+} catch(ed){
+  console.log(ed)
+}
