@@ -1224,3 +1224,33 @@ aside.twitter-sidebar .twitter-holder{
 .sidebar-menu ul li.hassub .sub-menu a{
   font-size: 14px;
 }
+
+
+.fav-btn{
+  white-space: nowrap;
+  background-color: #fff;
+  border: 1px solid #f54200;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 15px; 
+  cursor: pointer;
+  min-width: 145px;
+}
+.fav-btn.Unfavorite{
+  background-color: #f54200;
+  color: #fff;
+}
+.fav-btn .fav-button{
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.fav-btn.Unfavorite .fav-button{
+  color: #fff;
+}
+.fav-btn .fav_count_div1{
+  padding: 0 5px;
+}

@@ -58,4 +58,3 @@ class CommentView(LoginRequiredMixin,APIView):
 			return Response({'message': 'Your comment posted successfully', 'code': 200, 'data': {'username': user.username.title(), 'body': comment.body, 'created': comment.created.strftime('%b. %d, %Y, %I:%M %P.')}})
 		except Exception as ex:
 			return Response({'code': 500, 'message': str(ex)})
-	

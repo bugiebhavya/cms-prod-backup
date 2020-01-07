@@ -3,6 +3,9 @@ from django.db import models
 from datetime import datetime, timedelta
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Group
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
 
 def get_expiry_date():
 	return datetime.now()+timedelta(days=30)
@@ -51,3 +54,16 @@ class User(AbstractUser):
 
 	def __str__(self):
 		return str(self.username)
+
+
+class Favorite(models.Model):
+    """ Represents an instance of Favorite """
+    content_type = models.ForeignKey(ContentType, null=True, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField(null=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
+    user = models.ForeignKey(User, null=True, blank=True,  on_delete=models.CASCADE,)
+    cookie = models.CharField(null=True, max_length=256, blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    
+    def __str__(self):
+        return str(self.user.username)

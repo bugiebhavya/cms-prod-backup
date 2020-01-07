@@ -93,7 +93,7 @@ class CustomDocument(AbstractDocument):
     topic = models.ForeignKey(Topic, related_name="topic_documents", verbose_name=_('Topic'), on_delete=models.SET_NULL, null=True, blank=True)
     subtopic = models.ForeignKey(SubTopic, related_name="subtopic_documents", verbose_name=_('SubTopic'), on_delete=models.SET_NULL, null=True, blank=True)
     nature = models.ForeignKey(Natures, related_name="nature_documents", verbose_name=_('Natures'), on_delete=models.SET_NULL, null=True, blank=True)
-
+    favorites = GenericRelation("users.Favorite", related_query_name='fav_documents')
     comments = GenericRelation("home.Comment", related_query_name='comments')
     media_views = GenericRelation("dashboard.MediaView", related_query_name='document_media_views')
     thumbnail = models.FileField(upload_to='documents', blank=True, verbose_name=('thumbnail'), default='documents/logo.png')

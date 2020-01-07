@@ -103,6 +103,13 @@ class DashboardPage(RoutablePageMixin, Page):
         return render(request, 'dashboard/history.html', {'medias': medias})
 
 
+    @route(r'^favorites/$', name="favorites")
+    def favorites(self, request, *args, **kwargs):
+        from modules.users.models import Favorite
+        favorites = Favorite.objects.filter(user=request.user)
+        return render(request, 'fav/list.html', {'favorites': favorites})
+
+
     @route(r'^logout/$', name='user-logout')
     def logout(self, request, *args, **kwargs):
         logout(request)

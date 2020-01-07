@@ -14,10 +14,10 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12 trending-page">
-          <h2>Search Results</h2>
-          <p id="notfound"></p>
+          <h2>Search Results ({{videos|length}})</h2>
+          
           <div class="row">
-            {% for video in videos%}
+            {% for video in videos %}
             <a href="/users/watch/{{video.id}}/" class="col-sm-12 video-block">
               <div class="video-part">
                 <img class="thumbnail" src="{{video.thumbnail.url}}" alt="img">
@@ -26,12 +26,12 @@
               <div class="video-detail">
                 <h3>{{ video.title|safe}}</h3>
                 <div class="video-meta">
-                  <span class="total-views">34k views</span>
+                  <span class="total-views">{{video.media_views.last.iviews}} views</span>
                   <span class="post-date">{{ video.created_at|timesince }} ago</span>
-                  <span class="postby">Gussie French</span>
+                  <span class="postby">{{video.author}}</span>
                 </div>
                 <div class="video-desc">
-                  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                  <p>{{video.synthesis}}</p>
                 </div>
               </div>
             </a>
@@ -44,10 +44,5 @@
   </div>
   {% endblock %}
   {% block script %} 
-  <script>
-      {% if videos.count == 0 %}
-        document.getElementById('notfound').innerHTML = "No results found Try different keywords or remove search filters"
-      {% endif %}
-  </script>  
-
-   {% endblock %}
+  
+  {% endblock %}

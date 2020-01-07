@@ -102,14 +102,5 @@ $(document).ready(function(){
         }
     }, 1000)
 
-    // $('#id_area').change(function(){
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '',
-    //         data_type: 'json',
-    //         success: function(response){
-    //             console.log(response)
-    //         }
-    //     })
-    // })
+    
 })

@@ -3,7 +3,7 @@
 {% load static %}
 {% load file_size %}
 {% load i18n %}
-
+{% load favorite_tags %}
 {% block header %}
 <header class="login-header d-flex align-items-center">
   {% include 'dashboard_header.html' %}
@@ -36,11 +36,21 @@
                 <span class="date">{{ document.created_at }}</span>
               </div>
               <div class="info-menu">
-                <div class="like-action">
-                 <button type="button" class="btn"><i class="fas fa-heart"></i> Favorite</button>
+                <div class="like-action channel-subscribe">
+                  {% if user.is_authenticated %} 
+                      <!-- for unauthenticated users -->
+                      <div class="fav-btn {% get_fav_notation document user %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {%  get_fav document user %}</div>
+                  {% else %}
+                     <!-- for authenticated users -->
+                     <div class="fav-btn {% get_fav_notation document request %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {% get_fav_nouser document request %}</div>
+                  {% endif %}
                 </div>
               </div>
+
             </div>
+             <div class="video-desc">
+                <p>{{document.synthesis}}</p>
+              </div>
           </div>
 
           <div class="channel-information">
@@ -48,7 +58,7 @@
             <div class="channel-details">
               <div class="channel-name">
                 <a href="#">{{ document.channel.title }}</a>
-                <span>514K subscribers</span>
+               
               </div>
              
               <div id="video-full-desp" class="video-full-desp">
@@ -59,11 +69,10 @@
                   <ul>
                     <li><label>Title</label> {{ document.channel.title }}</li>
                     <li><label>Created At</label> {{ document.channel.created_at }}</li>
-                    <li><label>Album</label> Testing User</li>
-                    <li><label>Licensed by</label> Believe Music (on behalf of White Hill Music); venus_pub,
-                      and 1 music rights societies</li>
+                    <li><label>Licensed by</label> {{document.author}}</li>
                   </ul>
                 </div>
+                
               </div>
               <a href="javascript:void(0);" class="readmore"><span class="more">Read More</span> <span class="less">Read
                   Less</span>
@@ -160,7 +169,7 @@
       display: none !important;
     }
   </style>
-
+  <script src="{% static 'js/fav.js' %}"></script>
   <script>
   $(document).ready(function(){
     var commensts_html = '<li class="comment-box">\

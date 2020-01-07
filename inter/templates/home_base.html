@@ -29,13 +29,11 @@
   {% block body %}
 
   {% endblock %}
-          <script type="text/javascript" src="{% static 'js/InterEjecutivos.js' %}"></script>
           <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
           <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
           <script type="text/javascript" src="{% static 'js/wow.js' %}"></script>
           <script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
           <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
-          <script type="text/javascript" src="{% static 'js/developer.js' %}"></script>
     {% block script %}
       {% if messages %}
             {% for message in messages %}
@@ -43,13 +41,14 @@
                 <strong >{{ message|escape }}</strong>
             </div>
             {% endfor %}
-        {% endif %}
+        
         <script type="text/javascript">
           var message_ele = document.getElementById("message_container");
           setTimeout(function(){ 
            message_ele.style.display = "none"; 
           }, 3000);
         </script>
+      {% endif %}
     {% endblock %}
 
 </body>
