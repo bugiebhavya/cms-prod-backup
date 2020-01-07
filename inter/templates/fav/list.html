@@ -35,7 +35,7 @@
                     <div class="video-detail">
                       <h3>{{media.title|safe}}</h3>
                       <div class="video-meta">
-                        <span class="total-views">{{media.views}} views</span>
+                        <span class="total-views">{{media.media_views.last.iviews}} views</span>
                         <span class="post-date">{{ media.created_at|timesince }} ago</span>
                       </div>
                     </div>

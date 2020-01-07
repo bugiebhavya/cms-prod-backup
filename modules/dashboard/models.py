@@ -4,6 +4,7 @@ from django.utils.dateformat import DateFormat
 from django.utils.formats import date_format
 from django.shortcuts import render
 import pdb 
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
@@ -66,7 +67,6 @@ class MediaView(models.Model):
 
     @property
     def iviews(self):
-        print('-- %s'%self.views)
         if self.views:
             return self.views
         return 0
@@ -94,8 +94,8 @@ class DashboardPage(RoutablePageMixin, Page):
         if request.user and request.user.is_authenticated:
             content_type_document = ContentType.objects.get(model='customdocument')
             content_type_video = ContentType.objects.get(model='video')
-            videos = ContentType.objects.raw("SELECT vid.id, vid.title, vid.thumbnail, vid.created_at, vid.duration, mv.views, vid.author FROM dashboard_mediaview As mv LEFT OUTER JOIN wagtailvideos_video AS vid ON (mv.object_id = vid.id AND (mv.content_type_id = {0})) WHERE (mv.user_id = 1 AND vid.id IS NOT NULL)".format(content_type_video.id))
-            documents = ContentType.objects.raw("SELECT dc.id, dc.title, dc.thumbnail, dc.created_at, dc.file_size, mv.views, dc.author FROM dashboard_mediaview As mv LEFT OUTER JOIN documents_customdocument AS dc ON (mv.object_id = dc.id AND (mv.content_type_id = {0})) WHERE (mv.user_id = 1 AND dc.id IS NOT NULL)".format(content_type_document.id))
+            videos = ContentType.objects.raw("SELECT vid.id, vid.title, vid.thumbnail, vid.created_at, vid.duration, mv.views, vid.author FROM dashboard_mediaview As mv LEFT OUTER JOIN wagtailvideos_video AS vid ON (mv.object_id = vid.id AND (mv.content_type_id = {0})) WHERE (mv.user_id = {1} AND vid.id IS NOT NULL)".format(content_type_video.id, request.user.id))
+            documents = ContentType.objects.raw("SELECT dc.id, dc.title, dc.thumbnail, dc.created_at, dc.file_size, mv.views, dc.author FROM dashboard_mediaview As mv LEFT OUTER JOIN documents_customdocument AS dc ON (mv.object_id = dc.id AND (mv.content_type_id = {0})) WHERE (mv.user_id = {1} AND dc.id IS NOT NULL)".format(content_type_document.id, request.user.id))
             from itertools import chain
             media = list(chain(videos, documents))
             medias = sorted(media, key=lambda x: x.views, reverse=True)

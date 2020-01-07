@@ -39,7 +39,7 @@
                       <div class="fav-btn {% get_fav_notation video user %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {%  get_fav video user %}</div>
                   {% else %}
                      <!-- for authenticated users -->
-                     <div class="fav-btn {% get_fav_notation video user %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {% get_fav_nouser video request %}</div>
+                     <div class="fav-btn {% get_nofav_notation video request %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {% get_fav_nouser video request %}</div>
                   {% endif %}
 
                 </div>

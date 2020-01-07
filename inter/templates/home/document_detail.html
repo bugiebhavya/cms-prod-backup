@@ -42,7 +42,7 @@
                       <div class="fav-btn {% get_fav_notation document user %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {%  get_fav document user %}</div>
                   {% else %}
                      <!-- for authenticated users -->
-                     <div class="fav-btn {% get_fav_notation document request %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {% get_fav_nouser document request %}</div>
+                     <div class="fav-btn {% get_nofav_notation document request %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {% get_fav_nouser document request %}</div>
                   {% endif %}
                 </div>
               </div>

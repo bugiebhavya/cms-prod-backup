@@ -17,6 +17,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib import messages
 from datetime import timedelta, datetime
+
 User = get_user_model()
 
 class HomePageCarouselVideos(Orderable):
@@ -67,17 +68,14 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
                 return 0
 
 	def update_views(self, obj, user):
-		if obj.media_views.exists():
-			obj = obj.media_views.last()
-			obj.views +=1
-			obj.save()
-		else:
-			from modules.dashboard.models import MediaView
-			obj = MediaView(content_object=obj, views=0)
-			obj.views = 1
-			if not user.is_anonymous:
-				obj.user = user
-			obj.save()
+		if not user.is_anonymous:
+			if obj.media_views.filter(user=user).exists():
+				media_obj = obj.media_views.filter(user=user).last()
+				media_obj.views = media_obj.views+1
+				media_obj.save()
+			else:
+				from modules.dashboard.models import MediaView
+				MediaView.objects.create(content_object=obj, user=user, views=1)
 
 	def get_videos(self):
 		self.videos = Video.objects
@@ -93,6 +91,10 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 
 	@route(r'^trending/$')
 	def trending_media(self, request, *args, **kwargs):
+		if request.user.is_anonymous:
+			messages.warning(request, 'Please login to view this media.')
+			return HttpResponseRedirect('/')
+
 		videos = self.get_videos().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).order_by('-media_views__views')
 		documents = self.get_documents().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).order_by('-media_views__views')
 		from itertools import chain
@@ -107,6 +109,10 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 
 	@route(r'^library/(?P<type>[-\w]+)/(?P<id>[-\w]+)/$', name="user_library")
 	def user_library(self, request, *args, **kwargs):
+		if request.user.is_anonymous:
+			messages.warning(request, 'Please login to view this media.')
+			return HttpResponseRedirect('/')
+
 		from modules.documents.models import SubTopic, Topic, Subject, Area
 		if kwargs.get('type') == 'subtopic':
 			obj = SubTopic.objects.get(id=kwargs.get('id'))
