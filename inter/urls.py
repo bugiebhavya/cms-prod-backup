@@ -14,11 +14,10 @@ urlpatterns = [
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search/', search_views.search, name='search'),
-    url('us-login', controller.LoginView.as_view(), name="us-login"), 
+    url(r'^us-login/', controller.LoginView.as_view(), name="us-login"), 
     url(r'^comment/$', controller.CommentView.as_view(), name="comment-view"),
-    url('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
-    url(r'^media/fav$', FavAlterView.as_view(), name='fav-alter'),
-    url(r'^filter/catalogs$', FilterCatalogsView.as_view(), name='filter-catalogs'),
+    url(r'^media/fav/$', FavAlterView.as_view(), name='fav-alter'),
+    url(r'^filter/catalogs/$', FilterCatalogsView.as_view(), name='filter-catalogs'),
     url(r'', include(wagtail_urls)),
 ]
 

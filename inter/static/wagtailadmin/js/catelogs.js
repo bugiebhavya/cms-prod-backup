@@ -3,7 +3,7 @@ $(document).ready(function(){
 		var area_id = $(this).val()
         $.ajax({
             type: 'GET',
-            url: '/filter/catalogs?object=0&type=area'.replace('0', area_id),
+            url: '/filter/catalogs/?object=0&type=area'.replace('0', area_id),
             data_type: 'json',
             success: function(response){
                 if(response.code == 200){
@@ -24,7 +24,7 @@ $(document).ready(function(){
 		var subject_id = $(this).val()
         $.ajax({
             type: 'GET',
-            url: '/filter/catalogs?object=0&type=subject'.replace('0', subject_id),
+            url: '/filter/catalogs/?object=0&type=subject'.replace('0', subject_id),
             data_type: 'json',
             success: function(response){
                 if(response.code == 200){
@@ -44,7 +44,7 @@ $(document).ready(function(){
 		var topic_id = $(this).val()
         $.ajax({
             type: 'GET',
-            url: '/filter/catalogs?object=0&type=topic'.replace('0', topic_id),
+            url: '/filter/catalogs/?object=0&type=topic'.replace('0', topic_id),
             data_type: 'json',
             success: function(response){
                 if(response.code == 200){
@@ -62,7 +62,7 @@ $(document).ready(function(){
 		var topic_id = $(this).val()
         $.ajax({
             type: 'GET',
-            url: '/filter/catalogs?object=0&type=topic'.replace('0', topic_id),
+            url: '/filter/catalogs/?object=0&type=topic'.replace('0', topic_id),
             data_type: 'json',
             success: function(response){
                 if(response.code == 200){

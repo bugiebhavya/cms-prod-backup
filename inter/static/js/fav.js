@@ -21,7 +21,7 @@ $(document).ready(function(){
        		data.append('fav_value',negative_notation);
      	}
     		$.ajax({
-	            url: "/media/fav",
+	            url: "/media/fav/",
 	            type: "POST",
 	            data: data,
 	            processData: false,
