@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^search/', search_views.search, name='search'),
     url(r'^us-login/', controller.LoginView.as_view(), name="us-login"), 
     url(r'^comment/$', controller.CommentView.as_view(), name="comment-view"),
-    url(r'^media/fav/$', FavAlterView.as_view(), name='fav-alter'),
+    url(r'^medias/fav/$', FavAlterView.as_view(), name='fav-alter'),
     url(r'^filter/catalogs/$', FilterCatalogsView.as_view(), name='filter-catalogs'),
     url(r'', include(wagtail_urls)),
 ]
