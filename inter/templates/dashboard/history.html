@@ -26,7 +26,7 @@
                   <div class="video-part">
                     <img class="thumbnail" src="/media/{{media.thumbnail}}" alt="img">
                   {% if media.duration %}
-                    <span class="video-time">{{ media.duration}}</span>
+                    <span class="video-time">{{ media.duration |duration_field}}</span>
                   {% else %}
                     <span class="video-time">{{ media.file_size |convert_size}}</span>
                   {% endif %}
