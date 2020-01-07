@@ -150,21 +150,21 @@ class ChannelPage(RoutablePageMixin,Page):
     
     @route(r'^(?P<channel>[-\w]+)/media/$', name="channel_details")
     def channel_details(self, request, *args, **kwargs):
-        # try:
-        def get_views(x):
-            try:
-                return x.media_views.last().views
-            except:
-                return 0
+        try:
+            def get_views(x):
+                try:
+                    return x.media_views.last().views
+                except:
+                    return 0
 
-        channel = Channels.objects.get(id=kwargs.get('channel'))
-        from itertools import chain
-        media = list(chain(channel.documents.all(), channel.video_set.all()))
-        media_list = sorted(media, key=lambda x: get_views(x), reverse=True)
-        from home.models import ReferenceUrlPage
-        homepage = ReferenceUrlPage(request)
-        return render(request, 'channel/details.html', {'medias': media_list, 'channel': channel, 'homepage': homepage})
-        # except Exception as ex:
-        #     messages.info(request, str(ex))
-        #     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+            channel = Channels.objects.get(id=kwargs.get('channel'))
+            from itertools import chain
+            media = list(chain(channel.documents.all(), channel.video_set.all()))
+            media_list = sorted(media, key=lambda x: get_views(x), reverse=True)
+            from home.models import ReferenceUrlPage
+            homepage = ReferenceUrlPage(request)
+            return render(request, 'channel/details.html', {'medias': media_list, 'channel': channel, 'homepage': homepage})
+        except Exception as ex:
+            messages.info(request, str(ex))
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
