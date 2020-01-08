@@ -58,7 +58,7 @@ class User(AbstractUser):
     def clean(self):
         associate = self.associate
         if associate.user_set.all().count() >= associate.associate_level.allowed_users:
-            raise ValidationError(_("Allowed users limit has reached."))
+            raise ValidationError(_("Max allowed users reached for that membership"))
 
 
 class Favorite(models.Model):
