@@ -95,8 +95,8 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
 
-		videos = self.get_videos().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).order_by('-media_views__views')
-		documents = self.get_documents().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).order_by('-media_views__views')
+		videos = self.get_videos().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).distinct().order_by('-media_views__views')
+		documents = self.get_documents().filter(media_views__updated__gte=datetime.now()-timedelta(days=31), media_views__views__isnull=False).distinct().order_by('-media_views__views')
 		from itertools import chain
 		media = list(chain(documents, videos))
 		media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True) 
