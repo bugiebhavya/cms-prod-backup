@@ -1,13 +1,13 @@
 {% load static %}
-{% load url_resolver %}
+{% load url_resolver i18n %}
  <div class="sidebar-menu">
     <button class="menu-btn d-none d-md-block"><i class="fal fa-bars"></i></button>
     <a class="navbar-brand d-none d-md-block" href="/"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
     <ul class="menu">
-      <li><a href="/users/dashboard"> <i class="fal fa-home-lg-alt"></i> Inicio</a></li>
-      <li><a href="/users/trending"> <i class="fal fa-fire"></i> Tendencia</a></li>
-      <li><a href="/users/channels"> <i class="fal fa-album-collection"></i> Canales</a></li>
-      <li><a href="#"> <i class="fal fa-book-alt"></i> Libreria</a>
+      <li><a href="/users/dashboard"> <i class="fal fa-home-lg-alt"></i> {% trans 'Home' %}</a></li>
+      <li><a href="/users/trending"> <i class="fal fa-fire"></i> {% trans 'Trendings' %}</a></li>
+      <li><a href="/users/channels"> <i class="fal fa-album-collection"></i> {% trans 'Channels' %}</a></li>
+      <li><a href="#"> <i class="fal fa-book-alt"></i> {% trans 'Library' %}</a>
         <ul class="sub-menu">
           {% area_list as areas %}
             {% for area in areas %}
@@ -35,11 +35,7 @@
       </li>
     </ul>
     <ul class="menu d-none d-md-block">
-      <li><a href="/users/dashboard/history"> <i class="fal fa-folder"></i> History</a></li>
-      <li><a href="/users/dashboard/favorites"> <i class="fal fa-heart"></i> Favoritos</a></li>
+      <li><a href="/users/dashboard/history"> <i class="fal fa-folder"></i> {% trans 'History' %}</a></li>
+      <li><a href="/users/dashboard/favorites"> <i class="fal fa-heart"></i> {% trans 'Favorite' %}</a></li>
     </ul>
   </div>
-
-  <script type="text/javascript">
-    
-  </script>

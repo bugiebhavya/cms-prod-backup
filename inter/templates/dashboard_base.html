@@ -1,6 +1,7 @@
 <!doctype html>
 {% load static %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags i18n %}
+
 <html>
 
 <head>
@@ -99,7 +100,7 @@
         {% if messages %}
             {% for message in messages %}
                 <div id="message_container" class="alert alert-danger">
-                <strong >{{ message|escape }}</strong>
+                <strong >{% trans message %}</strong>
             </div>
             {% endfor %}
         

@@ -67,15 +67,15 @@
                 </div>
                 <div class="video-other-info">
                   <ul>
-                    <li><label>Title</label> {{ document.channel.title }}</li>
-                    <li><label>Created At</label> {{ document.channel.created_at }}</li>
-                    <li><label>Licensed by</label> {{document.author}}</li>
+                    <li><label>{% trans 'Title' %}</label> {{ document.channel.title }}</li>
+                    <li><label>{% trans 'Created At' %}</label> {{ document.channel.created_at }}</li>
+                    <li><label>{% trans 'Licensed by' %}</label> {{document.author}}</li>
                   </ul>
                 </div>
                 
               </div>
-              <a href="javascript:void(0);" class="readmore"><span class="more">Read More</span> <span class="less">Read
-                  Less</span>
+              <a href="javascript:void(0);" class="readmore"><span class="more">{% trans 'Read More' %}</span> <span class="less">{% trans 'Read
+                                Less' %}</span>
               </a>
             </div>
           </div>
@@ -83,14 +83,7 @@
           <div class="comment-block">
             {% with comments.count as comments_count %}
               <div class="comment-meta">
-                <span class="comment_counter" data-count="{{comments_count}}">Comment(s) {{comments_count}}</span>
-                  <button type="button" class="dropdown-toggle" id="commentSorting"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort"></i> Sort
-                  By</button>
-                <div class="sorting-menu dropdown-menu" aria-labelledby="commentSorting">
-                  <a href="#">Top Comments</a>
-                  <a href="#">Newest First</a>
-                </div>
+                <span class="comment_counter" data-count="{{comments_count}}">{% trans 'Comment' %} {{comments_count}}</span>
               </div>
             {% endwith %}
             <div class="comment-box">
@@ -103,11 +96,11 @@
                     <input type="hidden"  name="content_type" value="Document">
                     <input type="hidden"  name="object_id" value="{{document.id}}">
                     <div class="button-group text-right">
-                      <button type="submit" class="btn red">Comment</button>
+                      <button type="submit" class="btn red">{% trans 'Comment' %}</button>
                     </div>
                   </form>
                {% else %}
-                <span class="btn btn-info">Please login to post a comments ...</span>
+                <span class="btn btn-info">{% trans "Please login to post a comments" %} ...</span>
                {% endif %} 
               </div>
             </div>
@@ -121,17 +114,11 @@
                       <div class="comment-detail">
                         <h5><a href="#">{{comment.name}}</a> <span>{{comment.created}}</span></h5>
                         {{comment.body|linebreaks}}
-                        <div class="comment-action">
-                          <div class="like-action">
-                            <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>
-                            <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>
-                          </div>
-                        </div>
                       </div>
                     </li>
                   {% endfor %}
               {% else %}
-                <p> </p>
+                <p> {% trans 'There are no comments Yet' %}</p>
               {% endif %}
             </ul>
           </div>
@@ -139,9 +126,9 @@
         </div>
         <div class="col-lg-3 sidebar-right">
           {% if category_documents.count > 0 %}
-           <h3>Next</h3>
+           <h3>{% trans 'Next' %}</h3>
           {% else %}
-            <h3>No Next Content..</h3>
+            <h3>{% trans 'No Next Content' %}..</h3>
           {% endif %}
           {% for cat_document in category_documents %}
           <a href="/users/doc-watch/{{cat_document.id}}/" class="video-block">
@@ -152,7 +139,7 @@
             <div class="video-detail">
               <h3>{{ cat_document.title|safe}}</h3>
               <span class="postby">{{cat_document.author|title}}</span>
-              <span class="total-views">{{cat_document.media_views.last.iviews}} views</span>
+              <span class="total-views">{{cat_document.media_views.last.iviews}} {% trans 'views' %}</span>
             </div>
           </a>
           {% endfor %}
@@ -192,7 +179,7 @@
       e.preventDefault()
       let formData = new FormData($(this)[0])
       $.ajax({
-        url: '/comment/',
+        url: "{% url 'comment-add' %}",
         data: formData,
         type: 'POST',
         contentType: false,

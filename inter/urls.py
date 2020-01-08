@@ -9,18 +9,19 @@ from home import controller
 from search import views as search_views
 from modules.documents.views import MediaDetailView, FilterCatalogsView
 from modules.users.views import FavAlterView
-urlpatterns = [
+from django.conf.urls.i18n import i18n_patterns
+
+urlpatterns = i18n_patterns(
     url(r'^django-admin/', admin.site.urls),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search/', search_views.search, name='search'),
     url(r'^us-login/', controller.LoginView.as_view(), name="us-login"), 
-    url(r'^comment/$', controller.CommentView.as_view(), name="comment-view"),
+    url(r'^comment/$', controller.CommentView.as_view(), name="comment-add"),
     url(r'^medias/fav/$', FavAlterView.as_view(), name='fav-alter'),
     url(r'^filter/catalogs/$', FilterCatalogsView.as_view(), name='filter-catalogs'),
     url(r'', include(wagtail_urls)),
-]
-
+)
 
 if settings.DEBUG:
     from django.conf.urls.static import static

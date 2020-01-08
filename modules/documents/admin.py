@@ -29,7 +29,7 @@ class SubjectViewAdmin(ModelAdmin):
     menu_order = 290
     add_to_settings_menu = True
     exclude_from_explorer = False
-    list_display = ("name", "id", "created",)
+    list_display = ("name", "area", "id", "created",)
 
 modeladmin_register(SubjectViewAdmin)
 
@@ -41,7 +41,7 @@ class TopicViewAdmin(ModelAdmin):
     menu_order = 290
     add_to_settings_menu = True
     exclude_from_explorer = False
-    list_display = ("name", "id", "created",)
+    list_display = ("name", "subject" "id", "created",)
 
 modeladmin_register(TopicViewAdmin)
 
@@ -53,7 +53,7 @@ class SubTopicViewAdmin(ModelAdmin):
     menu_order = 290
     add_to_settings_menu = True
     exclude_from_explorer = False
-    list_display = ("name", "id", "created",)
+    list_display = ("name", "topic", "id", "created",)
 
 modeladmin_register(SubTopicViewAdmin)
 

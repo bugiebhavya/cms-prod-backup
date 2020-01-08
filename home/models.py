@@ -104,8 +104,12 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		
 	@route(r'^search/$', name='search')
 	def search_media(self, request, *args, **kwargs):
-		self.videos = self.get_videos().filter(title__icontains=request.GET.get('q'))
-		return render(request, 'home/search_results.html', {'videos': self.videos})
+		videos = self.get_videos().filter(title__icontains=request.GET.get('q'))
+		documents = self.get_documents().filter(title__icontains=request.GET.get('q'))
+		from itertools import chain
+		media = list(chain(documents, videos))
+		media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True) 
+		return render(request, 'home/search_results.html', {'medias': media_list})
 
 	@route(r'^library/(?P<type>[-\w]+)/(?P<id>[-\w]+)/$', name="user_library")
 	def user_library(self, request, *args, **kwargs):

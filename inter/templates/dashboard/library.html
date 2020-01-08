@@ -1,6 +1,6 @@
 {% extends 'dashboard_base.html' %}
 {% load static %}
-{% load duration_field %}
+{% load duration_field i18n %}
 {% load file_size %}
 {% block header %}
 <header class="login-header d-flex align-items-center">
@@ -17,36 +17,16 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <h2><i class="fal fa-book-alt"></i> Libreria {{object.name|title}}</h2>
+          <h2><i class="fal fa-book-alt"></i> {% trans 'Library' %} {{object.name|title}}</h2>
           <hr>
           <div class="row">
             {% for media in medias %}
-              <div class="col-lg-4 col-md-6 videoBox">
-                <a href={% if media.duration %}"/users/watch/{{media.id}}/"{% else %} "/users/doc-watch/{{media.id}}/"{% endif %} class="video-block w-100">
-                  <div class="video-part">
-                    <img class="thumbnail" src="{{media.thumbnail.url}}" alt="img">
-                  {% if media.duration %}
-                    <span class="video-time">{{ media.duration|duration_field }}</span>
-                  {% else %}
-                    <span class="video-time">{{ media.file_size |convert_size}}</span>
-                  {% endif %}
-                  </div>
-                  <div class="video-detail">
-                    <h3>{{media.title|safe}}</h3>
-                    <div class="video-meta">
-                      <span class="total-views">{{media.media_views.last.iviews}} views</span>
-                      <span class="post-date">{{ media.created_at|timesince }} ago</span>
-                      <span class="post-date">{{ media.author }}</span>
-                    </div>
-                  </div>
-                </a>
-              </div>
+              {% include 'media_template/horizontal.html' %}
             {% endfor %}
 
             {% if not medias %}
-
               <div class="col-lg-12">
-                <h4><p class="text-center">No media available ...</p></h4>
+                <h4><p class="text-center">{% trans 'No media available' %} ...</p></h4>
               </div>
             {% endif %}
           </div>

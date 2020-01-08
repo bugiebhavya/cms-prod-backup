@@ -14,7 +14,7 @@ class AssociatesLevelAdmin(ModelAdmin):
     menu_icon = "user"
     menu_order = 290
     add_to_settings_menu = True
-    list_display = ("title", "id","updated",)
+    list_display = ("title", "allowed_users", "id","updated",)
 
 modeladmin_register(AssociatesLevelAdmin)
 

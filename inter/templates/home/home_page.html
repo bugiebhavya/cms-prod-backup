@@ -10,62 +10,35 @@
 
 
 {% block body %}
-  <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-        <aside class="col-lg-3 col-md-4 twitter-sidebar">
-          <div class="twitter-holder">
-            <a class="twitter-timeline" href="https://twitter.com/interejecutivos?ref_src=twsrc%5Etfw">Tweets by
-              interejecutivos</a>
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-          </div>
-        </aside>
-        <div class="col-lg-9 col-md-8">
-          <h2>Información Pública</h2>
-          <div class="row">
-            <div class="video-slider w-100">
-            {% for loop_cycle in self.carousel_media.all %}
-              {% if loop_cycle.carousel_video %}
-                {% with loop_cycle.carousel_video as video %}
-                <a href="/users/watch/{{video.id}}/" class="video-block">
-                  <div class="video-part">
-                    <img class="thumbnail" src="{{ video.thumbnail.url }}" alt="img">
-                    <span class="video-time">{{ video.duration|duration_field }}</span>
-                  </div>
-                  <div class="video-detail">
-                    <p class="vidTitle"><i class="fa fa-video"></i>  {{ video.title|safe}}</p>
-                    <div class="video-meta">
-                      <span class="total-views">{{video.media_views.last.iviews}} views</span>
-                      <span class="post-date">{{ video.created_at|timesince }} ago</span>
-                    </div>
-                  </div>
-                </a>
-                {% endwith %}
-              {% endif %}
-              {% if loop_cycle.carousel_document %}
-                {% with loop_cycle.carousel_document as document %}
-                <a href="/users/doc-watch/{{document.id}}/" class="video-block">
-                  <div class="video-part">
-                    <img class="thumbnail" src="{{ document.thumbnail.url }}" alt="img">
-                    <span class="video-time">{{ document.file_size |convert_size}}</span>
-                  </div>
-                  <div class="video-detail">
-                    <p class="vidTitle"><i class="fa fa-file"></i> {{ document.title|safe}}</p>
-                    <div class="video-meta">
-                      <span class="total-views">{{document.media_views.last.iviews}} views</span>
-                      <span class="post-date">{{ document.created_at|timesince }} ago</span>
-                    </div>
-                  </div>
-                </a>
-                {% endwith %}
-              {% endif %}
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <aside class="col-lg-3 col-md-4 twitter-sidebar">
+        <div class="twitter-holder">
+          <a class="twitter-timeline" href="https://twitter.com/interejecutivos?ref_src=twsrc%5Etfw">Tweets by
+          interejecutivos</a>
+          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+      </aside>
+      <div class="col-lg-9 col-md-4">
+        <div class="row">
+          <div class="col-sm-12">
+            <h2>Información Pública</h2>
+            <div class="row">
+                {% for loop_cycle in self.carousel_media.all %}
+                {% if loop_cycle.carousel_video %}
+                {% include 'media_template/horizontal.html' with media=loop_cycle.carousel_video %}
+                {% endif %}
+                {% if loop_cycle.carousel_document %}
+                {% include 'media_template/horizontal.html' with media=loop_cycle.carousel_document %}
+                {% endif %}
 
-            {% endfor %}
+                {% endfor %}
+            </div>
           </div>
-          </div>
-          
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}  

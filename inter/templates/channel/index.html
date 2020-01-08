@@ -1,7 +1,7 @@
 {% extends 'dashboard_base.html' %}
 {% load url_resolver %}
 {% load static %}
-{% load duration_field %}
+{% load duration_field i18n %}
 {% block header %}
 <header class="login-header d-flex align-items-center">
   {% include 'dashboard_header.html' %}
@@ -13,7 +13,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12 trending-page">
-          <h2>Channels</h2>
+          <h2>{% trans 'Channels' %}</h2>
           <div class="row">
             {% for page in self.channels.all%}
             {% with page.channel as channel %}
@@ -21,7 +21,7 @@
               <div class="video-detail">
                 <h3>{{ channel.title|safe}}</h3>
                 <div class="video-meta">
-                  <span class="total-views">{{channel.video_set.count}} media</span>
+                  <span class="total-views">{{channel.video_set.count}} {% trans 'media' %}</span>
                 </div>
                 <div class="video-desc">
                   <p>{{channel.description}}</p>

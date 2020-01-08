@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-
+from django.core.exceptions import ValidationError
 
 def get_expiry_date():
 	return datetime.now()+timedelta(days=30)
@@ -14,7 +14,7 @@ class AssociatesLevel(models.Model):
     class Meta:
         verbose_name = _('Associate Level')
         verbose_name_plural = _('Associate Levels')
-    title = models.CharField(verbose_name=_('Level Title'),max_length=100)
+    title = models.CharField(verbose_name=_('Level Title'),max_length=100, unique=True)
     allowed_users = models.PositiveIntegerField(default=0, verbose_name=_('Allowed users'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
     created = models.DateTimeField(auto_now_add=True, null=True)
@@ -47,13 +47,18 @@ class Associate(models.Model):
         return str(self.rfc)
 
 class User(AbstractUser):
-	associate = models.ForeignKey(Associate, verbose_name=_('Associate'), on_delete=models.SET_NULL, null=True, blank=True)
-	position_held = models.CharField(verbose_name=_('Position held'), max_length=100, null=True, blank=True)
-	created = models.DateTimeField(auto_now_add=True, null=True)
-	updated = models.DateTimeField(auto_now=True)
+    associate = models.ForeignKey(Associate, verbose_name=_('Associate'), on_delete=models.SET_NULL, null=True, blank=True)
+    position_held = models.CharField(verbose_name=_('Position held'), max_length=100, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
 
-	def __str__(self):
-		return str(self.username)
+    def __str__(self):
+        return str(self.username)
+
+    def clean(self):
+        associate = self.associate
+        if associate.user_set.all().count() >= associate.associate_level.allowed_users:
+            raise ValidationError(_("Allowed users limit has reached."))
 
 
 class Favorite(models.Model):
