@@ -2,6 +2,12 @@
   .header-top{
     padding-right: 40px;
   }
+  .login-form{
+    margin-right: 0;
+  }
+  .right-option{
+    width: 75%;
+  }
   aside.twitter-sidebar{
     padding-right: 15px;
   }
@@ -22,11 +28,17 @@
   .header-bottom{
     padding: 20px;
   }
+  .language-form select{
+    margin-left: 15px;
+  }
   .site-header .navbar-brand{
     left: 20px;
   }
   .login-header{
     padding: 21px 20px 21px 250px;
+  }
+  .right-option .list-inline-item:not(:last-child){
+    margin-right: 15px;
   }
   .main-content{
     padding: 190px 0 30px;

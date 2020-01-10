@@ -12,7 +12,20 @@
     <div class="right-option d-flex justify-content-end">
       <ul class="list-inline mb-0 d-flex align-items-center">
         <li class="list-inline-item">
-          <button class="open-search d-md-none"><i class="fal fa-search"></i></button>
+          <form class="language-form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}" />
+                <select name="language" onclick="Bonjour">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                        </option>
+                    {% endfor %}
+                </select>
+                <!-- <input type="submit" value="Go" /> -->
+            </form>
         </li>
         <li class="list-inline-item dropleft d-none d-md-block">
           <a href="javascript:void(0);" class="grid-icon dropdown-toggle" id="links" data-toggle="dropdown"
@@ -22,7 +35,7 @@
             <div class="user-link">
               <a href="/users/channels"><i class="fal fa-album-collection"></i> {% trans 'Channels' %}</a>
               <a href="#"><i class="fas fa-usd-circle"></i> {% trans 'Paid Membership' %}</a>
-              <!-- <a href="#"><i class="fal fa-sign-out"></i> Logout</a> -->
+              
             </div>
           </div>
         </li>
