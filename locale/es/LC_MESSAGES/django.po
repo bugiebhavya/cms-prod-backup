@@ -20,55 +20,56 @@ msgstr ""
 
 #: home/forms.py:28 home/forms.py:33 modules/users/models.py:51
 msgid "Position held"
-msgstr ""
+msgstr "Cargo"
 
 #: home/forms.py:29 home/forms.py:34 modules/users/models.py:29
 #: modules/users/models.py:30 modules/users/models.py:50
 msgid "Associate"
-msgstr ""
+msgstr "Socio"
 
 #: home/templates/home/welcome_page.html:6
 msgid "Visit the Wagtail website"
-msgstr ""
+msgstr "Visita el sitio web"
 
 #: home/templates/home/welcome_page.html:15
 msgid "View the release notes"
-msgstr ""
+msgstr "Ver las notas de liberacion"
 
 #: home/templates/home/welcome_page.html:27
 msgid "Welcome to your new Wagtail site!"
-msgstr ""
+msgstr "Bienvenido al sitio web"
 
 #: home/templates/home/welcome_page.html:28
 msgid ""
 "Please feel free to <a href=\"https://github.com/wagtail/wagtail/wiki/Slack"
 "\">join our community on Slack</a>, or get started with one of the links "
 "below."
-msgstr ""
+msgstr "Please feel free to <a href=\"https://github.com/wagtail/wagtail/wiki/Slack"
+"\">join our community on Slack</a>, or get started with one of the links "
 
 #: home/templates/home/welcome_page.html:35
 msgid "Wagtail Documentation"
-msgstr ""
+msgstr "Documentación"
 
 #: home/templates/home/welcome_page.html:36
 msgid "Topics, references, & how-tos"
-msgstr ""
+msgstr "Tópicos, referencias y Que hacer"
 
 #: home/templates/home/welcome_page.html:42
 msgid "Tutorial"
-msgstr ""
+msgstr "Tutorial"
 
 #: home/templates/home/welcome_page.html:43
 msgid "Build your first Wagtail site"
-msgstr ""
+msgstr "Crear su primer sitio"
 
 #: home/templates/home/welcome_page.html:49
 msgid "Admin Interface"
-msgstr ""
+msgstr "Interfase de administración"
 
 #: home/templates/home/welcome_page.html:50
 msgid "Create your superuser first!"
-msgstr ""
+msgstr "Crear un super usuario primero!"
 
 #: inter/templates/channel/details.html:17
 #: wagtailvideos/wagtailvideos/models.py:89
@@ -76,7 +77,7 @@ msgstr ""
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/index.html:4
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/index.html:23
 msgid "Channel"
-msgstr ""
+msgstr "Canal"
 
 #: inter/templates/channel/index.html:16
 #: inter/templates/dashboard_header.html:23
@@ -84,118 +85,118 @@ msgstr ""
 #: wagtailvideos/wagtailvideos/models.py:90
 #: wagtailvideos/wagtailvideos/wagtail_hooks.py:47
 msgid "Channels"
-msgstr ""
+msgstr "Canales"
 
 #: inter/templates/channel/index.html:24
 msgid "media"
-msgstr ""
+msgstr "Medios"
 
 #: inter/templates/dashboard/history.html:19
 #: inter/templates/dashboard_sidebar.html:38
 msgid "History"
-msgstr ""
+msgstr "Histórico"
 
 #: inter/templates/dashboard/history.html:29
 #: inter/templates/dashboard/library.html:29
 msgid "No media available"
-msgstr ""
+msgstr "No hay medios disponibles"
 
 #: inter/templates/dashboard/library.html:20
 #: inter/templates/dashboard_sidebar.html:10
 msgid "Library"
-msgstr ""
+msgstr "Librería"
 
 #: inter/templates/dashboard_header.html:7
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/chooser/chooser.html:7
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: inter/templates/dashboard_header.html:24
 msgid "Paid Membership"
-msgstr ""
+msgstr "Membresía pagada"
 
 #: inter/templates/dashboard_header.html:34
 msgid "Notification"
-msgstr ""
+msgstr "Notificación"
 
 #: inter/templates/dashboard_header.html:109
 msgid "Manage your account"
-msgstr ""
+msgstr "Administrar su cuenta"
 
 #: inter/templates/dashboard_header.html:112
 #: inter/templates/wagtailadmin/base.html:7
 #: inter/templates/wagtailadmin/base.html:17
 #: inter/templates/wagtailadmin/home.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Panel de Control"
 
 #: inter/templates/dashboard_header.html:113
 msgid "Profile"
-msgstr ""
+msgstr "Perfil"
 
 #: inter/templates/dashboard_header.html:114
 msgid "Logout"
-msgstr ""
+msgstr "Cerrar Sesión"
 
 #: inter/templates/dashboard_sidebar.html:7
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
 #: inter/templates/dashboard_sidebar.html:8
 msgid "Trendings"
-msgstr ""
+msgstr "Tendencia"
 
 #: inter/templates/dashboard_sidebar.html:39
 msgid "Favorite"
-msgstr ""
+msgstr "Favoritos"
 
 #: inter/templates/home/document_detail.html:70
 #: inter/templates/home/video_detail.html:66
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/usage.html:16
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: inter/templates/home/document_detail.html:71
 #: inter/templates/home/video_detail.html:67
 msgid "Created At"
-msgstr ""
+msgstr "Creado el"
 
 #: inter/templates/home/document_detail.html:72
 #: inter/templates/home/video_detail.html:68
 msgid "Licensed by"
-msgstr ""
+msgstr "Licencia de"
 
 #: inter/templates/home/document_detail.html:77
 #: inter/templates/home/video_detail.html:73
 msgid "Read More"
-msgstr ""
+msgstr "Leer Más"
 
 #: inter/templates/home/document_detail.html:86
 #: inter/templates/home/document_detail.html:99
 #: inter/templates/home/video_detail.html:81
 #: inter/templates/home/video_detail.html:94
 msgid "Comment"
-msgstr ""
+msgstr "Comentarios"
 
 #: inter/templates/home/document_detail.html:103
 #: inter/templates/home/video_detail.html:98
 msgid "Please login to post a comments"
-msgstr ""
+msgstr "Por favor inicie sesión para agregar comentarios"
 
 #: inter/templates/home/document_detail.html:121
 #: inter/templates/home/video_detail.html:117
 msgid "There are no comments Yet"
-msgstr ""
+msgstr "No hay comentarios aún"
 
 #: inter/templates/home/document_detail.html:129
 #: inter/templates/home/video_detail.html:125
 msgid "Next"
-msgstr ""
+msgstr "Siguiente"
 
 #: inter/templates/home/document_detail.html:131
 #: inter/templates/home/video_detail.html:127
 msgid "No Next Content"
-msgstr ""
+msgstr "No hay contenido siguiente"
 
 #: inter/templates/home/document_detail.html:142
 #: inter/templates/home/video_detail.html:139
@@ -203,29 +204,29 @@ msgstr ""
 #: inter/templates/media_template/index_horizontal.html:17
 #: inter/templates/media_template/vertical.html:17
 msgid "views"
-msgstr ""
+msgstr "Vistas"
 
 #: inter/templates/home/search_results.html:18
 msgid "Search Results"
-msgstr ""
+msgstr "Resultados de la búsqueda"
 
 #: inter/templates/home_header.html:14
 msgid "Associated Access"
-msgstr ""
+msgstr "Acceso de Socios"
 
 #: inter/templates/home_header.html:18
 msgid "Enter"
-msgstr ""
+msgstr "Entrar"
 
 #: inter/templates/media_template/horizontal.html:19
 #: inter/templates/media_template/index_horizontal.html:18
 #: inter/templates/media_template/vertical.html:18
 msgid "ago"
-msgstr ""
+msgstr "hace"
 
 #: inter/templates/wagtailadmin/base.html:55
 msgid "Menu"
-msgstr ""
+msgstr "Menú"
 
 #: inter/templates/wagtailadmin/common_template/create.html:21
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/add.html:24
@@ -233,46 +234,47 @@ msgstr ""
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/add.html:33
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:40
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: inter/templates/wagtailadmin/home.html:19
 msgid "Welcome To The Administration Platform"
-msgstr ""
+msgstr "Bienvenido a la plataforma administrativa"
 
 #: inter/templates/wagtailadmin/home.html:30
 msgid ""
 "This is your dashboard on which helpful information about content you've "
 "created will be displayed."
-msgstr ""
+msgstr "Este es el tablero de control"
 
 #: inter/templates/wagtailadmin/login.html:3
 #: inter/templates/wagtailadmin/login.html:83
 msgid "Sign in"
-msgstr ""
+msgstr "Iniciar Sesión"
 
 #: inter/templates/wagtailadmin/login.html:18
-#, python-format
 msgid "Your %(username_field)s and password didn't match. Please try again."
-msgstr ""
+msgstr "El usuario %(username_field) y la contraseña no coinciden. favor de reintentar."
 
 #: inter/templates/wagtailadmin/login.html:36
 msgid "ADMINISTRATION PLATFORM"
-msgstr ""
+msgstr "PLATAFORMA ADMINISTRATIVA"
 
 #: inter/templates/wagtailadmin/login.html:56
 msgid "Forgotten it?"
-msgstr ""
+msgstr "Lo olvidó?"
 
 #: inter/templates/wagtailadmin/login.html:83
 msgid "Signing in…"
-msgstr ""
+msgstr "Iniciando Sesión..."
 
 #: inter/templates/wagtailadmin/skeleton.html:23
 msgid ""
 "You are using an <strong>outdated</strong> browser not supported by this "
 "software. Please <a href=\"http://browsehappy.com/\">upgrade your browser</"
 "a>."
-msgstr ""
+msgstr "Está utilizando un navegador <strong>no soportado</strong> por esta "
+"plataforma. por favor <a href=\"http://browsehappy.com/\">actualice su navegador </"
+"a>."
 
 #: inter/templates/wagtailadmin/skeleton.html:26
 msgid ""
@@ -287,321 +289,309 @@ msgstr ""
 
 #: modules/dashboard/models.py:55 modules/dashboard/models.py:56
 msgid "Media Views"
-msgstr ""
+msgstr "Vista de Medios"
 
 #: modules/dashboard/models.py:57
 msgid "Content Type"
-msgstr ""
+msgstr "Tipo de Contenido"
 
 #: modules/dashboard/models.py:58
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #: modules/dashboard/models.py:59
 msgid "Content ID"
-msgstr ""
+msgstr "ID del Contenido"
 
 #: modules/dashboard/models.py:61
 msgid "Total Views"
-msgstr ""
+msgstr "Vistas Totales"
 
 #: modules/documents/models.py:20 modules/documents/models.py:21
 #: modules/documents/models.py:37 modules/documents/models.py:91
 #: wagtailvideos/wagtailvideos/models.py:114
 msgid "Area"
-msgstr ""
+msgstr "Area"
 
 #: modules/documents/models.py:22
 msgid "Area name"
-msgstr ""
+msgstr "Nombre de Area"
 
 #: modules/documents/models.py:23 modules/documents/models.py:36
 #: modules/documents/models.py:49 modules/documents/models.py:63
 #: modules/documents/models.py:76 modules/users/models.py:19
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #: modules/documents/models.py:33 modules/documents/models.py:34
 #: modules/documents/models.py:50 modules/documents/models.py:92
 #: wagtailvideos/wagtailvideos/models.py:115
 msgid "Subject"
-msgstr ""
+msgstr "Tema"
 
 #: modules/documents/models.py:35
 msgid "Subject name"
-msgstr ""
+msgstr "Nombre del Tema"
 
 #: modules/documents/models.py:46 modules/documents/models.py:47
 #: modules/documents/models.py:64 modules/documents/models.py:93
 #: wagtailvideos/wagtailvideos/models.py:116
 msgid "Topic"
-msgstr ""
+msgstr "Tópico"
 
 #: modules/documents/models.py:48
 msgid "Topic name"
-msgstr ""
+msgstr "Nombre del Tópico"
 
 #: modules/documents/models.py:60 modules/documents/models.py:61
 #: modules/documents/models.py:94 wagtailvideos/wagtailvideos/models.py:117
 msgid "SubTopic"
-msgstr ""
+msgstr "SubTópico"
 
 #: modules/documents/models.py:62
 msgid "Subtopic name"
-msgstr ""
+msgstr "Nombre del Subtópico"
 
 #: modules/documents/models.py:73 modules/documents/models.py:74
 msgid "Nature"
-msgstr ""
+msgstr "Naturaleza"
 
 #: modules/documents/models.py:75
 msgid "Nature name"
-msgstr ""
+msgstr "Descripción de la Naturaleza"
 
 #: modules/documents/models.py:89 wagtailvideos/wagtailvideos/models.py:97
 msgid "Public"
-msgstr ""
+msgstr "Público"
 
 #: modules/documents/models.py:90 wagtailvideos/wagtailvideos/models.py:98
 msgid "Private"
-msgstr ""
+msgstr "Privado"
 
 #: modules/documents/models.py:95 wagtailvideos/wagtailvideos/models.py:118
 msgid "Natures"
-msgstr ""
+msgstr "Naturaleza"
 
 #: modules/documents/models.py:103 wagtailvideos/wagtailvideos/models.py:120
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: modules/documents/models.py:104 wagtailvideos/wagtailvideos/models.py:121
 msgid "Author Profession"
-msgstr ""
+msgstr "Profesión del Autor"
 
 #: modules/documents/models.py:105 wagtailvideos/wagtailvideos/models.py:122
 msgid "Validity Start"
-msgstr ""
+msgstr "Inicio de Vigencia"
 
 #: modules/documents/models.py:106 wagtailvideos/wagtailvideos/models.py:123
 msgid "Validity End"
-msgstr ""
+msgstr "Find de Vigencia"
 
 #: modules/documents/models.py:107 wagtailvideos/wagtailvideos/models.py:124
 msgid "Synthesis"
-msgstr ""
+msgstr "Síntesis"
 
 #: modules/documents/models.py:108 wagtailvideos/wagtailvideos/models.py:125
 msgid "Publish At"
-msgstr ""
+msgstr "Inicio de Publicación"
 
 #: modules/documents/models.py:109 wagtailvideos/wagtailvideos/models.py:126
 msgid "Publish End"
-msgstr ""
+msgstr "Fin de Publicación"
 
 #: modules/documents/models.py:110 wagtailvideos/wagtailvideos/models.py:127
 msgid "Republish At"
-msgstr ""
+msgstr "Republicado en"
 
 #: modules/documents/models.py:111 wagtailvideos/wagtailvideos/models.py:79
 #: wagtailvideos/wagtailvideos/models.py:104
 msgid "created at"
-msgstr ""
+msgstr "Creado en"
 
 #: modules/users/models.py:15
 msgid "Associate Level"
-msgstr ""
+msgstr "Nivel del Socio"
 
 #: modules/users/models.py:16
 msgid "Associate Levels"
-msgstr ""
+msgstr "Niveles de Socios"
 
 #: modules/users/models.py:17
 msgid "Level Title"
-msgstr ""
+msgstr "Título del Nivel"
 
 #: modules/users/models.py:18
 msgid "Allowed users"
-msgstr ""
+msgstr "Usuarios Permitidos"
 
 #: modules/users/models.py:31
 msgid "RFC"
-msgstr ""
+msgstr "RFC"
 
 #: modules/users/models.py:32
 msgid "Tax residence"
-msgstr ""
+msgstr "Ciudad"
 
 #: modules/users/models.py:33
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #: modules/users/models.py:34
 msgid "Sociaty"
-msgstr ""
+msgstr "Tipo de Sociedad"
 
 #: modules/users/models.py:35
 msgid "Legal representative"
-msgstr ""
+msgstr "Representante Legal"
 
 #: modules/users/models.py:36
 msgid "Membership Start Date"
-msgstr ""
+msgstr "Inicio de Memnbresía"
 
 #: modules/users/models.py:37
 msgid "Membership End Date"
-msgstr ""
+msgstr "Fin de Membresía"
 
 #: modules/users/models.py:38
 msgid "Sector"
-msgstr ""
+msgstr "Sector"
 
 #: modules/users/models.py:39
 msgid "Web page"
-msgstr ""
+msgstr "Página Web"
 
 #: modules/users/models.py:40
 msgid "Email address"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: modules/users/models.py:41
 msgid "Level of associate"
-msgstr ""
+msgstr "Nivel de Socio"
 
 #: modules/users/models.py:61
-msgid "Allowed users limit has reached."
-msgstr ""
+msgid "Max allowed users reached for that membership"
+msgstr "Ya se tiene aisgnado el número máximo de usuarios para ese socio."
 
 #: wagtailvideos/wagtailvideos/fields.py:19
 #, python-format
 msgid "Maximum filesize: %(max_upload_size)s."
-msgstr ""
+msgstr "Tamaño máximo de archivo: %(max_upload_size)s."
 
 #: wagtailvideos/wagtailvideos/fields.py:26
 #, python-format
 msgid "Not a valid video. Content type was %s."
-msgstr ""
+msgstr "No es un video válido. El tipo de contenido es %s."
 
 #: wagtailvideos/wagtailvideos/fields.py:30
 #, python-format
 msgid "This file is too big (%%s). Maximum filesize %s."
-msgstr ""
+msgstr "El archivo es muy grande (%%s). El Tamaño máximo es %s."
 
 #: wagtailvideos/wagtailvideos/fields.py:34
 #, python-format
 msgid "This file is too big. Maximum filesize %s."
-msgstr ""
+msgstr "El archivo es muy grande. El máximo es %s."
 
 #: wagtailvideos/wagtailvideos/forms.py:83
 msgid "Add"
-msgstr ""
+msgstr "Agregar"
 
 #: wagtailvideos/wagtailvideos/forms.py:83
 msgid "Add/edit images you own"
-msgstr ""
+msgstr "Agregar/editar sus imagenes"
 
 #: wagtailvideos/wagtailvideos/forms.py:84
 #: wagtailvideos/wagtailvideos/views/channel.py:116
 #: wagtailvideos/wagtailvideos/views/videos.py:168
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: wagtailvideos/wagtailvideos/forms.py:84
 msgid "Edit any video"
-msgstr ""
+msgstr "Editar video"
 
 #: wagtailvideos/wagtailvideos/models.py:77
 #: wagtailvideos/wagtailvideos/models.py:100
 msgid "title"
-msgstr ""
+msgstr "título"
 
 #: wagtailvideos/wagtailvideos/models.py:102
 #: wagtailvideos/wagtailvideos/models.py:406
 msgid "file"
-msgstr ""
+msgstr "archivo"
 
 #: wagtailvideos/wagtailvideos/models.py:107
 msgid "uploaded by user"
-msgstr ""
+msgstr "subido por usuario"
 
 #: wagtailvideos/wagtailvideos/models.py:111
 msgid "tags"
-msgstr ""
+msgstr "Palabras Clave"
 
 #: wagtailvideos/wagtailvideos/models.py:112
 msgid "Scope"
-msgstr ""
+msgstr "Alcance"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/add.html:3
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/add.html:3
 msgid "Add an image"
-msgstr ""
+msgstr "Agregar una imagen"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/add.html:10
 msgid "Add Channel"
-msgstr ""
+msgstr "Agregar Canal"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/confirm_delete.html:4
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/confirm_delete.html:7
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/edit.html:32
 msgid "Delete channel"
-msgstr ""
+msgstr "Eliminar Canal"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/confirm_delete.html:13
 msgid "Are you sure you want to delete this channel ?"
-msgstr ""
+msgstr "Esta seguro de eliminar este canal?"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/confirm_delete.html:16
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/confirm_delete.html:18
 msgid "Yes, delete"
-msgstr ""
+msgstr "Si, Eliminar"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/edit.html:5
-#, python-format
 msgid "Editing Channel %(title)s"
-msgstr ""
+msgstr "Editando Canal %(title)"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/edit.html:11
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:20
 msgid "Editing"
-msgstr ""
+msgstr "Editando"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/index.html:25
 msgid "Add a channel"
-msgstr ""
+msgstr "Agregar un Canal"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/results.html:6
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/chooser/results.html:6
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/results.html:6
-#, python-format
-msgid ""
-"\n"
-"            There is one match\n"
-"        "
-msgid_plural ""
-"\n"
-"            There are %(counter)s matches\n"
-"        "
-msgstr[0] ""
-msgstr[1] ""
+
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/results.html:15
 msgid "Latest channels"
-msgstr ""
+msgstr "Canales Recientes"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/results.html:33
 #, python-format
 msgid "Sorry, no channels match \"<em>%(query_string)s</em>\""
-msgstr ""
+msgstr "Lo siento, no hay canales que coincidan con la busqueda. \"<em>%(query_string)s</em>\""
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/results.html:39
-#, python-format
 msgid ""
 "You've not uploaded any channels in this collection. Why not <a href="
 "\"%(wagtailvideos_add_channel_url)s\">add one now</a>?"
-msgstr ""
+msgstr "No hay canales aún. Por que no <a href="
+"\"%(wagtailvideos_add_channel_url)s\">Agrega un Canal ahora</a>?"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/channels/results.html:41
-#, python-format
 msgid ""
 "You've not uploaded any channels. Why not <a href="
 "\"%(wagtailvideos_add_channel_url)s\">add one now</a>?"
@@ -610,153 +600,152 @@ msgstr ""
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/chooser/chooser.html:2
 #: wagtailvideos/wagtailvideos/widgets.py:11
 msgid "Choose a video"
-msgstr ""
+msgstr "Elija un video"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/chooser/chooser.html:8
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/chooser/chooser.html:49
 msgid "Upload"
-msgstr ""
+msgstr "Subir"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/chooser/chooser.html:24
 msgid "Popular tags"
-msgstr ""
+msgstr "Palabras Clave Populares"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/chooser/chooser.html:49
 msgid "Uploading..."
-msgstr ""
+msgstr "Subiendo..."
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/chooser/results.html:13
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/results.html:15
 msgid "Latest videos"
-msgstr ""
+msgstr "Videos recientes"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:3
 msgid "Add multiple videos"
-msgstr ""
+msgstr "Agregar múltiples videos"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:11
 msgid "Add videos"
-msgstr ""
+msgstr "Agregar Videos"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:16
 msgid "Drag and drop videos into this area to upload immediately."
-msgstr ""
+msgstr "Arrastre y suelte los videos aqui para subir inmediatamente."
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:21
 msgid "Or choose from your computer"
-msgstr ""
+msgstr "O seeccione uno de su computadora"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:27
 msgid "Add to collection:"
-msgstr ""
+msgstr "Agregar a la colección:"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:57
 msgid ""
 "Upload successful. Please update this video with a more appropriate title, "
 "if necessary. You may also delete the video completely if the upload wasn't "
 "required."
-msgstr ""
+msgstr "Carga Exitosa. Por favor actualice el video con un título apropiado, "
+"si es necesario. Puede también eliminar el video completamente si la publicación no es requerida."
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:58
 msgid "Sorry, upload failed."
-msgstr ""
+msgstr "Falló la carga del archivo."
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:59
 msgid "Video updated."
-msgstr ""
+msgstr "Video actualizado"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/edit_form.html:13
 msgid "Update"
-msgstr ""
+msgstr "Actualizar"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/edit_form.html:14
 #: wagtailvideos/wagtailvideos/views/videos.py:111
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/permissions/includes/video_permissions_formset.html:4
 msgid "Video permissions"
-msgstr ""
+msgstr "permisos del Video"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/permissions/includes/video_permissions_formset.html:5
 msgid "Add an video permission"
-msgstr ""
+msgstr "Agregar permisos al video"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/_file_field.html:6
 msgid "Change video file:"
-msgstr ""
+msgstr "Cambiar archivo de video:"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/add.html:19
 msgid "Add video"
-msgstr ""
+msgstr "Agregar video"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/confirm_delete.html:4
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/confirm_delete.html:7
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:41
 msgid "Delete video"
-msgstr ""
+msgstr "Eliminar video"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/confirm_delete.html:15
 msgid "Are you sure you want to delete this video?"
-msgstr ""
+msgstr "Esta seguro de que desea eliminar el video?"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:5
-#, python-format
 msgid "Editing video %(title)s"
-msgstr ""
+msgstr "Editando el video %(title)"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:47
 msgid "Video preview"
-msgstr ""
+msgstr "Previsualizar video"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:85
 msgid "Thumbnail"
-msgstr ""
+msgstr "Miniatura"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:88
 msgid "Filesize"
-msgstr ""
+msgstr "Tamaño"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:89
 msgid "File not found"
-msgstr ""
+msgstr "Archivo no encontrado"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:91
 msgid "Duration"
-msgstr ""
+msgstr "Duración"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:95
 msgid "Usage"
-msgstr ""
+msgstr "Uso"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/edit.html:97
-#, python-format
 msgid "Used %(usage_count)s time"
 msgid_plural "Used %(usage_count)s times"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Utilizado %(usage_count) vez"
+msgstr[1] "Utilizado %(usage_count) veces"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/index.html:4
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/index.html:23
 #: wagtailvideos/wagtailvideos/wagtail_hooks.py:39
 msgid "Videos"
-msgstr ""
+msgstr "Videos"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/index.html:25
 msgid "Add a video"
-msgstr ""
+msgstr "Agregar un video"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/results.html:37
-#, python-format
 msgid "Sorry, no videos match \"<em>%(query_string)s</em>\""
-msgstr ""
+msgstr "Lo siento, no hay videos que coinciden con su búsqueda \"<em>%(query_string)s</em>\""
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/results.html:43
 #, python-format
 msgid ""
 "You've not uploaded any videos in this collection. Why not <a href="
 "\"%(wagtailvideos_add_video_url)s\">add one now</a>?"
-msgstr ""
+msgstr "No hay videos en esta colección. Por que no <a href="
+"\"%(wagtailvideos_add_video_url)s\">Agregamos uno ahora</a>?"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/results.html:45
 #, python-format
@@ -766,101 +755,100 @@ msgid ""
 msgstr ""
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/usage.html:3
-#, python-format
 msgid "Usage of %(title)s"
-msgstr ""
+msgstr "Uso de %(title)"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/usage.html:5
 msgid "Usage of"
-msgstr ""
+msgstr "Uso de "
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/usage.html:17
 msgid "Parent"
-msgstr ""
+msgstr "Padre"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/usage.html:18
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/usage.html:19
 msgid "Status"
-msgstr ""
+msgstr "Estatus"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/videos/usage.html:26
 msgid "Edit this page"
-msgstr ""
+msgstr "Editar esta página"
 
 #: wagtailvideos/wagtailvideos/views/channel.py:29
 #: wagtailvideos/wagtailvideos/views/channel.py:35
 msgid "Search Channel"
-msgstr ""
+msgstr "Buscar Canal"
 
 #: wagtailvideos/wagtailvideos/views/channel.py:74
 #, python-brace-format
 msgid "Channel '{0}' updated."
-msgstr ""
+msgstr "Canal '{0}' actualizados."
 
 #: wagtailvideos/wagtailvideos/views/channel.py:75
 #: wagtailvideos/wagtailvideos/views/videos.py:98
 msgid "Edit again"
-msgstr ""
+msgstr "Editar nuevamente"
 
 #: wagtailvideos/wagtailvideos/views/channel.py:79
 msgid "The channel could not be saved due to errors."
-msgstr ""
+msgstr "El canal no pudo guardarse por los siguientes errores."
 
 #: wagtailvideos/wagtailvideos/views/channel.py:97
 #, python-brace-format
 msgid "Channel '{0}' deleted."
-msgstr ""
+msgstr "Canal '{0}' eliminado."
 
 #: wagtailvideos/wagtailvideos/views/channel.py:115
 #, python-brace-format
 msgid "Channel '{0}' added."
-msgstr ""
+msgstr "Canal '{0}' Añadido."
 
 #: wagtailvideos/wagtailvideos/views/channel.py:120
 msgid "The channel could not be created due to errors."
-msgstr ""
+msgstr "El canal no pudo crearse debido a los siguientes errores."
 
 #: wagtailvideos/wagtailvideos/views/videos.py:30
 #: wagtailvideos/wagtailvideos/views/videos.py:36
 msgid "Search videos"
-msgstr ""
+msgstr "Buscar videos"
 
 #: wagtailvideos/wagtailvideos/views/videos.py:97
 #, python-brace-format
 msgid "Video '{0}' updated."
-msgstr ""
+msgstr "Video '{0}' actualizado."
 
 #: wagtailvideos/wagtailvideos/views/videos.py:102
 msgid "The video could not be saved due to errors."
-msgstr ""
+msgstr "El video no pudo guardarse debido a los siguientes errores."
 
 #: wagtailvideos/wagtailvideos/views/videos.py:109
 msgid ""
 "The source video file could not be found. Please change the source or delete "
 "the video."
-msgstr ""
+msgstr "El archivo fuente no fué encontrado. Por favor verifique."
 
 #: wagtailvideos/wagtailvideos/views/videos.py:142
 #, python-brace-format
 msgid "Video '{0}' deleted."
-msgstr ""
+msgstr "El video '{0}' eliminado."
 
 #: wagtailvideos/wagtailvideos/views/videos.py:167
 #, python-brace-format
 msgid "Video '{0}' added."
-msgstr ""
+msgstr "El video '{0}' agregado."
 
 #: wagtailvideos/wagtailvideos/views/videos.py:172
 msgid "The video could not be created due to errors."
-msgstr ""
+msgstr "El video no pudo crearse debido a los siguientes errores."
 
 #: wagtailvideos/wagtailvideos/widgets.py:12
 msgid "Choose another video"
-msgstr ""
+msgstr "Seleccione otro video"
 
 #: wagtailvideos/wagtailvideos/widgets.py:13
 msgid "Edit this video"
-msgstr ""
+msgstr "Editar este video"
