@@ -4,7 +4,7 @@
     <div class="search-option">
       <div class="share-popup-backdrop d-md-none"></div>
       <form method="get" action="/users/search/" class="search-form">
-        <input type="text" placeholder="{% trans 'Search' %}..." class="form-control" name="q", id="search">
+        <input type="text" placeholder="{% trans 'Search' %}..." class="form-control" name="q", id="search" value="{{request.GET.q}}">
         <button type="submit" class="search-icon"><i class="far fa-search"></i></button>
         <a href="javascript:void(0);" class="close-search d-md-none"><i class="fal fa-long-arrow-left"></i></a>
       </form>
