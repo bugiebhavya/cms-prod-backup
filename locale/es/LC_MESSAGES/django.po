@@ -327,7 +327,7 @@ msgstr "Notas"
 #: modules/documents/models.py:50 modules/documents/models.py:92
 #: wagtailvideos/wagtailvideos/models.py:115
 msgid "Subject"
-msgstr "Tema"
+msgstr "Materia"
 
 #: modules/documents/models.py:35
 msgid "Subject name"
@@ -337,7 +337,7 @@ msgstr "Nombre del Tema"
 #: modules/documents/models.py:64 modules/documents/models.py:93
 #: wagtailvideos/wagtailvideos/models.py:116
 msgid "Topic"
-msgstr "Tópico"
+msgstr "Tema"
 
 #: modules/documents/models.py:48
 msgid "Topic name"
@@ -346,7 +346,7 @@ msgstr "Nombre del Tópico"
 #: modules/documents/models.py:60 modules/documents/models.py:61
 #: modules/documents/models.py:94 wagtailvideos/wagtailvideos/models.py:117
 msgid "SubTopic"
-msgstr "SubTópico"
+msgstr "SubTema"
 
 #: modules/documents/models.py:62
 msgid "Subtopic name"
