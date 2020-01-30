@@ -12,7 +12,7 @@
 		{% endif %}
 	</div>
 	<div class="video-detail">
-		<h3>{{media.title|truncatechars:100}}</h3>
+		<h3>{{media.title|truncatechars:28}}</h3>
 		<div class="video-meta">
 			<span class="total-views">{{media.media_views.last.iviews}} {% trans 'views' %}</span>
 			<span class="post-date">{{ media.created_at|timesince }} {% trans 'ago' %}</span>
