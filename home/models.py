@@ -27,7 +27,7 @@ class HomePageCarouselVideos(Orderable):
 		"wagtailvideos.Video",
 		null = True, 
 		blank = False,
-		on_delete= models.SET_NULL,
+		on_delete= models.CASCADE,
 		related_name = "+" 
 		)
 	
@@ -36,7 +36,7 @@ class HomePageCarouselVideos(Orderable):
 		"documents.CustomDocument",
 		null = True, 
 		blank = True,
-		on_delete= models.SET_NULL,
+		on_delete= models.CASCADE,
 		related_name = "+" 
 	)
 
@@ -155,7 +155,7 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		self.update_views(media, request.user)
 		comments = media.comments.all()
 		commentable = True
-		category_videos = Video.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)
+		category_videos = Video.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
 		
 		return render(request, 'home/video_detail.html', {'video': media, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
 
@@ -169,7 +169,7 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		self.update_views(media, request.user)
 		comments = media.comments.all()
 		commentable = True
-		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id)
+		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
 		
 		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
 

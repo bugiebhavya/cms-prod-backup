@@ -20,14 +20,24 @@
           <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
           <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
           <link href="{% static 'css/video-js.css' %}" rel="stylesheet" type="text/css">
-        <style type="text/css">
-          .site-header .navbar-brand img {
-            max-height: 70px !important;
-          }
-        </style>
+        {% if request.user.is_authenticated %}
+          <style type="text/css">
+            .site-header .navbar-brand img {
+              max-height: 70px !important;
+            }
+            
+          </style>
+        {% else %}
+          <style type="text/css">
+            .header-bottom {
+                background-color: #000;
+                padding: 8px 33px !important;
+            }
+          </style>
+        {% endif %}
 </head>
 
-<body class="loggedin">
+<body class="{% if user.is_authenticated %} loggedin{% endif %}">
   {% block header %}
 
   {% endblock %}
@@ -100,7 +110,7 @@
         {% if messages %}
             {% for message in messages %}
                 <div id="message_container" class="alert alert-danger">
-                <strong >{% trans message %}</strong>
+                <strong >{{message }}</strong>
             </div>
             {% endfor %}
         

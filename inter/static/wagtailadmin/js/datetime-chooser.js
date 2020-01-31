@@ -29,7 +29,7 @@ function DateChooser(id, opts) {
             closeOnDateSelect: true,
             timepicker: false,
             scrollInput: false,
-            format: 'Y-m-d',
+            format: 'd/m/Y',
             onGenerate: hideCurrent,
             onChangeDateTime: function(_, $el) {
               $el.get(0).dispatchEvent(new Event('change'))
@@ -39,7 +39,7 @@ function DateChooser(id, opts) {
         $('#' + id).datetimepicker($.extend({
             timepicker: false,
             scrollInput: false,
-            format: 'Y-m-d',
+            format: 'd/m/Y',
             onGenerate: hideCurrent,
             onChangeDateTime: function(_, $el) {
               $el.get(0).dispatchEvent(new Event('change'))
@@ -74,7 +74,7 @@ function DateTimeChooser(id, opts) {
     if (window.dateTimePickerTranslations) {
         $('#' + id).datetimepicker($.extend({
             closeOnDateSelect: true,
-            format: 'Y-m-d H:i',
+            format: 'd/m/Y H:i',
             scrollInput: false,
             onGenerate: hideCurrent,
             onChangeDateTime: function(_, $el) {
@@ -83,7 +83,7 @@ function DateTimeChooser(id, opts) {
         }, opts || {}));
     } else {
         $('#' + id).datetimepicker($.extend({
-            format: 'Y-m-d H:i',
+            format: 'd/m/Y H:i',
             onGenerate: hideCurrent,
             onChangeDateTime: function(_, $el) {
               $el.get(0).dispatchEvent(new Event('change'))
@@ -93,12 +93,12 @@ function DateTimeChooser(id, opts) {
 }
 
 $(document).ready(function(){
-    $('.date_time_input').each(function(){ var ids = $(this).find('input').attr('id'); DateTimeChooser(ids, {"dayOfWeekStart": 0, "format": "Y-m-d H:i:s"});})
-    $('.date_input').each(function(){ var ids = $(this).find('input').attr('id'); DateChooser(ids, {"dayOfWeekStart": 0, "format": "Y-m-d"});})
+    $('.date_time_input').each(function(){ var ids = $(this).find('input').attr('id'); DateTimeChooser(ids, {"dayOfWeekStart": 0, format: "d/m/Y H:i:s"});})
+    $('.date_input').each(function(){ var ids = $(this).find('input').attr('id'); DateChooser(ids, {"dayOfWeekStart": 0, format: "d/m/Y"});})
     setInterval(function(){
         if($('.upload-complete')[0] != undefined){
-            $('.date_time_input').each(function(){ var ids = $(this).find('input').attr('id'); DateTimeChooser(ids, {"dayOfWeekStart": 0, "format": "Y-m-d H:i:s"});})
-            $('.date_input').each(function(){ var ids = $(this).find('input').attr('id'); DateChooser(ids, {"dayOfWeekStart": 0, "format": "Y-m-d"});}) 
+            $('.date_time_input').each(function(){ var ids = $(this).find('input').attr('id'); DateTimeChooser(ids, {"dayOfWeekStart": 0, format: "d/m/Y H:i:s"});})
+            $('.date_input').each(function(){ var ids = $(this).find('input').attr('id'); DateChooser(ids, {"dayOfWeekStart": 0, format: "d/m/Y"});}) 
         }
     }, 1000)
 

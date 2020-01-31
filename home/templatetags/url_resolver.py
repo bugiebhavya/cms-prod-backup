@@ -3,12 +3,14 @@ import pdb
 register = Library()
 
 @register.simple_tag()
-def reverse_url(page, url_name, args, base_url=''):
+def reverse_url(page, url_name, channel, base_url=''):
 	if page.url:
 		base_url = page.url
-
-	url = base_url + page.reverse_subpage(url_name,args=[args])
-	return url
+	try:
+		url = base_url + page.reverse_subpage(url_name,args=[channel])
+		return url
+	except:
+		return base_url
 
 @register.simple_tag()
 def area_list():

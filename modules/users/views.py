@@ -41,7 +41,6 @@ class FavAlterView(FormView):
                         return JsonResponse({
                             'success': 0,
                             'error': "You have to sign in "})
-                Favorite.objects.get(id=fav.id)
             else:
                 if self.request.user.is_authenticated:
                     Favorite.objects.filter(

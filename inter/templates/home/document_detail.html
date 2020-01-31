@@ -5,198 +5,214 @@
 {% load i18n %}
 {% load favorite_tags %}
 {% block header %}
-<header class="login-header d-flex align-items-center">
-  {% include 'dashboard_header.html' %}
-</header>
+{% include 'home_header.html' %}
 {% endblock %}
 
 {% block body %}
+{% if user.is_authenticated %} 
 {% include 'dashboard_sidebar.html' %}
+{% endif %}
 
 <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-9 single-video-page">
-          <!-- <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=&embedded=true" frameborder="0"  width='400' height='500' allowfullscreen webkitallowfullscreen> -->
-<!-- </iframe> -->
-      
-          <iframe id="docs" src="https://docs.google.com/viewer?url={{base_url}}{{document.file.url}}&embedded=true" frameborder="0"  width='400' height='500' allowfullscreen webkitallowfullscreen>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-9 col-md-4  single-video-page">
+        <div class="row">
+        {% if not user.is_authenticated %} 
+          <aside class="col-lg-3 col-md-4 twitter-sidebar">
+            <div class="twitter-holder">
+              <a class="twitter-timeline" href="https://twitter.com/interejecutivos?ref_src=twsrc%5Etfw">Tweets by
+              interejecutivos</a>
+              <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+          </aside>
+          <div class="col-lg-9">
+            {% else %}
+              <div class="col-lg-12">
+                {% endif %}
 
-          </iframe>
-          <div class="video-information">
-            <div class="tags">
-              {% for tag in document.tags.all %}
-                <a href="#">#{{tag.name}}</a>
+                <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{base_url}}{{document.file.url}}&embedded=true" frameborder="0"  width='400' height='500' allowfullscreen webkitallowfullscreen> </iframe> 
+
+                <div class="video-information">
+                  <div class="tags">
+                    {% for tag in document.tags.all %}
+                    <a href="#">#{{tag.name}}</a>
+                    {% endfor %}
+                  </div>
+                  <h1>{{document.title}}</h1>
+                  <div class="info">
+                    <div class="info-text">
+                      <span class="count">{{document.media_views.last.iviews}} views </span>
+                      <span class="date">{{ document.created_at }}</span>
+                    </div>
+                    <div class="info-menu">
+                      <div class="like-action channel-subscribe">
+                        {% if user.is_authenticated %} 
+                        <!-- for unauthenticated users -->
+                        <div class="fav-btn {% get_fav_notation document user %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {%  get_fav document user %}</div>
+                        {% else %}
+                        <!-- for authenticated users -->
+                        <div class="fav-btn {% get_nofav_notation document request %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {% get_fav_nouser document request %}</div>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="video-desc">
+                    <p>{{document.synthesis}}</p>
+                  </div>
+                </div>
+
+                <div class="channel-information">
+                  <a href="#" class="icon"><img class="thumbnail" src="{% static 'images/clapperboard.png' %}" alt="img"></a>
+                  <div class="channel-details">
+                    <div class="channel-name">
+                      <a href="#">{{ document.channel.title }}</a>
+
+                    </div>
+
+                    <div id="video-full-desp" class="video-full-desp">
+                      <div class="video-description">
+                        <p>{{ document.channel.description }}</p>
+                      </div>
+                      <div class="video-other-info">
+                        <ul>
+                          <li><label>{% trans 'Title' %}</label> {{ document.channel.title }}</li>
+                          <li><label>{% trans 'Created At' %}</label> {{ document.channel.created_at }}</li>
+                          <li><label>{% trans 'Licensed by' %}</label> {{document.author}}</li>
+                        </ul>
+                      </div>
+
+                    </div>
+                    <a href="javascript:void(0);" class="readmore"><span class="more">{% trans 'Read More' %}</span> <span class="less">
+                    {% trans 'Read Less' %}</span>
+                    </a>
+                  </div>
+                </div>
+
+              <div class="comment-block">
+                {% with comments.count as comments_count %}
+                <div class="comment-meta">
+                  <span class="comment_counter" data-count="{{comments_count}}">{% trans 'Comment' %} {{comments_count}}</span>
+                </div>
+                {% endwith %}
+                  <div class="comment-box">
+
+                  <div class="comment-detail">
+                    {% if commentable and request.user and request.user.is_authenticated %}
+                      <form action="" method="post"  id="commentForm">
+                      {% csrf_token %}
+                      <textarea rows="1" class="comment-field" name="body" placeholder="Post Your Comment" required></textarea>
+                      <input type="hidden"  name="content_type" value="Document">
+                      <input type="hidden"  name="object_id" value="{{document.id}}">
+                      <div class="button-group text-right">
+                        <button type="submit" class="btn red">{% trans 'Comment' %}</button>
+                      </div>
+                    </form>
+                    {% else %}
+                    <span class="btn btn-info">{% trans "Please login to post a comments" %} ...</span>
+                    {% endif %} 
+                  </div>
+                </div>
+                <ul class="comment-list">
+                  {% if comments %}
+                  {% for comment in comments %}
+                  <li class="comment-box">
+                    <div class="comment-user-icon">
+                      <img src="{% static 'images/user.png' %}" alt="user">
+                    </div>
+                    <div class="comment-detail">
+                      <h5><a href="#">{{comment.name}}</a> <span>{{comment.created}}</span></h5>
+                      {{comment.body|linebreaks}}
+                    </div>
+                  </li>
+                  {% endfor %}
+                  {% else %}
+                  <p> {% trans 'There are no comments Yet' %}</p>
+                  {% endif %}
+                </ul>
+             </div>
+
+            </div>
+          </div>
+          </div>
+            <div class="col-lg-3 sidebar-right">
+              {% if category_documents.count > 0 %}
+              <h3>{% trans 'Next' %}</h3>
+              {% else %}
+              <h3>{% trans 'No Next Content' %}..</h3>
+              {% endif %}
+              {% for cat_document in category_documents %}
+              <a href="/users/doc-watch/{{cat_document.id}}/" class="video-block">
+                <div class="video-part">
+                  <img class="thumbnail" src="{{ cat_document.thumbnail.url }}" alt="img">
+                  <span class="video-time">{{ cat_document.file_size |convert_size}}</span>
+                </div>
+                <div class="video-detail">
+                  <h3>{{ cat_document.title|safe}}</h3>
+                  <span class="postby">{{cat_document.author|title}}</span>
+                  <span class="total-views">{{cat_document.media_views.last.iviews}} {% trans 'views' %}</span>
+                </div>
+              </a>
               {% endfor %}
             </div>
-            <h1>{{document.title}}</h1>
-            <div class="info">
-              <div class="info-text">
-                <span class="count">{{document.media_views.last.iviews}} views </span>
-                <span class="date">{{ document.created_at }}</span>
-              </div>
-              <div class="info-menu">
-                <div class="like-action channel-subscribe">
-                  {% if user.is_authenticated %} 
-                      <!-- for unauthenticated users -->
-                      <div class="fav-btn {% get_fav_notation document user %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {%  get_fav document user %}</div>
-                  {% else %}
-                     <!-- for authenticated users -->
-                     <div class="fav-btn {% get_nofav_notation document request %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {% get_fav_nouser document request %}</div>
-                  {% endif %}
-                </div>
-              </div>
-
-            </div>
-             <div class="video-desc">
-                <p>{{document.synthesis}}</p>
-              </div>
           </div>
-
-          <div class="channel-information">
-            <a href="#" class="icon"><img class="thumbnail" src="{% static 'images/clapperboard.png' %}" alt="img"></a>
-            <div class="channel-details">
-              <div class="channel-name">
-                <a href="#">{{ document.channel.title }}</a>
-               
-              </div>
-             
-              <div id="video-full-desp" class="video-full-desp">
-                <div class="video-description">
-                  <p>{{ document.channel.description }}</p>
-                </div>
-                <div class="video-other-info">
-                  <ul>
-                    <li><label>{% trans 'Title' %}</label> {{ document.channel.title }}</li>
-                    <li><label>{% trans 'Created At' %}</label> {{ document.channel.created_at }}</li>
-                    <li><label>{% trans 'Licensed by' %}</label> {{document.author}}</li>
-                  </ul>
-                </div>
-                
-              </div>
-              <a href="javascript:void(0);" class="readmore"><span class="more">{% trans 'Read More' %}</span> <span class="less">{% trans 'Read
-                                Less' %}</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="comment-block">
-            {% with comments.count as comments_count %}
-              <div class="comment-meta">
-                <span class="comment_counter" data-count="{{comments_count}}">{% trans 'Comment' %} {{comments_count}}</span>
-              </div>
-            {% endwith %}
-            <div class="comment-box">
-              
-              <div class="comment-detail">
-               {% if commentable and request.user and request.user.is_authenticated %}
-                  <form action="" method="post"  id="commentForm">
-                    {% csrf_token %}
-                    <textarea rows="1" class="comment-field" name="body" placeholder="Post Your Comment" required></textarea>
-                    <input type="hidden"  name="content_type" value="Document">
-                    <input type="hidden"  name="object_id" value="{{document.id}}">
-                    <div class="button-group text-right">
-                      <button type="submit" class="btn red">{% trans 'Comment' %}</button>
-                    </div>
-                  </form>
-               {% else %}
-                <span class="btn btn-info">{% trans "Please login to post a comments" %} ...</span>
-               {% endif %} 
-              </div>
-            </div>
-            <ul class="comment-list">
-              {% if comments %}
-                  {% for comment in comments %}
-                    <li class="comment-box">
-                      <div class="comment-user-icon">
-                        <img src="{% static 'images/user.png' %}" alt="user">
-                      </div>
-                      <div class="comment-detail">
-                        <h5><a href="#">{{comment.name}}</a> <span>{{comment.created}}</span></h5>
-                        {{comment.body|linebreaks}}
-                      </div>
-                    </li>
-                  {% endfor %}
-              {% else %}
-                <p> {% trans 'There are no comments Yet' %}</p>
-              {% endif %}
-            </ul>
-          </div>
-
-        </div>
-        <div class="col-lg-3 sidebar-right">
-          {% if category_documents.count > 0 %}
-           <h3>{% trans 'Next' %}</h3>
-          {% else %}
-            <h3>{% trans 'No Next Content' %}..</h3>
-          {% endif %}
-          {% for cat_document in category_documents %}
-          <a href="/users/doc-watch/{{cat_document.id}}/" class="video-block">
-            <div class="video-part">
-              <img class="thumbnail" src="{{ cat_document.thumbnail.url }}" alt="img">
-              <span class="video-time">{{ cat_document.file_size |convert_size}}</span>
-            </div>
-            <div class="video-detail">
-              <h3>{{ cat_document.title|safe}}</h3>
-              <span class="postby">{{cat_document.author|title}}</span>
-              <span class="total-views">{{cat_document.media_views.last.iviews}} {% trans 'views' %}</span>
-            </div>
-          </a>
-          {% endfor %}
-        </div>
-      </div>
+        
+      
     </div>
   </div>
+</div>
+</div>
 
-{% endblock %}
+      {% endblock %}
 
-{% block script %}
-  <style type="text/css">
-    .ndfHFb-c4YZDc-Wrql6b {
-      display: none !important;
-    }
-  </style>
-  <script src="{% static 'js/fav.js' %}"></script>
-  <script>
-  $(document).ready(function(){
-    var commensts_html = '<li class="comment-box">\
-                      <div class="comment-user-icon">\
-                        <img src="/static/images/user.png" alt="user">\
-                      </div>\
-                      <div class="comment-detail">\
-                        <h5><a href="#">{0}</a> <span>{1}</span></h5>\
-                        {2}\
-                        <div class="comment-action">\
-                          <div class="like-action">\
-                            <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>\
-                            <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>\
-                          </div>\
-                        </div>\
-                      </div>\
-                    </li>'
-    
-    $('#commentForm').submit(function(e){
-      e.preventDefault()
-      let formData = new FormData($(this)[0])
-      $.ajax({
-        url: "{% url 'comment-add' %}",
-        data: formData,
-        type: 'POST',
-        contentType: false,
-        processData: false,
-        success: function(response){
-          console.log(response)
-          if(response.code == 200){
-            $(".comment-list").prepend(commensts_html.f(response.data.username, response.data.created, response.data.body))
-            $('.comment-field').val('')
-            var comments = parseInt($('.comment_counter').attr('data-count'))+1
-            $('.comment_counter').text("Comment(s) "+comments)
-          }
+      {% block script %}
+      <style type="text/css">
+        .ndfHFb-c4YZDc-Wrql6b {
+          display: none !important;
         }
-      })
-    })
-  })
-  
+      </style>
+      <script src="{% static 'js/fav.js' %}"></script>
+      <script>
+        $(document).ready(function(){
+          var commensts_html = '<li class="comment-box">\
+          <div class="comment-user-icon">\
+          <img src="/static/images/user.png" alt="user">\
+          </div>\
+          <div class="comment-detail">\
+          <h5><a href="#">{0}</a> <span>{1}</span></h5>\
+          {2}\
+          <div class="comment-action">\
+          <div class="like-action">\
+          <button type="button"><i class="fas fa-thumbs-up"></i> 10K</button>\
+          <button type="button"><i class="fas fa-thumbs-down"></i> 2K</button>\
+          </div>\
+          </div>\
+          </div>\
+          </li>'
 
- </script> 
-{% endblock %}
+          $('#commentForm').submit(function(e){
+            e.preventDefault()
+            let formData = new FormData($(this)[0])
+            $.ajax({
+              url: "{% url 'comment-add' %}",
+              data: formData,
+              type: 'POST',
+              contentType: false,
+              processData: false,
+              success: function(response){
+                console.log(response)
+                if(response.code == 200){
+                  $(".comment-list").prepend(commensts_html.f(response.data.username, response.data.created, response.data.body))
+                  $('.comment-field').val('')
+                  var comments = parseInt($('.comment_counter').attr('data-count'))+1
+                  $('.comment_counter').text("Comment(s) "+comments)
+                }
+              }
+            })
+          })
+        })
+
+
+      </script> 
+      {% endblock %}

@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import *
 from wagtail.contrib.modeladmin.options import (modeladmin_register, ModelAdmin,)
 from wagtail.contrib.modeladmin.helpers import PermissionHelper
+import pdb
 
 class ModelPermissionHelper(PermissionHelper):
     def user_can_create(self, user):
@@ -54,6 +55,9 @@ class SubTopicViewAdmin(ModelAdmin):
     add_to_settings_menu = True
     exclude_from_explorer = False
     list_display = ("name", "topic", "id", "created",)
+    ordering = ('name',)
+        
+
 
 modeladmin_register(SubTopicViewAdmin)
 

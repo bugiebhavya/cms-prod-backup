@@ -5,121 +5,138 @@
 {% load duration_field %}
 {% load favorite_tags %}
 {% block header %}
-<header class="login-header d-flex align-items-center">
-  {% include 'dashboard_header.html' %}
-</header>
+  {% include 'home_header.html' %}
 {% endblock %}
 
 {% block body %}
-{% include 'dashboard_sidebar.html' %}
+  {% if user.is_authenticated %} 
+    {% include 'dashboard_sidebar.html' %}
+  {% endif %}
 <div class="main-content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-9 single-video-page">
-          <video-js autoplay class="video-js" id="video-js" preload="auto" controls class="video-js vjs-default-skin" poster="{{ video.thumbnail.url }}">
-          </video-js>
-          <div class="video-information">
-            <div class="tags">
-              {% for tag in video.tags.all %}
-                <a href="#">#{{tag.name}}</a>
-              {% endfor %}
-            </div>
-            <h1>{{video.title}}</h1>
-            <div class="info">
-              <div class="info-text">
-                <span class="count">{{video.media_views.last.iviews}} views </span>
-                <span class="date">{{ video.created_at }}</span>
-              </div>
-
-              <div class="info-menu">
-                <div class="like-action channel-subscribe">
-                  
-                  {% if user.is_authenticated %} 
-                      <!-- for unauthenticated users -->
-                      <div class="fav-btn {% get_fav_notation video user %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {%  get_fav video user %}</div>
-                  {% else %}
-                     <!-- for authenticated users -->
-                     <div class="fav-btn {% get_nofav_notation video request %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {% get_fav_nouser video request %}</div>
-                  {% endif %}
-
+        
+        <div class="col-lg-9 col-md-4 single-video-page">
+          <div class="row">
+            {% if not user.is_authenticated %} 
+              <aside class="col-lg-3 col-md-4 twitter-sidebar">
+                <div class="twitter-holder">
+                  <a class="twitter-timeline" href="https://twitter.com/interejecutivos?ref_src=twsrc%5Etfw">Tweets by
+                  interejecutivos</a>
+                  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
-              </div>
-              
-            </div>
-            <div class="video-desc">
-                  <p>{{video.synthesis}}</p>
-            </div>
-          </div>
-          <div class="channel-information">
-            <a href="#" class="icon"><img class="thumbnail" src="{% static 'images/clapperboard.png' %}" alt="img"></a>
-            <div class="channel-details">
-              <div class="channel-name">
-                <a href="#">{{ video.channel.title }}</a>
-                
-              </div>
-              <div id="video-full-desp" class="video-full-desp">
-                <div class="video-description">
-                  <p>{{ video.channel.description }}</p>
-                </div>
-                <div class="video-other-info">
-                  <ul>
-                    <li><label>{% trans 'Title' %}</label> {{ video.channel.title }}</li>
-                    <li><label>{% trans 'Created At' %}</label> {{ video.channel.created_at }}</li>
-                    <li><label>{% trans 'Licensed by' %}</label>{{video.author}}</li>
-                  </ul>
-                </div>
-
-              </div>
-              <a href="javascript:void(0);" class="readmore"><span class="more">{% trans 'Read More' %}</span> <span class="less">{% trans 'Read
-                                Less' %}</span>
-              </a>
-            </div>
-          </div>
-          <div class="comment-block">
-            {% with comments.count as comments_count %}
-              <div class="comment-meta">
-                <span class="comment_counter" data-count="{{comments_count}}">{% trans 'Comment' %} {{comments_count}}</span>
-              </div>
-            {% endwith %}
-            <div class="comment-box">
-              
-              <div class="comment-detail">
-               {% if commentable and request.user and request.user.is_authenticated %}
-                  <form action="" method="post"  id="commentForm">
-                    {% csrf_token %}
-                    <textarea rows="1" class="comment-field" name="body" placeholder="Post Your Comment" required></textarea>
-                    <input type="hidden"  name="content_type" value="Video">
-                    <input type="hidden"  name="object_id" value="{{video.id}}">
-                    <div class="button-group text-right">
-                      <button type="submit" class="btn red">{% trans 'Comment' %}</button>
-                    </div>
-                  </form>
-               {% else %}
-                <span class="btn btn-info">{% trans 'Please login to post a comments' %} ...</span>
-               {% endif %} 
-              </div>
-            </div>
-            <ul class="comment-list">
-              {% if comments %}
-                  {% for comment in comments %}
-                    <li class="comment-box">
-                      <div class="comment-user-icon">
-                        <img src="{% static 'images/user.png' %}" alt="user">
-                      </div>
-
-                      <div class="comment-detail">
-                        <h5><a href="#">{{comment.user.username|title}}</a> <span>{{comment.created}}</span></h5>
-                        {{comment.body|linebreaks}}
-                      </div>
-                    </li>
+              </aside>
+              <div class="col-lg-9">
+            {% else %}
+              <div class="col-lg-12">
+            {% endif %}
+            
+              <video-js autoplay class="video-js" id="video-js" preload="auto" controls class="video-js vjs-default-skin" poster="{{ video.thumbnail.url }}">
+              </video-js>
+              <div class="video-information">
+                <div class="tags">
+                  {% for tag in video.tags.all %}
+                    <a href="#">#{{tag.name}}</a>
                   {% endfor %}
-              {% else %}
-                <p> {% trans 'There are no comments Yet' %}</p>
-              {% endif %}
-            </ul>
+                </div>
+                <h1>{{video.title}}</h1>
+                <div class="info">
+                  <div class="info-text">
+                    <span class="count">{{video.media_views.last.iviews}} views </span>
+                    <span class="date">{{ video.created_at }}</span>
+                  </div>
+
+                  <div class="info-menu">
+                    <div class="like-action channel-subscribe">
+                      
+                      {% if user.is_authenticated %} 
+                          <!-- for unauthenticated users -->
+                          <div class="fav-btn {% get_fav_notation video user %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {%  get_fav video user %}</div>
+                      {% else %}
+                         <!-- for authenticated users -->
+                         <div class="fav-btn {% get_nofav_notation video request %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {% get_fav_nouser video request %}</div>
+                      {% endif %}
+
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="video-desc">
+                      <p>{{video.synthesis}}</p>
+                </div>
+              </div>
+              <div class="channel-information">
+                <a href="#" class="icon"><img class="thumbnail" src="{% static 'images/clapperboard.png' %}" alt="img"></a>
+                <div class="channel-details">
+                  <div class="channel-name">
+                    <a href="#">{{ video.channel.title }}</a>
+                    
+                  </div>
+                  <div id="video-full-desp" class="video-full-desp">
+                    <div class="video-description">
+                      <p>{{ video.channel.description }}</p>
+                    </div>
+                    <div class="video-other-info">
+                      <ul>
+                        <li><label>{% trans 'Title' %}</label> {{ video.channel.title }}</li>
+                        <li><label>{% trans 'Created At' %}</label> {{ video.channel.created_at }}</li>
+                        <li><label>{% trans 'Licensed by' %}</label>{{video.author}}</li>
+                      </ul>
+                    </div>
+
+                  </div>
+                  <a href="javascript:void(0);" class="readmore"><span class="more">{% trans 'Read More' %}</span> <span class="less">{% trans 'Read
+                                    Less' %}</span>
+                  </a>
+                </div>
+              </div>
+              <div class="comment-block">
+                {% with comments.count as comments_count %}
+                  <div class="comment-meta">
+                    <span class="comment_counter" data-count="{{comments_count}}">{% trans 'Comment' %} {{comments_count}}</span>
+                  </div>
+                {% endwith %}
+                <div class="comment-box">
+                  
+                  <div class="comment-detail">
+                   {% if commentable and request.user and request.user.is_authenticated %}
+                      <form action="" method="post"  id="commentForm">
+                        {% csrf_token %}
+                        <textarea rows="1" class="comment-field" name="body" placeholder="Post Your Comment" required></textarea>
+                        <input type="hidden"  name="content_type" value="Video">
+                        <input type="hidden"  name="object_id" value="{{video.id}}">
+                        <div class="button-group text-right">
+                          <button type="submit" class="btn red">{% trans 'Comment' %}</button>
+                        </div>
+                      </form>
+                   {% else %}
+                    <span class="btn btn-info">{% trans 'Please login to post a comments' %} ...</span>
+                   {% endif %} 
+                  </div>
+                </div>
+                <ul class="comment-list">
+                  {% if comments %}
+                      {% for comment in comments %}
+                        <li class="comment-box">
+                          <div class="comment-user-icon">
+                            <img src="{% static 'images/user.png' %}" alt="user">
+                          </div>
+
+                          <div class="comment-detail">
+                            <h5><a href="#">{{comment.user.username|title}}</a> <span>{{comment.created}}</span></h5>
+                            {{comment.body|linebreaks}}
+                          </div>
+                        </li>
+                      {% endfor %}
+                  {% else %}
+                    <p> {% trans 'There are no comments Yet' %}</p>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
           </div>
-          
         </div>
+
         <div class="col-lg-3 sidebar-right">
           {% if category_videos.count > 0 %}
            <h3>{% trans 'Next' %}</h3>
@@ -145,7 +162,7 @@
       </div>
     </div>
   </div>
-
+</div>
 {% endblock %}
 
 {% block script %}
@@ -189,18 +206,25 @@
     })
 
 
-    var myPlayer = videojs('video-js').ready(function () {
+    var videoPlayer = videojs('video-js').ready(function () {
         let player = this
-        $.ajax({
-          url: '{{ video.url }}',
-          type: 'GET',
-          xhrFields: { responseType: 'blob' },
-          success: function (data, textStatus, jqXHR) {
-            var src = window.URL.createObjectURL(data);
-            player.src({src:src, type: "video/mp4"});
-            player.load();
+        jQuery.ajax({
+          url:'{{ video.url }}',
+          cache:true,
+          xhr:function(){// Seems like the only way to get access to the xhr object
+              var xhr = new XMLHttpRequest();
+              xhr.responseType= 'blob'
+              return xhr;
+          },
+          success: function(data){
+              var url =  window.URL.createObjectURL(data);
+              player.src({src: url, type: "video/mp4"});
+              player.load()
+          },
+          error:function(){
+              
           }
-        });
+      })
     });
 
   })

@@ -232,7 +232,7 @@ button:focus, input:focus, textarea:focus, a:focus, .form-control:focus{
 .search-option .search-form .search-icon{
   position: absolute;
   right: 0;
-  top: 0;
+  top: 5px;
   background: none;
   border: none;
   font-size: 18px;

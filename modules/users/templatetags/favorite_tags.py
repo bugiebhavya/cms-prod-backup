@@ -71,7 +71,7 @@ def get_fav_nouser(object, request):
     content_type = ContentType.objects.get(app_label=get_app_name(object), model=get_model_name(object).lower())
     if not request.session.exists(request.session.session_key):
         request.session.create()
-    if getattr(settings, 'ALLOW_ANONYMOUS', 'TRUE') == "TRUE":
+    if getattr(settings, 'ALLOW_ANONYMOUS', 'TRUE') == 'TRUE':
         if Favorite.objects.filter(object_id=object.id,cookie=request.session.session_key, content_type=content_type):
             fav_value = getattr(settings, 'NEGATIVE_NOTATION', 'Unfavorite')
         else:

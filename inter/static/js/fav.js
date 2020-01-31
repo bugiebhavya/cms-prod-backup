@@ -20,17 +20,17 @@ $(document).ready(function(){
        	else{
        		data.append('fav_value',negative_notation);
      	}
-    		$.ajax({
-	            url: "/medias/fav/",
-	            type: "POST",
-	            data: data,
-	            processData: false,
-	            contentType: false,
-	            success: function(json) {
-	            	if (json['success'] == 0) {
-                  alert(json['error'])   
-                }
-	            	else {
+		$.ajax({
+            url: "/en/medias/fav/",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+            	if (response['success'] == 0) {
+	                  alert(response['error'])   
+	                }
+            	else {
 	            	$(fav_count_div).empty();
 	            	$(button).closest('.fav-btn').removeClass($(button).val())
 	            	if(button_value == positive_notation) {
@@ -44,14 +44,14 @@ $(document).ready(function(){
 	                  }
 	                $(button).closest('.fav-btn').addClass($(button).val())
 	                // Token maintained for multiple submissions of form(s).
-	                $("input[name=csrfmiddlewaretoken]").val(json['csrf']);
+	                $("input[name=csrfmiddlewaretoken]").val(response['csrf']);
 	                $(fav_count_field).val(fav_count_val);
 	                $(fav_count_div).append(fav_count_val);		            	
-					}
-	            },
-	            error: function(response) {
-	            	alert("error")
-	            }
+				}
+            },
+            error: function(response) {
+            	alert("error")
+            }
         }); 
 	});
 });

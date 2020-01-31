@@ -19,6 +19,8 @@ class Area(models.Model):
     class Meta:
         verbose_name = _('Area')
         verbose_name_plural = _('Area')
+        ordering = ('name',)
+
     name = models.CharField(max_length=100, verbose_name=_('Area name'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
     created = models.DateTimeField(auto_now_add=True, null=True)
@@ -32,6 +34,8 @@ class Subject(models.Model):
     class Meta:
         verbose_name = _('Subject')
         verbose_name_plural = _('Subject')
+        ordering = ('name',)
+
     name = models.CharField(max_length=100, verbose_name=_('Subject name'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
     area = models.ForeignKey(Area, verbose_name=_('Area'), on_delete=models.CASCADE)
@@ -45,6 +49,8 @@ class Topic(models.Model):
     class Meta:
         verbose_name = _('Topic')
         verbose_name_plural = _('Topic')
+        ordering = ('name',)
+
     name = models.CharField(max_length=100, verbose_name=_('Topic name'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
     subject = models.ForeignKey(Subject, verbose_name=_('Subject'), on_delete=models.CASCADE)
@@ -59,6 +65,7 @@ class SubTopic(models.Model):
     class Meta:
         verbose_name = _('SubTopic')
         verbose_name_plural = _('SubTopic')
+        ordering = ('name',)
     name = models.CharField(max_length=100, verbose_name=_('Subtopic name'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
     topic = models.ForeignKey(Topic,  verbose_name=_('Topic'), on_delete=models.CASCADE)
@@ -72,6 +79,7 @@ class Natures(models.Model):
     class Meta:
         verbose_name = _('Nature')
         verbose_name_plural = _('Nature')
+        ordering = ('name',)
     name = models.CharField(max_length=100, verbose_name=_('Nature name'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
     created = models.DateTimeField(auto_now_add=True, null=True)

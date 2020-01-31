@@ -1,6 +1,7 @@
 {% load static %}
 {% load i18n %}
-    <a class="navbar-brand d-md-none" href="/"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
+<header class="login-header d-flex align-items-center site-header">
+     <a class="navbar-brand" href="/"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
     <div class="search-option">
       <div class="share-popup-backdrop d-md-none"></div>
       <form method="get" action="/users/search/" class="search-form">
@@ -14,7 +15,7 @@
         <li class="list-inline-item">
           <form class="language-form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}" />
-                <select name="language" onclick="this.form.submit()">
+                <select name="language" onchange="this.form.submit()">
                     {% get_current_language as LANGUAGE_CODE %}
                     {% get_available_languages as LANGUAGES %}
                     {% get_language_info_list for LANGUAGES as languages %}
@@ -130,3 +131,4 @@
         </li>
       </ul>
     </div>
+</header>

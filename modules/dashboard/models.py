@@ -32,14 +32,14 @@ class DashboardPageCarouselVideos(Orderable):
         "wagtailvideos.Video",
         null = True, 
         blank = True,
-        on_delete= models.SET_NULL,
+        on_delete= models.CASCADE,
         related_name = "+" 
         )
     carousel_document = models.ForeignKey(
         "documents.CustomDocument",
         null = True, 
         blank = True,
-        on_delete= models.SET_NULL,
+        on_delete= models.CASCADE,
         related_name = "+" 
         )
 
@@ -124,7 +124,7 @@ class ChannelPageCarouselVideos(Orderable):
         "wagtailvideos.Channels",
         null = True, 
         blank = False,
-        on_delete= models.SET_NULL,
+        on_delete= models.CASCADE,
         related_name = "+" 
         )
 

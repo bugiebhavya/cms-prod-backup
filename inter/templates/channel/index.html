@@ -15,7 +15,7 @@
         <div class="col-sm-12 trending-page">
           <h2>{% trans 'Channels' %}</h2>
           <div class="row">
-            {% for page in self.channels.all%}
+            {% for page in self.channels.all %}
             {% with page.channel as channel %}
             <a href="{% reverse_url self 'channel_details' channel.id %}" class="col-sm-12 video-block">
               <div class="video-detail">

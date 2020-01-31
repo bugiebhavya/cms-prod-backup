@@ -1,9 +1,6 @@
 {% load static %}
 {% load i18n %}
 {% if request.user.is_authenticated %}
-<header class="login-header d-flex align-items-center site-header">
-  <a class="navbar-brand" href="/"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
-
    {% include 'dashboard_header.html' %}
 {% else %}
 <header class="site-header">
@@ -50,6 +47,11 @@
         </li>
       </ul>
     </div>
+  </header>
+
+
+
+
+
   
 {% endif %}
-</header>
