@@ -3,7 +3,8 @@
 {% load file_size %}
 
 <div class="col-lg-4 col-md-6 videoBox">
-	<a href={% if media.duration %}"/users/watch/{{media.id}}/"{% else %} "/users/doc-watch/{{media.id}}/"{% endif %} class="video-block w-100">
+
+	<a href="{% if media.duration %}/users/watch/{{media.id}}/{% else %}{% if media.is_image  %} /users/view-image/{{media.id}}/ {% else %}/users/doc-watch/{{media.id}}/{% endif %}{% endif %}" class="video-block w-100">
 		<div class="video-part">
 			<img class="thumbnail" src="/media/{{media.thumbnail}}" alt="img">
 			{% if media.duration %}

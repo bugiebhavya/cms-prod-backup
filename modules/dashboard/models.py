@@ -12,7 +12,7 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core import blocks
 from wagtail.core.models import Page, Orderable
 from wagtail.documents.edit_handlers import DocumentChooserPanel
-
+from wagtail.images.edit_handlers import ImageChooserPanel
 from modelcluster.fields import ParentalKey
 from taggit.models import Tag as TaggitTag
 from taggit.models import TaggedItemBase
@@ -24,6 +24,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from wagtailvideos.models import Channels
 from django.contrib import messages
+
 
 class DashboardPageCarouselVideos(Orderable):
     '''Between 1 and 5 imagges for the home carousel '''
@@ -43,10 +44,18 @@ class DashboardPageCarouselVideos(Orderable):
         related_name = "+" 
         )
 
+    carousel_image = models.ForeignKey(
+        "documents.CustomImage",
+        null = True, 
+        blank = True,
+        on_delete= models.CASCADE,
+        related_name = "+" 
+    )
 
     panels = [
             VideoChooserPanel("carousel_video"),
-            DocumentChooserPanel("carousel_document")
+            DocumentChooserPanel("carousel_document"),
+            ImageChooserPanel("carousel_image")
     ]
 
 
@@ -58,7 +67,7 @@ class MediaView(models.Model):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name=_('User'), null=True, blank=True)
     object_id = models.PositiveIntegerField(verbose_name=_('Content ID'))
     content_object = GenericForeignKey('content_type', 'object_id')
-    views = models.PositiveIntegerField(default=0, verbose_name=_('Total Views'), null=False)
+    views = models.PositiveIntegerField(default=1, verbose_name=_('Total Views'), null=False)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -90,23 +99,16 @@ class DashboardPage(RoutablePageMixin, Page):
 
     @route(r'^history/$', name="history")
     def user_history(self, request, *args, **kwargs):
-        medias=[]
         if request.user and request.user.is_authenticated:
-            content_type_document = ContentType.objects.get(model='customdocument')
-            content_type_video = ContentType.objects.get(model='video')
-            videos = ContentType.objects.raw("SELECT vid.id, vid.title, vid.thumbnail, vid.created_at, vid.duration, mv.views, vid.author FROM dashboard_mediaview As mv LEFT OUTER JOIN wagtailvideos_video AS vid ON (mv.object_id = vid.id AND (mv.content_type_id = {0})) WHERE (mv.user_id = {1} AND vid.id IS NOT NULL)".format(content_type_video.id, request.user.id))
-            documents = ContentType.objects.raw("SELECT dc.id, dc.title, dc.thumbnail, dc.created_at, dc.file_size, mv.views, dc.author FROM dashboard_mediaview As mv LEFT OUTER JOIN documents_customdocument AS dc ON (mv.object_id = dc.id AND (mv.content_type_id = {0})) WHERE (mv.user_id = {1} AND dc.id IS NOT NULL)".format(content_type_document.id, request.user.id))
-            from itertools import chain
-            media = list(chain(videos, documents))
-            medias = sorted(media, key=lambda x: x.views, reverse=True)
-
-        return render(request, 'dashboard/history.html', {'medias': medias})
-
+            from modules.dashboard.models import MediaView
+            medias = MediaView.objects.filter(user=request.user).distinct('object_id')
+            return render(request, 'dashboard/history.html', {'medias': medias})
+        return HttpResponseRedirect('/')
 
     @route(r'^favorites/$', name="favorites")
     def favorites(self, request, *args, **kwargs):
         from modules.users.models import Favorite
-        favorites = Favorite.objects.filter(user=request.user)
+        favorites = Favorite.objects.filter(user=request.user).distinct()
         return render(request, 'fav/list.html', {'favorites': favorites})
 
 
@@ -159,7 +161,7 @@ class ChannelPage(RoutablePageMixin,Page):
 
             channel = Channels.objects.get(id=kwargs.get('channel'))
             from itertools import chain
-            media = list(chain(channel.documents.all(), channel.video_set.all()))
+            media = list(chain(channel.documents.all(), channel.video_set.all(), channel.images.all()))
             media_list = sorted(media, key=lambda x: get_views(x), reverse=True)
             from home.models import ReferenceUrlPage
             homepage = ReferenceUrlPage(request)

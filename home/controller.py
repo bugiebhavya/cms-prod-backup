@@ -19,6 +19,7 @@ from rest_framework.response import Response
 from .models import Comment
 from modules.documents.models import CustomDocument as Document
 # from modules.mostviews.models import MostView
+from modules.documents.models import CustomImage as Images
 
 
 
@@ -51,8 +52,10 @@ class CommentView(LoginRequiredMixin,APIView):
 		try:
 			if request.data.get('content_type') == 'Video':
 				media = Video.objects.get(id=request.data.get('object_id'))
-			else:
+			elif request.data.get('content_type') == 'Document':
 				media = Document.objects.get(id=request.data.get('object_id'))
+			else:
+				media = Images.objects.get(id=request.data.get('object_id'))
 
 			comment = Comment.objects.create(content_object=media, user=user, body=request.data.get('body'))
 			return Response({'message': 'Your comment posted successfully', 'code': 200, 'data': {'username': user.username.title(), 'body': comment.body, 'created': comment.created.strftime('%b. %d, %Y, %I:%M %P.')}})

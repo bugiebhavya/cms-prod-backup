@@ -1,16 +1,20 @@
 from django.db import models
-from django.db.models import Q, Max
+from django.db.models import Q, Max, Sum, Count
 from django.shortcuts import render
 from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey 
 from wagtailvideos.models import Video 
 from modules.documents.models import CustomDocument as Document
+from modules.documents.models import CustomImage as Images
+
 import pdb
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel , MultiFieldPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from django.http import HttpResponse, HttpResponseRedirect
 from wagtailvideos.edit_handlers import VideoChooserPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
@@ -40,10 +44,19 @@ class HomePageCarouselVideos(Orderable):
 		related_name = "+" 
 	)
 
+	carousel_image = models.ForeignKey(
+		"documents.CustomImage",
+		null = True, 
+		blank = True,
+		on_delete= models.CASCADE,
+		related_name = "+" 
+	)
+
 
 	panels = [
 		VideoChooserPanel("carousel_video"),
-		DocumentChooserPanel("carousel_document")
+		DocumentChooserPanel("carousel_document"),
+		ImageChooserPanel("carousel_image")
 	]
 
 class HomePage(RoutablePageMixin, Page):
@@ -63,19 +76,16 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	settings_panels = []
 	def get_views(self, x):
             try:
-                return x.media_views.last().views
+                print(x.total_views)
+                return x.total_views
             except:
                 return 0
 
 	def update_views(self, obj, user):
 		if not user.is_anonymous:
-			if obj.media_views.filter(user=user).exists():
-				media_obj = obj.media_views.filter(user=user).last()
-				media_obj.views = media_obj.views+1
-				media_obj.save()
-			else:
+			if not obj.media_views.filter(user=user).exists():
 				from modules.dashboard.models import MediaView
-				MediaView.objects.create(content_object=obj, user=user, views=1)
+				MediaView.objects.create(content_object=obj, user=user)
 
 	def get_videos(self):
 		self.videos = Video.objects
@@ -84,6 +94,10 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	def get_documents(self):
 		self.documents = Document.objects
 		return self.documents
+
+	def get_images(self):
+		self.images = Images.objects
+		return self.images
 
 	# def get_context(self, request):
 	# 	context = super(HomePage, self).get_context(request)
@@ -95,10 +109,11 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
 
-		videos = self.get_videos().annotate(views=Max("media_views__views")).order_by('-views')
-		documents = self.get_documents().annotate(views=Max("media_views__views")).order_by('-views')
+		videos = self.get_videos().annotate(views=Count("media_views__views")).order_by('-views')
+		documents = self.get_documents().annotate(views=Count("media_views__views")).order_by('-views')
+		images = self.get_images().annotate(views=Count("media_views__views")).order_by('-views')
 		from itertools import chain
-		media = list(chain(documents, videos))
+		media = list(chain(documents, videos, images))
 		media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True) 
 		return render(request, 'dashboard/trending.html', {'medias': media_list})
 		
@@ -109,8 +124,10 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		if request.GET.get('q', False):
 			videos = self.get_videos().filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q'))  ).distinct()
 			documents = self.get_documents().filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q')) ).distinct()
+			images = self.get_images().filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q')) ).distinct()
+
 			from itertools import chain
-			media = list(chain(documents, videos))
+			media = list(chain(documents, videos, images))
 			media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True) 
 		return render(request, 'home/search_results.html', {'medias': media_list})
 
@@ -172,6 +189,22 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
 		
 		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
+
+
+	@route(r'^view-image/(?P<media_id>[-\w]+)/$', name='image_detail')
+	def image_detail(self, request, media_id,  *args, **kwargs):
+		from .forms import CommentForm
+		media = self.get_images().get(id=media_id)
+		if media.access == Images.PRIVATE and request.user.is_anonymous:
+			messages.warning(request, 'Please login to view this media.')
+			return HttpResponseRedirect('/')
+		self.update_views(media, request.user)
+		comments = media.comments.all()
+		commentable = True
+		category_documents = self.images.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
+		
+		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
+
 
 
 class Comment(models.Model):

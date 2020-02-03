@@ -1,5 +1,6 @@
 from django.db import models
 from wagtail.documents.models import Document, AbstractDocument
+from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from django.dispatch import receiver
 from django.db.models.signals import post_delete, post_save 
 from wagtailvideos.models import Channels
@@ -7,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 import os
 from datetime import datetime
+from django.utils.functional import cached_property
 """
 Preview generator:
 # https://pypi.org/project/preview-generator-ivc/
@@ -141,6 +143,98 @@ class CustomDocument(AbstractDocument):
         'republication_at',
     )
 
+    @property
+    def is_image(self):
+        return False
+
+    @cached_property
+    def total_views(self):
+        try:
+            return sum(self.media_views.values_list('views', flat=True))
+        except:
+            return 0
+
+class CustomImage(AbstractImage):
+    class Meta:
+        verbose_name = _('image')
+        verbose_name_plural = _('images')
+
+    PUBLIC = 'PUBLIC'
+    PRIVATE = 'PRIVATE'
+    SCOPE = (
+        (PUBLIC, _('Public')),
+        (PRIVATE, _('Private')),)
+    area = models.ForeignKey(Area, related_name="area_images", verbose_name=_('Area'), on_delete=models.SET_NULL, null=True, blank=True)
+    subject = models.ForeignKey(Subject, related_name="subject_images", verbose_name=_('Subject'), on_delete=models.SET_NULL, null=True, blank=True)
+    topic = models.ForeignKey(Topic, related_name="topic_images", verbose_name=_('Topic'), on_delete=models.SET_NULL, null=True, blank=True)
+    subtopic = models.ForeignKey(SubTopic, related_name="subtopic_images", verbose_name=_('SubTopic'), on_delete=models.SET_NULL, null=True, blank=True)
+    nature = models.ForeignKey(Natures, related_name="nature_images", verbose_name=_('Natures'), on_delete=models.SET_NULL, null=True, blank=True)
+    favorites = GenericRelation("users.Favorite", related_query_name='fav_images')
+    comments = GenericRelation("home.Comment", related_query_name='images')
+    media_views = GenericRelation("dashboard.MediaView", related_query_name='image_media_views')
+    access = models.CharField(verbose_name=('Access Type'), default="PUBLIC", choices=SCOPE, max_length=50, blank=True, null=True)
+    channel = models.ForeignKey(Channels, related_name="images", on_delete=models.SET_NULL, null=True, blank=True)
+    # new fields
+    author = models.CharField(max_length=100, verbose_name=_('Author'),  null=True, blank=True)
+    author_profession = models.CharField(max_length=200, verbose_name=_('Author Profession'),  null=True, blank=True)
+    validity_start = models.DateField(verbose_name=_('Validity Start'), default=datetime.now, null=True, blank=True)
+    validity_end = models.DateField(verbose_name=_('Validity End'), default=datetime.now, null=True, blank=True)
+    synthesis = models.TextField(verbose_name=_('Synthesis'), default="", null=True, blank=True)
+    publication_at = models.DateTimeField(verbose_name=_('Publish At'), default=datetime.now, null=True, blank=True)
+    expiration_at = models.DateField(verbose_name=_('Publish End'), default=datetime.now, null=True, blank=True)
+    republication_at = models.DateTimeField(verbose_name=_('Republish At'), default=datetime.now, null=True, blank=True)
+    created_at = models.DateTimeField(verbose_name=_('created at'), auto_now_add=True, db_index=True)
+
+    admin_form_fields = (
+        'channel',
+        'title',
+        'file',
+        'focal_point_x',
+        'focal_point_y',
+        'focal_point_width',
+        'focal_point_height',
+        'area',
+        'subject',
+        'topic',
+        'subtopic',
+        'nature',
+        'collection',
+        'tags',
+        'access',
+        'author',
+        'author_profession',
+        'validity_start',
+        'validity_end',
+        'synthesis',
+        'publication_at',
+        'expiration_at',
+        'republication_at',
+    )
+
+    @property
+    def thumbnail(self):
+        return self.file
+
+    @property
+    def is_image(self):
+        return True
+
+    @cached_property
+    def total_views(self):
+        try:
+            return sum(self.media_views.values_list('views', flat=True))
+        except:
+            return 0
+    
+    
+
+class CustomRendition(AbstractRendition):
+    image = models.ForeignKey(CustomImage, on_delete=models.CASCADE, related_name='renditions')
+
+    class Meta:
+        unique_together = (
+            ('image', 'filter_spec', 'focal_point_key'),
+        )
 
 def add_thumbnail(sender, instance, created, **kwargs):
     if created:

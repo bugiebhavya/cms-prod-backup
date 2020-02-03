@@ -20,7 +20,7 @@
           <hr>
           <div class="row">
             {% for media in medias %}
-              {% include 'media_template/horizontal.html' %}
+              {% include 'media_template/horizontal.html' with media=media.content_object %}
             {% endfor %}
 
             {% if not medias %}
