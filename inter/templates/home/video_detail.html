@@ -31,8 +31,10 @@
               <div class="col-lg-12">
             {% endif %}
             
-              <video-js autoplay class="video-js" id="video-js" preload="auto" controls class="video-js vjs-default-skin" poster="{{ video.thumbnail.url }}">
-              </video-js>
+              <video class="video-js" controls preload="auto" poster="{{ video.thumbnail.url }}" data-setup="{}">
+                <source src="{{ video.url }}" type="video/mp4">
+              </video>
+
               <div class="video-information">
                 <div class="tags">
                   {% for tag in video.tags.all %}
@@ -206,26 +208,6 @@
     })
 
 
-    var videoPlayer = videojs('video-js').ready(function () {
-        let player = this
-        jQuery.ajax({
-          url:'{{ video.url }}',
-          cache:true,
-          xhr:function(){// Seems like the only way to get access to the xhr object
-              var xhr = new XMLHttpRequest();
-              xhr.responseType= 'blob'
-              return xhr;
-          },
-          success: function(data){
-              var url =  window.URL.createObjectURL(data);
-              player.src({src: url, type: "video/mp4"});
-              player.load()
-          },
-          error:function(){
-              
-          }
-      })
-    });
 
   })
   
