@@ -106,6 +106,7 @@ class CustomDocument(AbstractDocument):
     favorites = GenericRelation("users.Favorite", related_query_name='fav_documents')
     comments = GenericRelation("home.Comment", related_query_name='comments')
     media_views = GenericRelation("dashboard.MediaView", related_query_name='document_media_views')
+    notifications = GenericRelation("dashboard.Notifications", related_query_name="document_notifications")
     thumbnail = models.FileField(upload_to='documents', blank=True, verbose_name=('thumbnail'), default='documents/logo.png')
     access = models.CharField(verbose_name=('Access Type'), default="PUBLIC", choices=SCOPE, max_length=50, blank=True, null=True)
     channel = models.ForeignKey(Channels, related_name="documents", on_delete=models.SET_NULL, null=True, blank=True)
@@ -172,6 +173,7 @@ class CustomImage(AbstractImage):
     favorites = GenericRelation("users.Favorite", related_query_name='fav_images')
     comments = GenericRelation("home.Comment", related_query_name='images')
     media_views = GenericRelation("dashboard.MediaView", related_query_name='image_media_views')
+    notifications = GenericRelation("dashboard.Notifications", related_query_name="image_notifications")
     access = models.CharField(verbose_name=('Access Type'), default="PUBLIC", choices=SCOPE, max_length=50, blank=True, null=True)
     channel = models.ForeignKey(Channels, related_name="images", on_delete=models.SET_NULL, null=True, blank=True)
     # new fields
@@ -248,5 +250,6 @@ def add_thumbnail(sender, instance, created, **kwargs):
             os.remove(doc_path)
         else:
             instance.delete()
+
 
 post_save.connect(add_thumbnail, CustomDocument)

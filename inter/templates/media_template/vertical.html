@@ -2,7 +2,7 @@
 {% load duration_field i18n %}
 {% load file_size %}
 
-<a class="col-sm-12 video-block" href="{% if media.duration %}/users/watch/{{media.id}}/{% else %}{% if media.is_image  %} /users/view-image/{{media.id}}/ {% else %}/users/doc-watch/{{media.id}}/{% endif %}{% endif %}">
+<a class="col-sm-12 video-block" href="{% if media.duration %}{% url 'video_detail' media.id %} {% else %}{% if media.is_image  %} {% url 'image_detail' media.id %} {% else %} {% url 'document_detail' media.id %} {% endif %}{% endif %}">
 	<div class="video-part">
 		<img class="thumbnail" src="{{ media.thumbnail.url }}" alt="img">
 		{% if media.duration %}

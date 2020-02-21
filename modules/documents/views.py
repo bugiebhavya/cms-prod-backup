@@ -1,14 +1,18 @@
 from braces.views import LoginRequiredMixin, SuperuserRequiredMixin
 from django.views.generic.detail import DetailView
+from django.views import View
 from django.conf import settings
 from home.forms import CommentForm
+from wagtailvideos.models import Video 
 from modules.documents.models import CustomDocument as Document
+from modules.documents.models import CustomImage as Images
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Area, Subject, Topic, SubTopic
+from django.shortcuts import render
 
 class MediaDetailView(LoginRequiredMixin, DetailView):
 	model = Document
@@ -33,6 +37,64 @@ class MediaDetailView(LoginRequiredMixin, DetailView):
 			messages.warning(request, 'Please login to view this media.')
 			return HttpResponseRedirect('/')
 		return super(MediaDetailView, self).get(request, id)
+
+
+class WatchVideoView(View):
+	def update_views(self, obj, user):
+		if not user.is_anonymous:
+			if not obj.media_views.filter(user=user).exists():
+				from modules.dashboard.models import MediaView
+				MediaView.objects.create(content_object=obj, user=user)
+
+	def get(self, request, media_id):
+		media = Video.objects.get(id=media_id)
+		if media.scope == Video.PRIVATE and request.user.is_anonymous:
+			messages.warning(request, 'Please login to view this media.')
+			return HttpResponseRedirect('/')
+		self.update_views(media, request.user)
+		comments = media.comments.all()
+		commentable = True
+		category_videos = Video.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
+		
+		return render(request, 'home/video_detail.html', {'video': media, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
+
+class ReadDocumentView(View):
+	def update_views(self, obj, user):
+		if not user.is_anonymous:
+			if not obj.media_views.filter(user=user).exists():
+				from modules.dashboard.models import MediaView
+				MediaView.objects.create(content_object=obj, user=user)
+
+	def get(self, request, media_id):
+		media = Document.objects.get(id=media_id)
+		if media.access == Document.PRIVATE and request.user.is_anonymous:
+			messages.warning(request, 'Please login to view this media.')
+			return HttpResponseRedirect('/')
+		self.update_views(media, request.user)
+		comments = media.comments.all()
+		commentable = True
+		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
+		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
+
+class ViewImageView(View):
+	def update_views(self, obj, user):
+		if not user.is_anonymous:
+			if not obj.media_views.filter(user=user).exists():
+				from modules.dashboard.models import MediaView
+				MediaView.objects.create(content_object=obj, user=user)
+
+	def get(self, request, media_id):
+		media =Images.objects.get(id=media_id)
+		if media.access == Images.PRIVATE and request.user.is_anonymous:
+			messages.warning(request, 'Please login to view this media.')
+			return HttpResponseRedirect('/')
+		self.update_views(media, request.user)
+		comments = media.comments.all()
+		commentable = True
+		category_documents = Images.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
+		
+		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
+
 
 
 class FilterCatalogsView(SuperuserRequiredMixin, LoginRequiredMixin, APIView):

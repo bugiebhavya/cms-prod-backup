@@ -145,17 +145,18 @@
               <h3>{% trans 'No Next Content' %}..</h3>
               {% endif %}
               {% for cat_document in category_documents %}
-              <a href="/users/doc-watch/{{cat_document.id}}/" class="video-block">
-                <div class="video-part">
-                  <img class="thumbnail" src="{{ cat_document.thumbnail.url }}" alt="img">
-                  <span class="video-time">{{ cat_document.file_size |convert_size}}</span>
-                </div>
-                <div class="video-detail">
-                  <h3>{{ cat_document.title|safe}}</h3>
-                  <span class="postby">{{cat_document.author|title}}</span>
-                  <span class="total-views">{{cat_document.media_views.last.iviews}} {% trans 'views' %}</span>
-                </div>
-              </a>
+
+                <a href="{% if cat_document.is_image  %} {% url 'image_detail' cat_document.id %} {% else %} {% url 'document_detail' cat_document.id %} {% endif %}" class="video-block">
+                  <div class="video-part">
+                    <img class="thumbnail" src="{{ cat_document.thumbnail.url }}" alt="img">
+                    <span class="video-time">{{ cat_document.file_size |convert_size}}</span>
+                  </div>
+                  <div class="video-detail">
+                    <h3>{{ cat_document.title|safe}}</h3>
+                    <span class="postby">{{cat_document.author|title}}</span>
+                    <span class="total-views">{{cat_document.media_views.last.iviews}} {% trans 'views' %}</span>
+                  </div>
+                </a>
               {% endfor %}
             </div>
           </div>

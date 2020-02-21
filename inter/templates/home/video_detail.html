@@ -146,7 +146,7 @@
             <h3>{% trans 'No Next Content' %}..</h3>
           {% endif %}
           {% for cat_video in category_videos %}
-            <a href="/users/watch/{{cat_video.id}}/" class="video-block">
+            <a href="{% url 'video_detail' cat_video.id %}" class="video-block">
               <div class="video-part">
                 <img class="thumbnail" src="{{ cat_video.thumbnail.url }}" alt="img">
                 <span class="video-time">{{cat_video.duration|duration_field}}</span>

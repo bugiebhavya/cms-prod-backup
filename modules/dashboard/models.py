@@ -17,7 +17,7 @@ from modelcluster.fields import ParentalKey
 from taggit.models import Tag as TaggitTag
 from taggit.models import TaggedItemBase
 from wagtail.admin.edit_handlers import (InlinePanel, MultiFieldPanel,FieldPanel,)
-
+from django.db.models.signals import post_save 
 from wagtailvideos.models import Video
 from wagtailvideos.edit_handlers import VideoChooserPanel
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -79,7 +79,21 @@ class MediaView(models.Model):
         if self.views:
             return self.views
         return 0
-    
+
+class Notifications(models.Model):
+    class Meta:
+        verbose_name = _('Notifications')
+        verbose_name_plural = _('Notifications')
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name=_('Content Type'))
+    seen_users = models.ManyToManyField(to="users.User", verbose_name=_('Seen Users'), null=True, blank=True)
+    object_id = models.PositiveIntegerField(verbose_name=_('Content ID'))
+    content_object = GenericForeignKey('content_type', 'object_id')
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.id)
+
 
 class DashboardPage(RoutablePageMixin, Page):
     template = 'dashboard/index.html'
@@ -170,3 +184,14 @@ class ChannelPage(RoutablePageMixin,Page):
             messages.info(request, str(ex))
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+
+def dashboard_notification(sender, instance, **kwargs):
+    if not instance.carousel_video.notifications.exists():
+        Notifications.objects.create(content_object=instance.carousel_video)
+    if not instance.carousel_document.notifications.exists():
+        Notifications.objects.create(content_object=instance.carousel_document)
+    if not instance.carousel_image.notifications.exists():
+        Notifications.objects.create(content_object=instance.carousel_image)
+
+
+post_save.connect(dashboard_notification, sender=DashboardPageCarouselVideos)

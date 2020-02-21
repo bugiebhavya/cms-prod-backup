@@ -48,25 +48,7 @@
   {% endblock %}
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     {% include "extra_search.html" %}
-
-    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/wow.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/video.js' %}"></script>
-    
-    <script>
-      String.prototype.format = String.prototype.f = function() {
-          var s = this,
-          i = arguments.length;
-
-          while (i--) {
-              s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
-          }
-          return s;
-      };
-
-
+    <script type="text/javascript">
       $.ajaxSetup({
           beforeSend: function(xhr, settings) {
                function getCookie(name) {
@@ -92,7 +74,24 @@
                }
            } 
       });
+       String.prototype.format = String.prototype.f = function() {
+          var s = this,
+          i = arguments.length;
 
+          while (i--) {
+              s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+          }
+          return s;
+      };
+
+    </script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/wow.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/video.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/notification.js' %}"></script>
+    <script>
       $('ul.menu li:has(ul)').addClass('hassub');
       $(".hassub").prepend('<span class="submenu-btn"><i class="fal fa-chevron-down"></i></span>');
 
@@ -105,7 +104,6 @@
              $(this).siblings('ul').addClass('open').slideToggle();
            }
       });
-
       
       </script>
         

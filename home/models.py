@@ -6,7 +6,7 @@ from modelcluster.fields import ParentalKey
 from wagtailvideos.models import Video 
 from modules.documents.models import CustomDocument as Document
 from modules.documents.models import CustomImage as Images
-
+from django.db.models.signals import post_save 
 import pdb
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel , MultiFieldPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -190,51 +190,6 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		return render(request, 'dashboard/library.html', {'medias': media_list, 'object': obj})
 
 
-	@route(r'^watch/(?P<media_id>[-\w]+)/$', name='video_detail')
-	def watch_media(self, request, media_id,  *args, **kwargs):
-		from .forms import CommentForm
-		media = self.get_videos().get(id=media_id)
-		if media.scope == Video.PRIVATE and request.user.is_anonymous:
-			messages.warning(request, 'Please login to view this media.')
-			return HttpResponseRedirect('/')
-		self.update_views(media, request.user)
-		comments = media.comments.all()
-		commentable = True
-		category_videos = Video.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
-		
-		return render(request, 'home/video_detail.html', {'video': media, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
-
-	@route(r'^doc-watch/(?P<media_id>[-\w]+)/$', name='document_detail')
-	def document_detail(self, request, media_id,  *args, **kwargs):
-		from .forms import CommentForm
-		media = self.get_documents().get(id=media_id)
-		if media.access == Document.PRIVATE and request.user.is_anonymous:
-			messages.warning(request, 'Please login to view this media.')
-			return HttpResponseRedirect('/')
-		self.update_views(media, request.user)
-		comments = media.comments.all()
-		commentable = True
-		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
-		
-		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
-
-
-	@route(r'^view-image/(?P<media_id>[-\w]+)/$', name='image_detail')
-	def image_detail(self, request, media_id,  *args, **kwargs):
-		from .forms import CommentForm
-		media = self.get_images().get(id=media_id)
-		if media.access == Images.PRIVATE and request.user.is_anonymous:
-			messages.warning(request, 'Please login to view this media.')
-			return HttpResponseRedirect('/')
-		self.update_views(media, request.user)
-		comments = media.comments.all()
-		commentable = True
-		category_documents = self.images.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
-		
-		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
-
-
-
 class Comment(models.Model):
 	content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)
 	object_id = models.PositiveIntegerField(null=True)
@@ -249,3 +204,15 @@ class Comment(models.Model):
 
 	def __str__(self):
 		return 'Commented by {} on {}'.format(self.user.username, self.content_object.title)
+
+
+
+def dashboard_notification(sender, instance, **kwargs):
+    if not instance.carousel_video.notifications.exists():
+        Notifications.objects.create(content_object=instance.carousel_video)
+    if not instance.carousel_document.notifications.exists():
+        Notifications.objects.create(content_object=instance.carousel_document)
+    if not instance.carousel_image.notifications.exists():
+        Notifications.objects.create(content_object=instance.carousel_image)
+
+post_save.connect(dashboard_notification, sender=HomePageCarouselVideos)
