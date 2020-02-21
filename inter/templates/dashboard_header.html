@@ -1,7 +1,7 @@
 {% load static %}
 {% load i18n %}
 <header class="login-header d-flex align-items-center site-header">
-     <a class="navbar-brand" href="/"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
+    <a class="navbar-brand" href="/"> <img src="{% static 'css/logo.png' %}" alt="Logo" /> </a>
     <div class="search-option">
       <div class="share-popup-backdrop d-md-none"></div>
       <form method="get" action="/users/search/" class="search-form">
@@ -9,9 +9,16 @@
         <button type="submit" class="search-icon"><i class="far fa-search"></i></button>
         <a href="javascript:void(0);" class="close-search d-md-none"><i class="fal fa-long-arrow-left"></i></a>
       </form>
+        <a href="javascript:void(0)" data-toggle="modal" data-target="#extraSearchOptions">{% trans 'Extra Search' %}</a>
     </div>
+
+    
+
     <div class="right-option d-flex justify-content-end">
       <ul class="list-inline mb-0 d-flex align-items-center">
+        <li class="list-inline-item">
+          <button class="open-search d-md-none"><i class="fal fa-search"></i></button>
+        </li>
         <li class="list-inline-item">
           <form class="language-form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}" />
@@ -21,7 +28,7 @@
                     {% get_language_info_list for LANGUAGES as languages %}
                     {% for language in languages %}
                         <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                            {{ language.name_local }} ({{ language.code }})
+                            {{ language.code }}
                         </option>
                     {% endfor %}
                 </select>
@@ -35,7 +42,7 @@
           <div class="dropdown-menu" aria-labelledby="links">
             <div class="user-link">
               <a href="/users/channels"><i class="fal fa-album-collection"></i> {% trans 'Channels' %}</a>
-              <a href="#"><i class="fas fa-usd-circle"></i> {% trans 'Paid Membership' %}</a>
+              <a href="/"><i class="fas fa-home"></i> {% trans 'Home' %}</a>
               
             </div>
           </div>
@@ -131,4 +138,6 @@
         </li>
       </ul>
     </div>
+
+
 </header>

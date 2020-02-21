@@ -1,6 +1,7 @@
 {% load static %}
 {% load wagtailcore_tags i18n %}
 {% load duration_field %}
+{% load i18n %}
 <html>
 
 <head>
@@ -27,7 +28,8 @@
   
   {% block body %}
 
-  {% endblock %}
+  {% endblock %}<!-- extra search options modal -->
+      {% include "extra_search.html" %}
           <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
           <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
           <script type="text/javascript" src="{% static 'js/wow.js' %}"></script>

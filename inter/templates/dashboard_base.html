@@ -1,7 +1,7 @@
 <!doctype html>
 {% load static %}
 {% load wagtailcore_tags i18n %}
-
+{% load i18n %}
 <html>
 
 <head>
@@ -20,6 +20,7 @@
           <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
           <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
           <link href="{% static 'css/video-js.css' %}" rel="stylesheet" type="text/css">
+          
         {% if request.user.is_authenticated %}
           <style type="text/css">
             .site-header .navbar-brand img {
@@ -46,6 +47,8 @@
 
   {% endblock %}
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    {% include "extra_search.html" %}
+
     <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/wow.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/slick.js' %}"></script>

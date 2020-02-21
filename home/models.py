@@ -14,13 +14,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from wagtailvideos.edit_handlers import VideoChooserPanel
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
-
+from django.utils.timezone import localtime, make_aware, timedelta
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib import messages
-from datetime import timedelta, datetime
+from datetime import datetime
 
 User = get_user_model()
 
@@ -120,13 +120,41 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 	@route(r'^search/$', name='search')
 	def search_media(self, request, *args, **kwargs):
 		from django.db.models import Q
+		videos = self.get_videos()
+		documents = self.get_documents()
+		images = self.get_images()
 		media_list =[]
-		if request.GET.get('q', False):
-			videos = self.get_videos().filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q'))  ).distinct()
-			documents = self.get_documents().filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q')) ).distinct()
-			images = self.get_images().filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q')) ).distinct()
+		has_result = False
+		if request.GET.get('q', '') != '':
+			videos = videos.filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q'))  )
+			documents =documents.filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q')) )
+			images = images.filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q')) )
+			has_result = True
+		if request.GET.get('publish_year', '') != '':
+			try:
+				videos = videos.filter(Q(publication_at__year=request.GET.get('publish_year')))
+				documents =documents.filter(Q(publication_at__year=request.GET.get('publish_year')))
+				images = images.filter(Q(publication_at__year=request.GET.get('publish_year')))
+				has_result = True
+			except Exception as ex:
+				print(ex)
 
-			from itertools import chain
+		if request.GET.get('publish_range', '') != '':
+			try:
+				publish_from = request.GET.get('publish_range').split(' - ')[0]
+				publish_to = request.GET.get('publish_range').split(' - ')[1]
+				date_publish_from = make_aware(datetime.strptime(publish_from, '%d/%m/%Y %I:%M %p'))
+				date_publish_to = make_aware(datetime.strptime(publish_to, '%d/%m/%Y %I:%M %p'))
+
+				videos = videos.filter(Q(publication_at__gte=date_publish_from)&Q(publication_at__lte=date_publish_to))
+				documents =documents.filter(Q(publication_at__gte=date_publish_from)&Q(publication_at__lte=date_publish_to))
+				images = images.filter(Q(publication_at__gte=date_publish_from)&Q(publication_at__lte=date_publish_to))
+				has_result = True
+			except Exception as ex:
+				print(ex)
+
+		from itertools import chain
+		if has_result:
 			media = list(chain(documents, videos, images))
 			media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True) 
 		return render(request, 'home/search_results.html', {'medias': media_list})

@@ -402,7 +402,7 @@ msgstr "Fin de Publicación"
 
 #: modules/documents/models.py:110 wagtailvideos/wagtailvideos/models.py:127
 msgid "Republish At"
-msgstr "Republicado en"
+msgstr "Replicado en"
 
 #: modules/documents/models.py:111 wagtailvideos/wagtailvideos/models.py:79
 #: wagtailvideos/wagtailvideos/models.py:104
@@ -447,7 +447,7 @@ msgstr "Representante Legal"
 
 #: modules/users/models.py:36
 msgid "Membership Start Date"
-msgstr "Inicio de Memnbresía"
+msgstr "Inicio de Membresía"
 
 #: modules/users/models.py:37
 msgid "Membership End Date"
@@ -634,7 +634,7 @@ msgstr "Arrastre y suelte los videos aqui para subir inmediatamente."
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:21
 msgid "Or choose from your computer"
-msgstr "O seeccione uno de su computadora"
+msgstr "O seleccione uno de su computadora"
 
 #: wagtailvideos/wagtailvideos/templates/wagtailvideos/multiple/add.html:27
 msgid "Add to collection:"
@@ -852,3 +852,58 @@ msgstr "Seleccione otro video"
 #: wagtailvideos/wagtailvideos/widgets.py:13
 msgid "Edit this video"
 msgstr "Editar este video"
+
+
+msgid "Social media settings"
+msgstr "Configuración redes sociales"
+
+msgid "Can access Wagtail admin"
+msgstr "Puede accesar sección administrador"
+
+msgid "Can view Tag"
+msgstr "Puede ver las etiquetas"
+
+msgid "Can view Media Views"
+msgstr "Puede ver lav istademedios"
+
+msgid "Can view Associate"
+msgstr "Puede ver Asociados"
+
+msgid "Can view Associate Level"
+msgstr "Puede ver Nivelde Asociados"
+
+msgid "Can view Area"
+msgstr "Puede ver Areas"
+
+msgid "Can view Subject"
+msgstr "Puede ver Materias"
+
+
+msgid "Can view Topic"
+msgstr "Puede ver Temas"
+
+
+msgid "Can view SubTopic"
+msgstr "Puede ver SubTemas"
+
+
+msgid "Can view Nature"
+msgstr "Puede ver Naturalezas"
+
+msgid "Slug"
+msgstr "Etiqueta a mostrar"
+
+msgid "Published Year"
+msgstr "Año publicado"
+
+msgid "Publish In"
+msgstr "Publicado en"
+
+msgid "Close"
+msgstr "Cerca"
+
+msgid "More search options"
+msgstr "Más opciones de búsqueda"
+
+msgid "Extra Search"
+msgstr "Búsqueda extra"
