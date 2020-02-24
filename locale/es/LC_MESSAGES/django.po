@@ -864,7 +864,7 @@ msgid "Can view Tag"
 msgstr "Puede ver las etiquetas"
 
 msgid "Can view Media Views"
-msgstr "Puede ver lav istademedios"
+msgstr "Puede ver las listas de medios"
 
 msgid "Can view Associate"
 msgstr "Puede ver Asociados"
@@ -900,7 +900,7 @@ msgid "Publish In"
 msgstr "Publicado en"
 
 msgid "Close"
-msgstr "Cerca"
+msgstr "Cerrar"
 
 msgid "More search options"
 msgstr "Más opciones de búsqueda"

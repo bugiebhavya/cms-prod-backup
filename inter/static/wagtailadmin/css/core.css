@@ -229,7 +229,7 @@ label.no-float {
         box-sizing: border-box;
         display: inline;
         float: left;
-        width: 16.66667%;
+        width: 100%;
         padding-right: 1.5%;
         padding-left: 1.5%;
         padding-top: 1.2em;

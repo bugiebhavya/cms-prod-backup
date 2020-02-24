@@ -11,10 +11,14 @@
           </button>
         </div>
         <div class="modal-body">
-          <form method="get" action="/users/search/" class="search-form">
+          <form method="get" action="/users/search/" class="extra-search-form">
             <div class="form-group">
-              <label class="col-form-label">{% trans 'Title' %}:</label>
-              <input type="text" class="form-control" name="q">
+              <label class="col-form-label">{% trans 'Subject' %}:</label>
+              <input type="text" class="form-control" name="subject">
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">{% trans 'Topic' %}:</label>
+              <input type="text" class="form-control" name="topic">
             </div>
             <div class="form-group">
               <label for="message-text" class="col-form-label">{% trans 'Published Year' %}:</label>
@@ -131,7 +135,20 @@
     $('#id_publish_range').on('cancel.daterangepicker', function(ev, picker) {
         $(this).val('');
     });
-    $('.monthselect').addClass('form-fontrol')
-    $('.yearselect').addClass('form-fontrol')
+    $(".extra-search-form").submit(function(e){
+      e.preventDefault()
+      query = "?"
+      $(".extra-search-form").serializeArray().forEach(function(q){
+        if(q.value != "" && q.value != undefined){
+          query = query+q.name+"="+q.value+"&"
+        }
+        
+      })
+      if(query.length > 1){
+        location.href = $(this).attr('action')+query
+      }
+    })
+
+
   })
 </script>

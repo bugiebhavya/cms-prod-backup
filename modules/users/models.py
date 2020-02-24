@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
+from django.utils.html import mark_safe
 
 def get_expiry_date():
 	return datetime.now()+timedelta(days=30)
@@ -21,7 +22,7 @@ class AssociatesLevel(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.title)
+        return mark_safe('{0}   (Usuarios: {1})'.format(self.title, self.allowed_users))
 
 
 class Associate(models.Model):

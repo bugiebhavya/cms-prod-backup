@@ -139,6 +139,34 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 			except Exception as ex:
 				print(ex)
 
+		if request.GET.get('subject', '') != '' and request.GET.get('topic', '') == '':
+			try:
+				videos = videos.filter(Q(subject__name__istartswith=request.GET.get('subject')))
+				documents =documents.filter(Q(subject__name__istartswith=request.GET.get('subject')))
+				images = images.filter(Q(subject__name__istartswith=request.GET.get('subject')))
+				has_result = True
+			except Exception as ex:
+				print(ex)
+
+		elif request.GET.get('topic', '') != '' and request.GET.get('subject', '') == '':
+			try:
+				videos = videos.filter(Q(topic__name__istartswith=request.GET.get('topic')))
+				documents =documents.filter(Q(topic__name__istartswith=request.GET.get('topic')))
+				images = images.filter(Q(topic__name__istartswith=request.GET.get('topic')))
+				has_result = True
+			except Exception as ex:
+				print(ex)
+
+		elif request.GET.get('topic', '') != '' and request.GET.get('subject', '') != '':
+			try:
+				videos = videos.filter(Q(topic__name__istartswith=request.GET.get('topic'))&Q(subject__name__istartswith=request.GET.get('subject')))
+				documents =documents.filter(Q(topic__name__istartswith=request.GET.get('topic'))&Q(subject__name__istartswith=request.GET.get('subject')))
+				images = images.filter(Q(topic__name__istartswith=request.GET.get('topic'))&Q(subject__name__istartswith=request.GET.get('subject')))
+				has_result = True
+			except Exception as ex:
+				print(ex)
+
+
 		if request.GET.get('publish_range', '') != '':
 			try:
 				publish_from = request.GET.get('publish_range').split(' - ')[0]
@@ -155,7 +183,7 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 
 		from itertools import chain
 		if has_result:
-			media = list(chain(documents, videos, images))
+			media = list(chain(documents.distinct(), videos.distinct(), images.distinct()))
 			media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True) 
 		return render(request, 'home/search_results.html', {'medias': media_list})
 
