@@ -870,7 +870,7 @@ msgid "Can view Associate"
 msgstr "Puede ver Asociados"
 
 msgid "Can view Associate Level"
-msgstr "Puede ver Nivelde Asociados"
+msgstr "Puede ver Nivel de Asociados"
 
 msgid "Can view Area"
 msgstr "Puede ver Areas"
