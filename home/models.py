@@ -126,9 +126,9 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		media_list =[]
 		has_result = False
 		if request.GET.get('q', '') != '':
-			videos = videos.filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q'))  )
-			documents =documents.filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q')) )
-			images = images.filter(Q(title__istartswith=request.GET.get('q')) | Q(tags__name__istartswith=request.GET.get('q')) )
+			videos = videos.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q'))  )
+			documents =documents.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) )
+			images = images.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) )
 			has_result = True
 		if request.GET.get('publish_year', '') != '':
 			try:
@@ -141,27 +141,27 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 
 		if request.GET.get('subject', '') != '' and request.GET.get('topic', '') == '':
 			try:
-				videos = videos.filter(Q(subject__name__istartswith=request.GET.get('subject')))
-				documents =documents.filter(Q(subject__name__istartswith=request.GET.get('subject')))
-				images = images.filter(Q(subject__name__istartswith=request.GET.get('subject')))
+				videos = videos.filter(Q(subject__name__icontains=request.GET.get('subject')))
+				documents =documents.filter(Q(subject__name__icontains=request.GET.get('subject')))
+				images = images.filter(Q(subject__name__icontains=request.GET.get('subject')))
 				has_result = True
 			except Exception as ex:
 				print(ex)
 
 		elif request.GET.get('topic', '') != '' and request.GET.get('subject', '') == '':
 			try:
-				videos = videos.filter(Q(topic__name__istartswith=request.GET.get('topic')))
-				documents =documents.filter(Q(topic__name__istartswith=request.GET.get('topic')))
-				images = images.filter(Q(topic__name__istartswith=request.GET.get('topic')))
+				videos = videos.filter(Q(topic__name__icontains=request.GET.get('topic')))
+				documents =documents.filter(Q(topic__name__icontains=request.GET.get('topic')))
+				images = images.filter(Q(topic__name__icontains=request.GET.get('topic')))
 				has_result = True
 			except Exception as ex:
 				print(ex)
 
 		elif request.GET.get('topic', '') != '' and request.GET.get('subject', '') != '':
 			try:
-				videos = videos.filter(Q(topic__name__istartswith=request.GET.get('topic'))&Q(subject__name__istartswith=request.GET.get('subject')))
-				documents =documents.filter(Q(topic__name__istartswith=request.GET.get('topic'))&Q(subject__name__istartswith=request.GET.get('subject')))
-				images = images.filter(Q(topic__name__istartswith=request.GET.get('topic'))&Q(subject__name__istartswith=request.GET.get('subject')))
+				videos = videos.filter(Q(topic__name__icontains=request.GET.get('topic'))&Q(subject__name__icontains=request.GET.get('subject')))
+				documents =documents.filter(Q(topic__name__icontains=request.GET.get('topic'))&Q(subject__name__icontains=request.GET.get('subject')))
+				images = images.filter(Q(topic__name__icontains=request.GET.get('topic'))&Q(subject__name__icontains=request.GET.get('subject')))
 				has_result = True
 			except Exception as ex:
 				print(ex)
