@@ -19,14 +19,33 @@
             <div class="icon"><img src="{% static 'images/user.png' %}" alt="User"></div> {{request.user.username}}
           </h2>
           <div class="video-slider w-100">
+
             {% for loop_cycle in self.carousel_media.all %}
               {% if loop_cycle.carousel_video %}
                   {% include 'media_template/index_horizontal.html' with media=loop_cycle.carousel_video %}
               {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <h2><div class="icon"><img src="{% static 'images/report.jpg' %}" alt="fevicon"></div> {% trans 'Documents' %}</h2>
+          <div class="recomendado-slider w-100">
+            {% for loop_cycle in self.carousel_media.all %}
               {% if loop_cycle.carousel_document %}
                 {% include 'media_template/index_horizontal.html' with media=loop_cycle.carousel_document %}
               {% endif %}
-
+            {% endfor %}
+          </div>
+        </div>
+        
+        <div class="col-sm-12">
+          <h2><div class="icon"><img src="{% static 'images/photo.png' %}" alt="fevicon"></div> {% trans 'Images' %}</h2>
+          <div class="video-slider w-100">
+            {% for loop_cycle in self.carousel_media.all %}
+              {% if loop_cycle.carousel_image %}
+                {% include 'media_template/index_horizontal.html' with media=loop_cycle.carousel_image %}
+              {% endif %}
             {% endfor %}
           </div>
         </div>

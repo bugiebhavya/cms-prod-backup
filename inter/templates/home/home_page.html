@@ -25,14 +25,14 @@
             <div class="row">
                 {% for loop_cycle in self.carousel_media.all %}
                   {% if loop_cycle.carousel_video %}
-                    {% include 'media_template/horizontal.html' with media=loop_cycle.carousel_video %}
+                    {% include 'media_template/home_index.html' with media=loop_cycle.carousel_video %}
                   {% endif %}
                   {% if loop_cycle.carousel_document %}
-                    {% include 'media_template/horizontal.html' with media=loop_cycle.carousel_document %}
+                    {% include 'media_template/home_index.html' with media=loop_cycle.carousel_document %}
                   {% endif %}
 
                   {% if loop_cycle.carousel_image %}
-                    {% include 'media_template/horizontal.html' with media=loop_cycle.carousel_image %}
+                    {% include 'media_template/home_index.html' with media=loop_cycle.carousel_image %}
                   {% endif %}
 
                 {% endfor %}

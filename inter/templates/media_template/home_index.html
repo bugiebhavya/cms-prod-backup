@@ -2,7 +2,7 @@
 {% load duration_field i18n %}
 {% load file_size %}
 
-<div class="col-lg-4 col-md-6 videoBox">
+<div class="col-md-6 videoBox">
 	<a href="{% if media.duration %}{% url 'video_detail' media.id %} {% else %}{% if media.is_image  %} {% url 'image_detail' media.id %} {% else %} {% url 'document_detail' media.id %}{% endif %}{% endif %}" class="video-block w-100">
 		<div class="video-part">
 			<img class="thumbnail" src="/media/{{media.thumbnail}}" alt="img">

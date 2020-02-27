@@ -186,12 +186,14 @@ class ChannelPage(RoutablePageMixin,Page):
 
 
 def dashboard_notification(sender, instance, **kwargs):
-    if not instance.carousel_video.notifications.exists():
-        Notifications.objects.create(content_object=instance.carousel_video)
-    if not instance.carousel_document.notifications.exists():
-        Notifications.objects.create(content_object=instance.carousel_document)
-    if not instance.carousel_image.notifications.exists():
-        Notifications.objects.create(content_object=instance.carousel_image)
-
+    try:
+        if not instance.carousel_video.notifications.exists():
+            Notifications.objects.create(content_object=instance.carousel_video)
+        if not instance.carousel_document.notifications.exists():
+            Notifications.objects.create(content_object=instance.carousel_document)
+        if not instance.carousel_image.notifications.exists():
+            Notifications.objects.create(content_object=instance.carousel_image)
+    except Exception as ex:
+        print(ex)
 
 post_save.connect(dashboard_notification, sender=DashboardPageCarouselVideos)
