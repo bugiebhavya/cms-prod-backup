@@ -11,6 +11,18 @@ from django.utils.html import mark_safe
 def get_expiry_date():
 	return datetime.now()+timedelta(days=30)
 
+class AssociateSector(models.Model):
+    class Meta:
+        verbose_name = _('Sector')
+        verbose_name_plural = _('Sectors')
+    value = models.CharField(verbose_name=_('Value'),max_length=150, unique=True)
+    notes = models.TextField(verbose_name=_('Notes'), default="", blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return mark_safe(self.value)
+
 class AssociatesLevel(models.Model):
     class Meta:
         verbose_name = _('Associate Level')
@@ -36,8 +48,8 @@ class Associate(models.Model):
     legal_representative = models.CharField(verbose_name=_('Legal representative'), max_length=100)
     membership_start = models.DateField(verbose_name=_('Membership Start Date'), default=datetime.now)
     membership_end = models.DateField(verbose_name=_('Membership End Date'), default=get_expiry_date)
-    sector = models.CharField(verbose_name=_('Sector'), max_length=200)
-    web_page = models.URLField(verbose_name=_('Web page'), max_length=200)
+    sector = models.ForeignKey(AssociateSector, verbose_name=_('Sector'), on_delete=models.SET_NULL, null=True, blank=True)
+    web_page = models.URLField(verbose_name=_('Web page'), max_length=200, blank=True, null=True)
     email = models.CharField(verbose_name=_('Email address'), max_length=200, unique=True)
     associate_level = models.ForeignKey(AssociatesLevel, verbose_name=_('Level of associate'), on_delete=models.SET_NULL, null=True, blank=True)
 
