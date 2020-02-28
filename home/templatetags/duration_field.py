@@ -14,4 +14,3 @@ def duration(td):
 	except:
 		total_seconds = timedelta(microseconds=td).total_seconds()
 		return time.strftime("%H:%M:%S",time.gmtime(total_seconds))
-	

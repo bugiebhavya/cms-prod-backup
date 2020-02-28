@@ -907,3 +907,9 @@ msgstr "Más opciones de búsqueda"
 
 msgid "Extra Search"
 msgstr "Búsqueda extra"
+
+msgid "Groups"
+msgstr "Nivel de Acceso"
+
+msgid "groups"
+msgstr "Nivel de Acceso"

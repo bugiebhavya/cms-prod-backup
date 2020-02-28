@@ -27,7 +27,7 @@ class CommentForm(forms.ModelForm):
 class CustomUserEditForm(UserEditForm):
     position_held = forms.CharField(required=True, label=_("Position held"))
     associate = forms.ModelChoiceField(queryset=Associate.objects, required=True, label=_("Associate"))
-
+    download_remain = forms.IntegerField(label=_('Downloads remain'), help_text=_('Number of media User can download'))
 
 class CustomUserCreationForm(UserCreationForm):
     position_held = forms.CharField(required=True, label=_("Position held"))

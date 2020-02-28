@@ -6012,3 +6012,9 @@ body.reordering {
 form .objects {
     padding-top: 2em;
 }
+
+a.related-widget-wrapper-link.add-related {
+    font-size: 36px;
+    font-weight: bold;
+    padding: 5px;
+}

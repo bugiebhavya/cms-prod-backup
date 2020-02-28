@@ -7,6 +7,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.utils.html import mark_safe
+import pdb
 
 def get_expiry_date():
 	return datetime.now()+timedelta(days=30)
@@ -29,6 +30,7 @@ class AssociatesLevel(models.Model):
         verbose_name_plural = _('Associate Levels')
     title = models.CharField(verbose_name=_('Level Title'),max_length=100, unique=True)
     allowed_users = models.PositiveIntegerField(default=0, verbose_name=_('Allowed users'))
+    download = models.PositiveIntegerField(default=0, verbose_name=_('Downloads'), help_text=_('Number of media User can download'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
@@ -60,19 +62,32 @@ class Associate(models.Model):
         return str(self.rfc)
 
 class User(AbstractUser):
+    class Meta:
+        ordering = ('-last_name',)
     associate = models.ForeignKey(Associate, verbose_name=_('Associate'), on_delete=models.SET_NULL, null=True, blank=True)
     position_held = models.CharField(verbose_name=_('Position held'), max_length=100, null=True, blank=True)
+    download_remain = models.PositiveIntegerField(default=0, verbose_name=_('Downloads remain'), help_text=_('Number of media User can download'))
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.username)
 
-    def clean(self):
-        associate = self.associate
-        if associate.user_set.all().count() >= associate.associate_level.allowed_users:
-            raise ValidationError(_("Max allowed users reached for that membership"))
+    def save(self, *args, **kwargs):
+        if self._state.adding:
+            self.download_remain = self.associate.associate_level.download
+        return super(User, self).save(*args, **kwargs)
 
+    def clean(self):
+        if self._state.adding:
+            associate = self.associate
+            if associate and associate.user_set.all().count() > associate.associate_level.allowed_users:
+                raise ValidationError(_("Max allowed users reached for that membership"))
+
+    @property
+    def can_download(self):
+        return self.download_remain > 0
+    
 
 class Favorite(models.Model):
     """ Represents an instance of Favorite """

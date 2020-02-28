@@ -9,6 +9,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 import os
 from datetime import datetime
 from django.utils.functional import cached_property
+from django.urls import reverse
 """
 Preview generator:
 # https://pypi.org/project/preview-generator-ivc/
@@ -31,6 +32,8 @@ class Area(models.Model):
     def __str__(self):
         return str(self.name)
 
+    def get_add_url(self):
+        return reverse('admin:area_add')
 
 class Subject(models.Model):
     class Meta:

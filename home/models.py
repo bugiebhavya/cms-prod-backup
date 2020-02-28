@@ -126,42 +126,42 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		media_list =[]
 		has_result = False
 		if request.GET.get('q', '') != '':
-			videos = videos.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q'))  )
-			documents =documents.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) )
-			images = images.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) )
+			videos = videos.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q'))  ).order_by('-id')
+			documents =documents.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) ).order_by('-id')
+			images = images.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) ).order_by('-id')
 			has_result = True
 		if request.GET.get('publish_year', '') != '':
 			try:
-				videos = videos.filter(Q(publication_at__year=request.GET.get('publish_year')))
-				documents =documents.filter(Q(publication_at__year=request.GET.get('publish_year')))
-				images = images.filter(Q(publication_at__year=request.GET.get('publish_year')))
+				videos = videos.filter(Q(publication_at__year=request.GET.get('publish_year'))).order_by('-id')
+				documents =documents.filter(Q(publication_at__year=request.GET.get('publish_year'))).order_by('-id')
+				images = images.filter(Q(publication_at__year=request.GET.get('publish_year'))).order_by('-id')
 				has_result = True
 			except Exception as ex:
 				print(ex)
 
 		if request.GET.get('subject', '') != '' and request.GET.get('topic', '') == '':
 			try:
-				videos = videos.filter(Q(subject__name__icontains=request.GET.get('subject')))
-				documents =documents.filter(Q(subject__name__icontains=request.GET.get('subject')))
-				images = images.filter(Q(subject__name__icontains=request.GET.get('subject')))
+				videos = videos.filter(Q(subject__name__icontains=request.GET.get('subject'))).order_by('-id')
+				documents =documents.filter(Q(subject__name__icontains=request.GET.get('subject'))).order_by('-id')
+				images = images.filter(Q(subject__name__icontains=request.GET.get('subject'))).order_by('-id')
 				has_result = True
 			except Exception as ex:
 				print(ex)
 
 		elif request.GET.get('topic', '') != '' and request.GET.get('subject', '') == '':
 			try:
-				videos = videos.filter(Q(topic__name__icontains=request.GET.get('topic')))
-				documents =documents.filter(Q(topic__name__icontains=request.GET.get('topic')))
-				images = images.filter(Q(topic__name__icontains=request.GET.get('topic')))
+				videos = videos.filter(Q(topic__name__icontains=request.GET.get('topic'))).order_by('-id')
+				documents =documents.filter(Q(topic__name__icontains=request.GET.get('topic'))).order_by('-id')
+				images = images.filter(Q(topic__name__icontains=request.GET.get('topic'))).order_by('-id')
 				has_result = True
 			except Exception as ex:
 				print(ex)
 
 		elif request.GET.get('topic', '') != '' and request.GET.get('subject', '') != '':
 			try:
-				videos = videos.filter(Q(topic__name__icontains=request.GET.get('topic'))&Q(subject__name__icontains=request.GET.get('subject')))
-				documents =documents.filter(Q(topic__name__icontains=request.GET.get('topic'))&Q(subject__name__icontains=request.GET.get('subject')))
-				images = images.filter(Q(topic__name__icontains=request.GET.get('topic'))&Q(subject__name__icontains=request.GET.get('subject')))
+				videos = videos.filter(Q(topic__name__icontains=request.GET.get('topic'))&Q(subject__name__icontains=request.GET.get('subject'))).order_by('-id')
+				documents =documents.filter(Q(topic__name__icontains=request.GET.get('topic'))&Q(subject__name__icontains=request.GET.get('subject'))).order_by('-id')
+				images = images.filter(Q(topic__name__icontains=request.GET.get('topic'))&Q(subject__name__icontains=request.GET.get('subject'))).order_by('-id')
 				has_result = True
 			except Exception as ex:
 				print(ex)
@@ -174,16 +174,16 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 				date_publish_from = make_aware(datetime.strptime(publish_from, '%d/%m/%Y %I:%M %p'))
 				date_publish_to = make_aware(datetime.strptime(publish_to, '%d/%m/%Y %I:%M %p'))
 
-				videos = videos.filter(Q(publication_at__gte=date_publish_from)&Q(publication_at__lte=date_publish_to))
-				documents =documents.filter(Q(publication_at__gte=date_publish_from)&Q(publication_at__lte=date_publish_to))
-				images = images.filter(Q(publication_at__gte=date_publish_from)&Q(publication_at__lte=date_publish_to))
+				videos = videos.filter(Q(publication_at__gte=date_publish_from)&Q(publication_at__lte=date_publish_to)).order_by('-id')
+				documents =documents.filter(Q(publication_at__gte=date_publish_from)&Q(publication_at__lte=date_publish_to)).order_by('-id')
+				images = images.filter(Q(publication_at__gte=date_publish_from)&Q(publication_at__lte=date_publish_to)).order_by('-id')
 				has_result = True
 			except Exception as ex:
 				print(ex)
 
 		from itertools import chain
 		if has_result:
-			media = list(chain(documents.distinct(), videos.distinct(), images.distinct()))
+			media = list(chain(documents.distinct('id'), videos.distinct('id'), images.distinct('id')))
 			media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True) 
 		return render(request, 'home/search_results.html', {'medias': media_list})
 

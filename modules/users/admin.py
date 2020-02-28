@@ -3,7 +3,6 @@ from .models import AssociatesLevel, Associate, User, AssociateSector
 from wagtail.contrib.modeladmin.options import (modeladmin_register, ModelAdmin,)
 from wagtail.contrib.modeladmin.helpers import PermissionHelper
 import pdb
-from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from taggit.models import Tag, TaggedItem
 
