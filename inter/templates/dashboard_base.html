@@ -38,7 +38,7 @@
         {% endif %}
 </head>
 
-<body class="{% if user.is_authenticated %} loggedin{% endif %}">
+<body class="{% if user.is_authenticated %} loggedin{% endif %}" oncontextmenu="return false;">
   {% block header %}
 
   {% endblock %}
@@ -92,6 +92,24 @@
     <script type="text/javascript" src="{% static 'js/video.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/notification.js' %}"></script>
     <script>
+      document.onkeydown = function(e) {
+        if(event.keyCode == 123) {
+           return false;
+        }
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+           return false;
+        }
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+           return false;
+        }
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+           return false;
+        }
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+           return false;
+        }
+      }
+
       $('ul.menu li:has(ul)').addClass('hassub');
       $(".hassub").prepend('<span class="submenu-btn"><i class="fal fa-chevron-down"></i></span>');
 
