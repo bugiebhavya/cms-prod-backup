@@ -406,6 +406,10 @@
 }
 
 @media (min-width: 730px) {
+  .daterangepicker{
+    height: 400px;
+    overflow-y: hidden !important;
+  }
   .daterangepicker .ranges {
     width: auto;
   }
@@ -420,5 +424,8 @@
 
   .daterangepicker .drp-calendar.left {
     clear: none !important;
+  }
+  .daterangepicker .drp-buttons{
+    top: 80px;
   }
 }
