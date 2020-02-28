@@ -913,3 +913,10 @@ msgstr "Nivel de Acceso"
 
 msgid "groups"
 msgstr "Nivel de Acceso"
+
+
+msgid "Sectors"
+msgstr "Sectores"
+
+msgid "Value"
+msgstr "Valor"
