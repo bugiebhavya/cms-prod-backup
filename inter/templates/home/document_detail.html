@@ -27,12 +27,12 @@
             </div>
           </aside>
           <div class="col-lg-9">
-            {% else %}
-              <div class="col-lg-12">
-                {% endif %}
+        {% else %}
+          <div class="col-lg-12">
+        {% endif %}
+                
                 {% if document.is_image %}
                   <img src="" id="photo">
-
                  {% elif document.is_pdf %}
                   <iframe src = "/users/doc-render/#{{document.file.url}}" width='400' height='500' allowfullscreen webkitallowfullscreen></iframe>
                 {% elif document.is_sheet %}

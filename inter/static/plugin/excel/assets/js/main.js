@@ -31,20 +31,6 @@ var _failed = function(e) {
 };
 
 /* make the buttons for the sheets */
-var make_buttons = function(sheetnames, cb) {
-  var buttons = document.getElementById('buttons');
-  buttons.innerHTML = "";
-  sheetnames.forEach(function(s,idx) {
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.name = 'btn' + idx;
-    btn.text = s;
-    var txt = document.createElement('h3'); txt.innerText = s; btn.appendChild(txt);
-    btn.addEventListener('click', function() { cb(idx); }, false);
-    buttons.appendChild(btn);
-    buttons.appendChild(document.createElement('br'));
-  });
-};
 
 var cdg = canvasDatagrid({
   parentNode: _grid
@@ -54,17 +40,15 @@ cdg.style.width = '100%';
 
 function _resize() {
   _grid.style.height = (window.innerHeight - 200) + "px";
-  _grid.style.width = (window.innerWidth - 200) + "px";
+  _grid.style.width = (window.innerWidth - 800) + "px";
 }
 window.addEventListener('resize', _resize);
 
 var _onsheet = function(json, sheetnames, select_sheet_cb) {
 
-  make_buttons(sheetnames, select_sheet_cb);
-
   /* show grid */
   _grid.style.display = "block";
-  _resize();
+  // _resize();
 
   /* set up table headers */
   var L = 0;
@@ -79,6 +63,7 @@ var _onsheet = function(json, sheetnames, select_sheet_cb) {
 };
 
 /** Drop it like it's hot **/
+
 DropSheet({
   file: _file,
   drop: _target,

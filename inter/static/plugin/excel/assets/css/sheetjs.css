@@ -1,8 +1,6 @@
 /* sheetjs.css (C) 2014-present SheetJS -- http://sheetjs.com */
 /* vim: set ts=2: */
-html {
-  overflow: hidden;
-}
+
 #drop{
   border:2px dashed #bbb;
   -moz-border-radius:5px;
@@ -14,23 +12,11 @@ html {
   font:20pt bold,"Vollkorn";color:#bbb
 }
 
-#left {
-  width:188px;
-  position:absolute;
-  left:0;
-}
-#right {
-  position:absolute;
-  left:200px;
-}
-#logo {
-  padding:25px;
-}
-#header {
-  height:168px;
-}
+
+
 #grid {
-  height: 100px;
+  height: 650px;
+  width: 100%;
   display: none;
 }
 

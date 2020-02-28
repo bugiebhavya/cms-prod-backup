@@ -167,8 +167,11 @@ var DropSheet = function DropSheet(opts) {
     request.send();
 
   }
-  readUrl()
-  // if(opts.file && opts.file.addEventListener) opts.file.addEventListener('change', handleFile, false);
+ window.onload = function() {
+    readUrl()
+  }
+  
+  
 };
 
 
