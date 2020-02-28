@@ -151,6 +151,15 @@ class CustomDocument(AbstractDocument):
     def is_image(self):
         return False
 
+    @property
+    def is_pdf(self):
+        return self.file.url.split('.')[-1] == 'pdf'
+
+    @property
+    def is_sheet(self):
+        return self.file.url.split('.')[-1] in ['xlsx', 'xls']
+    
+
     @cached_property
     def total_views(self):
         try:

@@ -32,7 +32,8 @@ class HomePageCarouselVideos(Orderable):
 		null = True, 
 		blank = False,
 		on_delete= models.CASCADE,
-		related_name = "+" 
+		related_name = "+",
+		unique=True
 		)
 	
 
@@ -41,7 +42,8 @@ class HomePageCarouselVideos(Orderable):
 		null = True, 
 		blank = True,
 		on_delete= models.CASCADE,
-		related_name = "+" 
+		related_name = "+",
+		unique=True
 	)
 
 	carousel_image = models.ForeignKey(
@@ -49,7 +51,8 @@ class HomePageCarouselVideos(Orderable):
 		null = True, 
 		blank = True,
 		on_delete= models.CASCADE,
-		related_name = "+" 
+		related_name = "+",
+		unique=True 
 	)
 
 
@@ -216,6 +219,10 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		media_list = sorted(media, key=lambda x: self.get_views(x), reverse=True)
 
 		return render(request, 'dashboard/library.html', {'medias': media_list, 'object': obj})
+
+	@route(r'^doc-render/$')
+	def document_viewer(self, request, *args, **kwargs):
+		return render(request, 'documents/pdfs.html',{})
 
 
 class Comment(models.Model):

@@ -34,14 +34,16 @@ class DashboardPageCarouselVideos(Orderable):
         null = True, 
         blank = True,
         on_delete= models.CASCADE,
-        related_name = "+" 
+        related_name = "+",
+        unique=True
         )
     carousel_document = models.ForeignKey(
         "documents.CustomDocument",
         null = True, 
         blank = True,
         on_delete= models.CASCADE,
-        related_name = "+" 
+        related_name = "+",
+        unique=True
         )
 
     carousel_image = models.ForeignKey(
@@ -49,7 +51,8 @@ class DashboardPageCarouselVideos(Orderable):
         null = True, 
         blank = True,
         on_delete= models.CASCADE,
-        related_name = "+" 
+        related_name = "+",
+        unique=True
     )
 
     panels = [

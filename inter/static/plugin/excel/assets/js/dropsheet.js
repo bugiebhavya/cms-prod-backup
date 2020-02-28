@@ -106,17 +106,7 @@ var DropSheet = function DropSheet(opts) {
     }
   }
 
-  function handleDragover(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-  }
-
-  if(opts.drop.addEventListener) {
-    opts.drop.addEventListener('dragenter', handleDragover, false);
-    opts.drop.addEventListener('dragover', handleDragover, false);
-    opts.drop.addEventListener('drop', handleDrop, false);
-  }
+ 
 
   function handleFile(e) {
     if(pending) return opts.errors.pending();

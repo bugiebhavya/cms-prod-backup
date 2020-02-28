@@ -5370,7 +5370,6 @@ var TextAnnotation = (function TextAnnotationClosure() {
 var LinkAnnotation = (function LinkAnnotationClosure() {
   function LinkAnnotation(params) {
     InteractiveAnnotation.call(this, params);
-
     var dict = params.dict;
     var data = this.data;
     data.annotationType = AnnotationType.LINK;

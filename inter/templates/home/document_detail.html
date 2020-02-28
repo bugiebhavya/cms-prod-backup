@@ -31,9 +31,15 @@
               <div class="col-lg-12">
                 {% endif %}
                 {% if document.is_image %}
-                  <img src="{{document.file.url}}">
+                  <img src="" id="photo">
+
+                 {% elif document.is_pdf %}
+                  <iframe src = "/users/doc-render/#{{document.file.url}}" width='400' height='500' allowfullscreen webkitallowfullscreen></iframe>
+                {% elif document.is_sheet %}
+                  {% include 'documents/excel.html' with file_url=document.file.url %}
                 {% else %}
-                <iframe id="docs" src="https://docs.google.com/viewer?url={{base_url}}{{document.file.url}}&embedded=true" frameborder="0"  width='400' height='500' allowfullscreen webkitallowfullscreen> </iframe>
+                  <iframe id="docs" src="https://docs.google.com/viewer?url={{base_url}}{{document.file.url}}&embedded=true" frameborder="0"  width='400' height='500' allowfullscreen webkitallowfullscreen> </iframe>
+
                 {% endif %}
                 <div class="video-information">
                   <div class="tags">
@@ -216,6 +222,27 @@
           })
         })
 
+
+        $(document).ready(function(){
+          {% if document.is_image %}
+            var xhr = new XMLHttpRequest();
+            xhr.open( "GET", "{{document.file.url}}", true );
+            // Ask for the result as an ArrayBuffer.
+            xhr.responseType = "arraybuffer";
+
+            xhr.onload = function( e ) {
+                // Obtain a blob: URL for the image data.
+                var arrayBufferView = new Uint8Array( this.response );
+                var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+                var urlCreator = window.URL || window.webkitURL;
+                var imageUrl = urlCreator.createObjectURL( blob );
+                var img = document.querySelector( "#photo" );
+                img.src = imageUrl;
+            };
+
+            xhr.send();
+           {% endif %}
+        })
 
       </script> 
       {% endblock %}
