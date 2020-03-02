@@ -10,7 +10,9 @@
             {% block form_field %}
                 {{ field|render_with_errors }}
             {% endblock %}
-                {{ field|get_related_url }}
+                {% if  field|can_add_related %}
+                    {{ field|get_related_url }}
+                {% endif %}
             <span></span>
         </div>
         {% if show_help_text|default_if_none:True and field.help_text %}

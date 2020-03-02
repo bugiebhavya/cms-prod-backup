@@ -1,5 +1,5 @@
 <!doctype html>
-{% load wagtailadmin_tags i18n %}
+{% load wagtailadmin_tags i18n url_resolver %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_current_language_bidi as LANGUAGE_BIDI %}
 <html class="no-js" lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
@@ -18,7 +18,7 @@
 
     {% block branding_favicon %}{% endblock %}
 </head>
-<body id="wagtail" class="{% block bodyclass %}{% endblock %} {% if messages %}has-messages{% endif %} focus-outline-on">
+<body id="wagtail" class="{% if request|is_popup %}popup {% endif %} {% block bodyclass %}{% endblock %} {% if messages %}has-messages{% endif %} focus-outline-on ">
     <!--[if lt IE 9]>
         <p class="capabilitymessage">{% blocktrans %}You are using an <strong>outdated</strong> browser not supported by this software. Please <a href="http://browsehappy.com/">upgrade your browser</a>.{% endblocktrans %}</p>
     <![endif]-->

@@ -105,6 +105,6 @@ $(document).ready(function(){
     $('.add-related').click(function(e){
         e.preventDefault()
         var url = $(this).attr('href')
-        window.open(url, "Add New", "width=700,height=600");
+        window.open(url, "Add New", "width=1400,height=800");
     })    
 })

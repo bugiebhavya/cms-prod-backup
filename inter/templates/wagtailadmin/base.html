@@ -1,7 +1,8 @@
 {% extends "wagtailadmin/admin_base.html" %}
-{% load wagtailadmin_tags wagtailcore_tags i18n %}
+{% load wagtailadmin_tags wagtailcore_tags i18n url_resolver %}
 
 {% block furniture %}
+    {% if not request|is_popup %}
     <aside class="nav-wrapper" data-nav-primary>
         <div class="inner">
             <a href="{% url 'wagtailadmin_home' %}" class="logo" aria-label="{% trans 'Dashboard' %}">
@@ -23,7 +24,7 @@
         </div>
         <div class="explorer__wrapper" data-explorer-menu></div>
     </aside>
-
+    {% endif %}
     <main class="content-wrapper" role="main">
         <div class="content">
             {# Always show messages div so it can be appended to by JS #}
@@ -52,9 +53,24 @@
                     </ul>
                 {% endif %}
             </div>
-            <div id="nav-toggle" class="nav-toggle icon text-replace">{% trans "Menu" %}</div>
-
+            {% if not request|is_popup %}
+                <div id="nav-toggle" class="nav-toggle icon text-replace">{% trans "Menu" %}</div>
+            {% endif %}
             {% block content %}{% endblock %}
         </div>
     </main>
+    <style type="text/css">
+        {% if request|is_popup %}
+            .wrapper {
+                    transform: none;
+                    padding-left: 0px !important;
+                }
+        {% endif %}
+    </style>
+    <script type="text/javascript">
+        if(document.referrer.indexOf('_popup') != -1){
+           window.top.close(); 
+        }
+    </script>
 {% endblock %}
+
