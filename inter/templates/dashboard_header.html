@@ -65,7 +65,7 @@
           <div class="dropdown-menu" aria-labelledby="profileBtn">
             <div class="user-info">
               <div class="icon"><img class="profile-pic" src="{% static 'images/user.png' %}" alt="{{ request.user.username }}"></div>
-              <div class="user-details"><span>{{ request.user.username }}</span> <span class="email">{{ request.user.email }}</span> <a href="#">{% trans 'Manage your account' %}</a></div>
+              <div class="user-details"><span>{{ request.user.username }}</span> <span class="email">{{ request.user.email }}</span> <a href="{% url 'profile-alter' %}">{% trans 'Manage your account' %}</a></div>
             </div>
             <div class="user-link">
               <a href="/users/dashboard"><i class="fas fa-tachometer"></i> {% trans 'Dashboard' %}</a>

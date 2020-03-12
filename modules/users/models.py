@@ -8,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.utils.html import mark_safe
 import pdb
+from unidecode import unidecode
 
 def get_expiry_date():
 	return datetime.now()+timedelta(days=30)
@@ -43,6 +44,7 @@ class Associate(models.Model):
     class Meta:
         verbose_name = _('Associate')
         verbose_name_plural = _('Associate')
+    company = models.CharField(verbose_name=_('Company Name'),max_length=100, unique=True)
     rfc = models.CharField(verbose_name=_('RFC'),max_length=100, unique=True)
     tax_residence = models.CharField(verbose_name=_('Tax residence'), max_length=100)
     state = models.CharField(verbose_name=_('State'), max_length=100)
@@ -59,7 +61,17 @@ class Associate(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.rfc)
+        return str(self.company)
+
+def get_upload_to(instance, filename):
+    """
+    Obtain a valid upload path for an image file.
+
+    This needs to be a module-level function so that it can be referenced within migrations,
+    but simply delegates to the `get_upload_to` method of the instance, so that AbstractImage
+    subclasses can override it.
+    """
+    return instance.get_upload_to(filename)
 
 class User(AbstractUser):
     class Meta:
@@ -67,6 +79,8 @@ class User(AbstractUser):
     associate = models.ForeignKey(Associate, verbose_name=_('Associate'), on_delete=models.SET_NULL, null=True, blank=True)
     position_held = models.CharField(verbose_name=_('Position held'), max_length=100, null=True, blank=True)
     download_remain = models.PositiveIntegerField(default=0, verbose_name=_('Downloads remain'), help_text=_('Number of media User can download'))
+    profile_image = models.ImageField( verbose_name=_('Profile Image'), upload_to=get_upload_to)
+
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -87,6 +101,30 @@ class User(AbstractUser):
     @property
     def can_download(self):
         return self.download_remain > 0
+
+    @property
+    def user_role_name(self):
+        return ",".join(self.groups.values_list('name', flat=True))
+
+    def get_upload_to(self, filename):
+        folder_name = 'profile_images'
+        filename = self.profile_image.field.storage.get_valid_name(filename)
+
+        # do a unidecode in the filename and then
+        # replace non-ascii characters in filename with _ , to sidestep issues with filesystem encoding
+        filename = "".join((i if ord(i) < 128 else '_') for i in unidecode(filename))
+
+        # Truncate filename so it fits in the 100 character limit
+        # https://code.djangoproject.com/ticket/9893
+        full_path = os.path.join(folder_name, filename)
+        if len(full_path) >= 95:
+            chars_to_trim = len(full_path) - 94
+            prefix, extension = os.path.splitext(filename)
+            filename = prefix[:-chars_to_trim] + extension
+            full_path = os.path.join(folder_name, filename)
+
+        return full_path
+
     
 
 class Favorite(models.Model):

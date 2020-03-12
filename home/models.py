@@ -129,9 +129,9 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 		media_list =[]
 		has_result = False
 		if request.GET.get('q', '') != '':
-			videos = videos.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q'))  ).order_by('-id')
-			documents =documents.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) ).order_by('-id')
-			images = images.filter(Q(title__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) ).order_by('-id')
+			videos = videos.filter(Q(title__icontains=request.GET.get('q')) | Q(synthesis__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q'))  ).order_by('-id')
+			documents =documents.filter(Q(title__icontains=request.GET.get('q')) | Q(synthesis__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) ).order_by('-id')
+			images = images.filter(Q(title__icontains=request.GET.get('q')) | Q(synthesis__icontains=request.GET.get('q')) | Q(tags__name__icontains=request.GET.get('q')) ).order_by('-id')
 			has_result = True
 		if request.GET.get('publish_year', '') != '':
 			try:

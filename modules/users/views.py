@@ -1,9 +1,11 @@
-from .models import Favorite
-from .forms import FavoriteForm
+from .models import Favorite, User
+from .forms import FavoriteForm, UserChangePassword
+from django.views.generic.edit import UpdateView
 from django.contrib.contenttypes.models import ContentType
 from django.http import JsonResponse
 from django.views.generic.edit import FormView
 from django.middleware.csrf import get_token
+from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings 
 import pdb
 
@@ -63,3 +65,27 @@ class FavAlterView(FormView):
         return JsonResponse({
             'success': 0,
             'error': form.errors})
+
+class ProfileUpdate(UpdateView):
+    model = User
+    fields = ['username', 'email', 'profile_image',]
+    template_name = 'dashboard/users/update.html'
+
+    def form_valid(self, form):
+        form.save()
+        return HttpResponseRedirect('/users/dashboard/profile/')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+class ChangePasswordView(UpdateView):
+    model = User
+    form_class = UserChangePassword
+    template_name = 'dashboard/users/change-password.html'
+
+    def form_valid(self, form):
+        form.save()
+        return HttpResponseRedirect('/users/dashboard/profile/')
+
+    def get_object(self, queryset=None):
+        return self.request.user

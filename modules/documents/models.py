@@ -25,7 +25,7 @@ class Area(models.Model):
         ordering = ('name',)
 
     name = models.CharField(max_length=100, verbose_name=_('Area name'))
-    notes = models.TextField(verbose_name=_('Notes'), default="")
+    notes = models.TextField(verbose_name=_('Notes'), default="", blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -42,7 +42,7 @@ class Subject(models.Model):
         ordering = ('name',)
 
     name = models.CharField(max_length=100, verbose_name=_('Subject name'))
-    notes = models.TextField(verbose_name=_('Notes'), default="")
+    notes = models.TextField(verbose_name=_('Notes'), default="", blank=True)
     area = models.ForeignKey(Area, verbose_name=_('Area'), on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
@@ -57,7 +57,7 @@ class Topic(models.Model):
         ordering = ('name',)
 
     name = models.CharField(max_length=100, verbose_name=_('Topic name'))
-    notes = models.TextField(verbose_name=_('Notes'), default="")
+    notes = models.TextField(verbose_name=_('Notes'), default="", blank=True)
     subject = models.ForeignKey(Subject, verbose_name=_('Subject'), on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
@@ -72,7 +72,7 @@ class SubTopic(models.Model):
         verbose_name_plural = _('SubTopic')
         ordering = ('name',)
     name = models.CharField(max_length=100, verbose_name=_('Subtopic name'))
-    notes = models.TextField(verbose_name=_('Notes'), default="")
+    notes = models.TextField(verbose_name=_('Notes'), default="", blank=True)
     topic = models.ForeignKey(Topic,  verbose_name=_('Topic'), on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
@@ -86,7 +86,7 @@ class Natures(models.Model):
         verbose_name_plural = _('Nature')
         ordering = ('name',)
     name = models.CharField(max_length=100, verbose_name=_('Nature name'))
-    notes = models.TextField(verbose_name=_('Notes'), default="")
+    notes = models.TextField(verbose_name=_('Notes'), default="", blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 

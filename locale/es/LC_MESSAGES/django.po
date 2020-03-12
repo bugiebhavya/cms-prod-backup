@@ -386,7 +386,7 @@ msgstr "Inicio de Vigencia"
 
 #: modules/documents/models.py:106 wagtailvideos/wagtailvideos/models.py:123
 msgid "Validity End"
-msgstr "Find de Vigencia"
+msgstr "Fin de Vigencia"
 
 #: modules/documents/models.py:107 wagtailvideos/wagtailvideos/models.py:124
 msgid "Synthesis"
@@ -920,3 +920,6 @@ msgstr "Sectores"
 
 msgid "Value"
 msgstr "Valor"
+
+msgid "Company Name"
+msgstr "Nombre o Razón Social"

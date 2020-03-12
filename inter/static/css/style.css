@@ -1166,7 +1166,6 @@ aside.twitter-sidebar .twitter-holder{
   overflow: hidden;
 }
 .alert{
-  position: fixed;
   bottom: 0;
   right: 0;
   -webkit-border-radius: 0;
