@@ -438,7 +438,7 @@ msgid "State"
 msgstr "Estado"
 
 #: modules/users/models.py:34
-msgid "Sociaty"
+msgid "Society"
 msgstr "Tipo de Sociedad"
 
 #: modules/users/models.py:35
