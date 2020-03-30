@@ -13,6 +13,10 @@
         <div class="modal-body">
           <form method="get" action="/users/search/" class="extra-search-form">
             <div class="form-group">
+              <label class="col-form-label">{% trans 'Area' %}:</label>
+              <input type="text" class="form-control" name="area">
+            </div>
+            <div class="form-group">
               <label class="col-form-label">{% trans 'Subject' %}:</label>
               <input type="text" class="form-control" name="subject">
             </div>

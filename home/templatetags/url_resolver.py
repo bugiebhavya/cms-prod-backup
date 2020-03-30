@@ -14,7 +14,8 @@ ADD_URL = {
 			'associate': '/admin/users/associate/create/',
 			'sector': '/admin/users/associatesector/create/',
 			'groups': '/admin/groups/new/',
-			'associate_level': '/admin/users/associateslevel/create/'
+			'associate_level': '/admin/users/associateslevel/create/',
+			'sociaty': '/admin/users/society/create/'
 		}
 
 register = Library()

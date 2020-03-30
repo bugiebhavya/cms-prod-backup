@@ -31,7 +31,7 @@ class LoginView(View):
 			if "@" in email:
 				users = User.objects.filter(email__iexact=email)
 			else:
-				users = User.objects.filter(mobile_number__iexact=email)
+				users = User.objects.filter(username__iexact=email)
 			if users.exists() and users.first().check_password(password):
 				user_obj = users.first()
 				login(request, user_obj)

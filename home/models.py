@@ -30,7 +30,7 @@ class HomePageCarouselVideos(Orderable):
 	carousel_video = models.ForeignKey(
 		"wagtailvideos.Video",
 		null = True, 
-		blank = False,
+		blank = True,
 		on_delete= models.CASCADE,
 		related_name = "+",
 		unique=True
@@ -138,6 +138,15 @@ class ReferenceUrlPage(RoutablePageMixin, Page):
 				videos = videos.filter(Q(publication_at__year=request.GET.get('publish_year'))).order_by('-id')
 				documents =documents.filter(Q(publication_at__year=request.GET.get('publish_year'))).order_by('-id')
 				images = images.filter(Q(publication_at__year=request.GET.get('publish_year'))).order_by('-id')
+				has_result = True
+			except Exception as ex:
+				print(ex)
+
+		if request.GET.get('area', '') != '':
+			try:
+				videos = videos.filter(Q(area__name__icontains=request.GET.get('subject'))).order_by('-id')
+				documents = documents.filter(Q(area__name__icontains=request.GET.get('subject'))).order_by('-id')
+				images = images.filter(Q(area__name__icontains=request.GET.get('subject'))).order_by('-id')
 				has_result = True
 			except Exception as ex:
 				print(ex)

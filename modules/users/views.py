@@ -8,6 +8,9 @@ from django.middleware.csrf import get_token
 from django.http import HttpResponse, HttpResponseRedirect
 from django.conf import settings 
 import pdb
+from django.views.generic.base import View
+from django.shortcuts import render
+from django.contrib import messages
 
 class FavAlterView(FormView):
 
@@ -89,3 +92,11 @@ class ChangePasswordView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+class ForgotPasswordView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "home/forgot-password.html")
+
+    def post(self, request, *args, **kwargs):
+        messages.info(request, 'You should get a forgot password link on your email address if your email is valid.')
+        return HttpResponseRedirect('/')

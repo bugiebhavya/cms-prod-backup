@@ -1310,4 +1310,12 @@ aside.twitter-sidebar .twitter-holder{
     border: 1px solid #ced4da;
     }
 
-    
+.forgot-pass {
+  float: right;
+  font-size: 10px;
+  color: white;
+  font-weight: 500;
+  top: 4px;
+  padding: -1px;
+  position: relative;
+}

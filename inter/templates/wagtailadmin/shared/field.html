@@ -10,10 +10,11 @@
             {% block form_field %}
                 {{ field|render_with_errors }}
             {% endblock %}
+             <span>
                 {% if  field|can_add_related %}
                     {{ field|get_related_url }}
                 {% endif %}
-            <span></span>
+           </span>
         </div>
         {% if show_help_text|default_if_none:True and field.help_text %}
             <p class="help">{{ field.help_text }}</p>

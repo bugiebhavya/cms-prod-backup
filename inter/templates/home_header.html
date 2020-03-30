@@ -14,7 +14,7 @@
           <input type="password" id="password"  name="password" placeholder="contraseña" class="form-control">
           <button type="submit" class="btn">{% trans 'Enter' %}</button>
         </div>
-        
+        <a href="{% url 'forgot-password' %}" class="forgot-pass">{% trans "Forgot password" %}</a>
       </form>
 
       <form class="language-form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
@@ -29,7 +29,6 @@
                 </option>
             {% endfor %}
         </select>
-        <!-- <input type="submit" value="Go" /> -->
     </form>
 
     </div>

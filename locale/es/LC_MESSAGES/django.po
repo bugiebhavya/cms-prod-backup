@@ -897,7 +897,7 @@ msgid "Published Year"
 msgstr "Año publicado"
 
 msgid "Publish In"
-msgstr "Publicado en"
+msgstr "Publicado el"
 
 msgid "Close"
 msgstr "Cerrar"
@@ -923,3 +923,12 @@ msgstr "Valor"
 
 msgid "Company Name"
 msgstr "Nombre o Razón Social"
+
+msgid "This field is required."
+msgstr "Este campo es requerido."
+
+msgid "Address"
+msgstr "Domicilio"
+
+msgid "You should get a forgot password link on your registered email address"
+msgstr "Debería obtener un enlace de contraseña olvidada en su dirección de correo electrónico registrada"

@@ -9,7 +9,7 @@ from home import controller
 from search import views as search_views
 from modules.documents.views import MediaDetailView, FilterCatalogsView, WatchVideoView, ReadDocumentView, ViewImageView
 from modules.dashboard.notification import NotificationListView, RemoveNotificationView
-from modules.users.views import FavAlterView, ProfileUpdate, ChangePasswordView
+from modules.users.views import FavAlterView, ProfileUpdate, ChangePasswordView, ForgotPasswordView
 from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = i18n_patterns(
@@ -23,6 +23,8 @@ urlpatterns = i18n_patterns(
     url(r'^medias/image/(?P<media_id>[-\w]+)/', ViewImageView.as_view(), name='image_detail'),
     url(r'^profile/update$', ProfileUpdate.as_view(), name='profile-alter'),
     url(r'^profile/reset-password$', ChangePasswordView.as_view(), name='profile-reset-password'),
+    url(r'^forgot-password$', ForgotPasswordView.as_view(), name='forgot-password'),
+
     url(r'^us-login/', controller.LoginView.as_view(), name="us-login"), 
     url(r'^comment/$', controller.CommentView.as_view(), name="comment-add"),
     url(r'^medias/fav/$', FavAlterView.as_view(), name='fav-alter'),

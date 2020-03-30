@@ -10,6 +10,7 @@ import os
 from datetime import datetime
 from django.utils.functional import cached_property
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 """
 Preview generator:
 # https://pypi.org/project/preview-generator-ivc/
@@ -167,6 +168,13 @@ class CustomDocument(AbstractDocument):
         except:
             return 0
 
+    def clean(self):
+        if not self.validity_start:
+            raise ValidationError({"validity_start": _('This field is required.')})
+
+        if not self.publication_at:
+            raise ValidationError({"publication_at": _('This field is required.')})
+
 class CustomImage(AbstractImage):
     class Meta:
         verbose_name = _('image')
@@ -240,7 +248,12 @@ class CustomImage(AbstractImage):
         except:
             return 0
     
-    
+    def clean(self):
+        if not self.validity_start:
+            raise ValidationError({"validity_start": _('This field is required.')})
+
+        if not self.publication_at:
+            raise ValidationError({"publication_at": _('This field is required.')})
 
 class CustomRendition(AbstractRendition):
     image = models.ForeignKey(CustomImage, on_delete=models.CASCADE, related_name='renditions')
