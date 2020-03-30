@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import pdb 
 from django.views.generic import DetailView
 from hitcount.views import HitCountDetailView
-from django.db.models import F
+from django.db.models import F, Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Comment
@@ -28,10 +28,7 @@ class LoginView(View):
 		email = request.POST.get('email',None)
 		password = request.POST.get('password',None)
 		if email and password:
-			if "@" in email:
-				users = User.objects.filter(email__iexact=email)
-			else:
-				users = User.objects.filter(username__iexact=email)
+			users = User.objects.filter(Q(email__iexact=email)|Q(username__iexact=email))
 			if users.exists() and users.first().check_password(password):
 				user_obj = users.first()
 				login(request, user_obj)
