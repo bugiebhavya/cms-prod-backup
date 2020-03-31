@@ -3,7 +3,7 @@ from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 
 class AuthBackend(ModelBackend):
-    def authenticate(self, username=None, password=None, **kwargs):
+    def authenticate(self, request, username=None, password=None, **kwargs):
         UserModel = get_user_model()
         try:
             user = UserModel.objects.get(Q(email__iexact=username)|Q(username__iexact=username))
