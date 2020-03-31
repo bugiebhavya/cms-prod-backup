@@ -10,52 +10,51 @@
 
 {% block body  %}    
     {% include 'dashboard_sidebar.html' %}
-    <div class="container-fluid">
+    <div class="container-fluid"> 
       <div class="row">
         <div class="col-lg-12">
-          <div class="main-content profile-page d-flex align-items-center justify-content-center">
-          <div class="row">
-            <div class="col-sm-12 d-flex mb-4">
-              <div class="profile-img d-flex align-items-center justify-content-center">
-                {% if not object.profile_image.name %}
-                  <i class="fal fa-user"></i>
-                {% else %}
-                  <img src=" {{object.profile_image.url}}" class="profile-img">
-                {% endif %}
+          <div class="main-content profile-page  d-flex align-items-center justify-content-center">
+            <div class="form-horizontal col-md-6">
+              <div class="row">
+                  <div class="col-sm-12 d-flex mb-4 align-items-center justify-content-center">
+                    <div class="profile-img ">
+                      <img src="{% if request.user.profile_image.name %} {{request.user.profile_image.url}} {% else %} {% static 'images/user.png' %} {% endif %}" class="profile-img">
+                    </div>
 
+                  </div>
+                  
               </div>
-            </div>
-            <div class="col-sm-12 d-flex mb-4">
-              <label for="staticEmail" class="col-form-label p-0"><strong>Username:</strong></label>
-              {{request.user.username}}
-            </div>
-            <div class="col-sm-12 d-flex mb-4">
-              <label for="staticEmail" class="col-form-label p-0"><strong>Email:</strong></label>
-              {{request.user.email}}
-            </div>
-            <div class="col-sm-12 d-flex mb-4">
-              <label for="staticEmail" class="col-form-label p-0"><strong>Fisrt Name:</strong></label>
-              {{request.user.first_name}}
-            </div>
-            <div class="col-sm-12 d-flex mb-4">
-              <label for="staticEmail" class="col-form-label p-0"><strong>Last Name:</strong></label>
-              {{request.user.last_name}}
-            </div>
-            <div class="col-sm-12 d-flex mb-4">
-              <label for="staticEmail" class="col-form-label p-0"><strong>D.O.J.:</strong></label>
-              {{ request.user.date_joined }}
-            </div>
 
-            <div class="row">
-              <div class="col-sm-6 d-flex my-2">
-               <a href="{% url 'profile-reset-password' %}" class="btn btn-default">{% trans 'Change password' %} <i class="fa fa-key"></i></a>
+              <div class="row">
+                  <div class="col-sm-12 d-flex mb-4">
+                    <label for="staticEmail" class="col-form-label p-0"><strong>{% trans "Username" %}:</strong></label>
+                    {{request.user.username}}
+                  </div>
               </div>
-              <div class="col-sm-6 d-flex my-2">
-               <a class="btn btn-default" href="{% url 'profile-alter' %}">{% trans 'Manage account' %} <i class="fa fa-pen"></i></a>
+
+              <div class="row">
+                  <div class="col-sm-12 d-flex mb-4">
+                    <label for="staticEmail" class="col-form-label p-0"><strong>{% trans "Email" %}:</strong></label>
+                    {{request.user.email}}
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-sm-12 d-flex mb-4">
+                    <label for="staticEmail" class="col-form-label p-0"><strong>{%trans "Date of join" %}:</strong></label>
+                    {{ request.user.date_joined }}
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6 d-flex">
+                 <a href="{% url 'profile-reset-password' %}" class="btn btn-default">{% trans 'Change password' %} <i class="fa fa-key"></i></a>
+                </div>
+                <div class="col-sm-6 d-flex">
+                 <a class="btn btn-default" href="{% url 'profile-alter' %}">{% trans 'Manage account' %} <i class="fa fa-pen"></i></a>
+                </div>
               </div>
             </div>
-          </div>
-          
 
         </div>
       </div>

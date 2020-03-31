@@ -20,7 +20,7 @@
           <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
           <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
           <link href="{% static 'css/video-js.css' %}" rel="stylesheet" type="text/css">
-          
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
         {% if request.user.is_authenticated %}
           <style type="text/css">
             .site-header .navbar-brand img {
@@ -47,6 +47,8 @@
 
   {% endblock %}
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
     {% include "extra_search.html" %}
     <script type="text/javascript">
       $.ajaxSetup({
@@ -85,7 +87,6 @@
       };
 
     </script>
-    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/wow.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>

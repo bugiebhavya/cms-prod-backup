@@ -6020,3 +6020,11 @@ a.related-widget-wrapper-link.add-related {
     position: absolute;
     top: 10px;
 }
+
+.form-errors {
+    height: 100px;
+    overflow-y: scroll;
+}
+.form-errors .warning {
+    padding: 2px 3em;
+}

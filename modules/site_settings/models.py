@@ -22,6 +22,16 @@ class SocialMediaSettings(BaseSetting):
 
 	]
 
+class GeneralParams(models.Model):
+	class Meta:
+		verbose_name = _('Parameter')
+		verbose_name_plural = _('Parameter')
 
+	key = models.CharField(max_length=250, null=False, blank=False)
+	value = models.CharField(max_length=250, null=False, blank=False)
+	description = models.TextField(blank=True, default='')
+	created = models.DateTimeField(auto_now_add=True, null=True)
+	updated = models.DateTimeField(auto_now=True)
 
-
+	def __str__(self):
+		return self.key

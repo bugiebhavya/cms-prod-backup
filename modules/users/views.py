@@ -11,6 +11,9 @@ import pdb
 from django.views.generic.base import View
 from django.shortcuts import render
 from django.contrib import messages
+from django.core.mail import EmailMessage
+from django.template.loader import get_template
+from django.utils.translation import ugettext_lazy as _
 
 class FavAlterView(FormView):
 
@@ -71,7 +74,7 @@ class FavAlterView(FormView):
 
 class ProfileUpdate(UpdateView):
     model = User
-    fields = ['username', 'email', 'profile_image',]
+    fields = ['username', 'email', 'profile_image','intrests',]
     template_name = 'dashboard/users/update.html'
 
     def form_valid(self, form):
@@ -98,5 +101,46 @@ class ForgotPasswordView(View):
         return render(request, "home/forgot-password.html")
 
     def post(self, request, *args, **kwargs):
+        try:
+            user = User.objects.get(email__iexact=request.POST.get('email'))
+            context={
+                'reset_password_url': '',
+                'username': user.username
+            }
+            template = get_template('forgot-password-mail.html')
+            html_string = template.render(context)
+            self.sendMailes(html_string, user.email)
+        except Exception as ex:
+            print(ex)
+        
         messages.info(request, 'You should get a forgot password link on your email address if your email is valid.')
         return HttpResponseRedirect('/')
+
+    def sendMailes(self, html_string, receiver_email,**kwargs):
+        try:
+            from modules.site_settings.models import GeneralParams
+            debug_mail = GeneralParams.objects.get(key="DEBUG_MAIL").value
+            debug_email = GeneralParams.objects.get(key="DEBUG_SMTP_EMAIL").value
+            smtp_password = GeneralParams.objects.get(key="SMTP_PASSWORD").value
+            smtp_user = GeneralParams.objects.get(key="SMTP_USER").value
+            smtp_host = GeneralParams.objects.get(key="SMTP_SERVER").value
+            smtp_port = GeneralParams.objects.get(key="SMTP_PORT").value
+
+            settings.EMAIL_HOST = smtp_host
+            settings.EMAIL_HOST_USER = smtp_user
+            settings.EMAIL_HOST_PASSWORD = smtp_password
+            settings.EMAIL_PORT = int(smtp_port)
+        except Exception as ex:
+            print(ex)
+            debug_mail = "0"
+
+        if debug_mail == "1":
+            receiver_email = debug_email
+
+        try:
+            subject = 'Reset password instruction.'
+            email = EmailMessage(subject, html_string, settings.MAIL_FROM, [receiver_email])
+            email.content_subtype = "html"
+            email.send()
+        except:
+            pass

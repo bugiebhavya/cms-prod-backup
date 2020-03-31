@@ -38,17 +38,17 @@
                 {% endif %}
             </div>
             <div class="messages">
+
                 {% if form.errors %}
+                    <ul class="form-errors">
                     {% for field in form %}
-                        <ul>
+                        
                             {% for error in field.errors %}
-                                 <li class="warning">{{ error|escape }}</li>
+                                <li class="warning">{{ field.label }}: {{ error|escape }}</li>
                             {% endfor %}
-                        </ul>
                     {% endfor %}
-                    <ul>
                         {% for error in form.non_field_errors %}
-                             <li class="warning">{{ error|escape }}</li>
+                                <li class="warning">{{ field.label }}: {{ error|escape }}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
@@ -68,9 +68,11 @@
         {% endif %}
     </style>
     <script type="text/javascript">
-        if(document.referrer.indexOf('_popup') != -1){
-           window.top.close(); 
-        }
+        {% if not form.errors %}
+            if(document.referrer.indexOf('_popup') != -1){
+                window.top.close(); 
+            }
+        {% endif %}
     </script>
 {% endblock %}
 

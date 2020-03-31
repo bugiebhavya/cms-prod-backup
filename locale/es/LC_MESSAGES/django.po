@@ -932,3 +932,27 @@ msgstr "Domicilio"
 
 msgid "You should get a forgot password link on your registered email address"
 msgstr "Debería obtener un enlace de contraseña olvidada en su dirección de correo electrónico registrada"
+
+msgid "Interest"
+msgstr "Interés del usuario"
+
+msgid "Username"
+msgstr "Nombre de usuario"
+
+msgid "Email"
+msgstr "Correo electrónico"
+
+msgid "Change password"
+msgstr "Cambia la contraseña"
+
+msgid "Date of join"
+msgstr "Fecha de ingreso"
+
+msgid "Current Password"
+msgstr "contraseña actual"
+
+msgid "New Password"
+msgstr "Nueva contraseña"
+
+msgid "Confirm Password"
+msgstr "Confirmar contraseña"

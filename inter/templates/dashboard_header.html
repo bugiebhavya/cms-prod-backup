@@ -61,10 +61,10 @@
         </li>
         <li class="list-inline-item user-menu dropleft">
           <a href="javascript:void(0);" class="dropdown-toggle" id="profileBtn" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false"><img class="profile-pic" src="{% static 'images/user.png' %}" alt="{{ request.user.username }}"></a>
+          aria-haspopup="true" aria-expanded="false"><img class="profile-pic" src="{% if request.user.profile_image.name %} {{request.user.profile_image.url}} {% else %} {% static 'images/user.png' %} {% endif %}" alt="{{ request.user.username }}"></a>
           <div class="dropdown-menu" aria-labelledby="profileBtn">
             <div class="user-info">
-              <div class="icon"><img class="profile-pic" src="{% static 'images/user.png' %}" alt="{{ request.user.username }}"></div>
+              <div class="icon"><img class="profile-pic" src="{% if request.user.profile_image.name %} {{request.user.profile_image.url}} {% else %} {% static 'images/user.png' %} {% endif %}" alt="{{ request.user.username }}"></div>
               <div class="user-details"><span>{{ request.user.username }}</span> <span class="email">{{ request.user.email }}</span> <a href="{% url 'profile-alter' %}">{% trans 'Manage your account' %}</a></div>
             </div>
             <div class="user-link">

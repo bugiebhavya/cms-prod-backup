@@ -7,7 +7,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.utils.html import mark_safe
-import pdb
+import pdb, os
 from unidecode import unidecode
 
 def get_expiry_date():
@@ -87,6 +87,15 @@ def get_upload_to(instance, filename):
     """
     return instance.get_upload_to(filename)
 
+class UserInterest(models.Model):
+    """docstring for UserInterest"""
+    class Meta:
+        verbose_name = _('Interest')
+        verbose_name_plural = _('Interest')
+    name = models.CharField(verbose_name=_("Name"), unique=True, max_length=100)
+    def __str__(self):
+        return self.name
+        
 class User(AbstractUser):
     class Meta:
         ordering = ('-last_name',)
@@ -94,7 +103,7 @@ class User(AbstractUser):
     position_held = models.CharField(verbose_name=_('Position held'), max_length=100, null=True, blank=True)
     download_remain = models.PositiveIntegerField(default=0, verbose_name=_('Downloads remain'), help_text=_('Number of media User can download'))
     profile_image = models.ImageField( verbose_name=_('Profile Image'), upload_to=get_upload_to)
-
+    intrests = models.ManyToManyField(UserInterest, blank=True, verbose_name=_('Interest'))
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 

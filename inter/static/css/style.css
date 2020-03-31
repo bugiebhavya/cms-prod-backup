@@ -1319,3 +1319,7 @@ aside.twitter-sidebar .twitter-holder{
   padding: -1px;
   position: relative;
 }
+
+.select2-container{
+  width: 100% !important;
+}

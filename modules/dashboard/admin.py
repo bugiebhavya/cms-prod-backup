@@ -11,9 +11,9 @@ class TagViewAdmin(ModelAdmin):
     create_template_name = 'wagtailadmin/common_template/create.html'
     edit_template_name = 'wagtailadmin/common_template/edit.html'
     model = Tag
-    menu_icon = 'folder'
+    menu_icon = 'tag'
     menu_order = 290
-    add_to_settings_menu = True
+    # add_to_settings_menu = True
     list_display = ("name", "id",)
 
 modeladmin_register(TagViewAdmin)

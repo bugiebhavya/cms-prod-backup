@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AssociatesLevel, Associate, User, AssociateSector, Society
+from .models import AssociatesLevel, Associate, User, AssociateSector, Society, UserInterest
 from wagtail.contrib.modeladmin.options import (modeladmin_register, ModelAdmin,)
 from wagtail.contrib.modeladmin.helpers import PermissionHelper
 import pdb
@@ -51,3 +51,12 @@ class SocietyAdmin(ModelAdmin):
     list_display = ("title","updated",)
 
 modeladmin_register(SocietyAdmin)
+
+class UserInterestAdmin(ModelAdmin):
+    model = UserInterest
+    menu_icon = 'tag'
+    create_template_name = 'wagtailadmin/common_template/create.html'
+    edit_template_name = 'wagtailadmin/common_template/edit.html'
+    list_display = ("id", "name",)
+
+modeladmin_register(UserInterestAdmin)

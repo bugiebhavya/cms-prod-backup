@@ -29,9 +29,12 @@
   {% block body %}
 
   {% endblock %}<!-- extra search options modal -->
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% if request.user.is_authenticated %}
       {% include "extra_search.html" %}
-          <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-          <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% endif %}
+          
           <script type="text/javascript" src="{% static 'js/wow.js' %}"></script>
           <script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
           <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
