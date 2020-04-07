@@ -24,7 +24,16 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from wagtailvideos.models import Channels
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 
+class Tags(TaggitTag):
+    class Meta:
+        verbose_name = _('Tag')
+        verbose_name_plural = _('Tags')
+        
+    def clean(self):
+        if TaggitTag.objects.filter(name__iexact=self.name).exists():
+            raise ValidationError("Already exists.")
 
 class DashboardPageCarouselVideos(Orderable):
     '''Between 1 and 5 imagges for the home carousel '''

@@ -11,5 +11,6 @@ class GeneralParamsViewAdmin(ModelAdmin):
     menu_icon = "cogs"
     menu_order = 290
     list_display = ("key", "value", "created",)
+    add_to_settings_menu = True
 
 modeladmin_register(GeneralParamsViewAdmin)

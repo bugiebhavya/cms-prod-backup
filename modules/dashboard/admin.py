@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MediaView
+from .models import MediaView, Tags
 from wagtail.contrib.modeladmin.options import (modeladmin_register, ModelAdmin,)
 from wagtail.contrib.modeladmin.helpers import PermissionHelper
 
@@ -10,11 +10,14 @@ from taggit.models import Tag, TaggedItem
 class TagViewAdmin(ModelAdmin):
     create_template_name = 'wagtailadmin/common_template/create.html'
     edit_template_name = 'wagtailadmin/common_template/edit.html'
-    model = Tag
+    model = Tags
     menu_icon = 'tag'
     menu_order = 290
-    # add_to_settings_menu = True
+    add_to_settings_menu = False
     list_display = ("name", "id",)
+
+    
+
 
 modeladmin_register(TagViewAdmin)
 

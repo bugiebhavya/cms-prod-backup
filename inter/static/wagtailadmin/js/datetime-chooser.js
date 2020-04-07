@@ -106,5 +106,10 @@ $(document).ready(function(){
         e.preventDefault()
         var url = $(this).attr('href')
         window.open(url, "Add New", "width=1400,height=800");
-    })    
+    })  
+
+    try{
+        $("[id$='validity_end']").val('')
+        $("[id$='expiration_at']").val('')
+    }catch(ex){}  
 })

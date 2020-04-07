@@ -26,7 +26,7 @@ class AssociatesAdmin(ModelAdmin):
     menu_icon = "user"
     menu_order = 290
     add_to_settings_menu = True
-    list_display = ("email","rfc", "email", "associate_level","updated",)
+    list_display = ("company","rfc", "email", "associate_level",)
 
 
 modeladmin_register(AssociatesAdmin)
@@ -58,5 +58,6 @@ class UserInterestAdmin(ModelAdmin):
     create_template_name = 'wagtailadmin/common_template/create.html'
     edit_template_name = 'wagtailadmin/common_template/edit.html'
     list_display = ("id", "name",)
-
+    add_to_settings_menu = True
+    
 modeladmin_register(UserInterestAdmin)
