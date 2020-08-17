@@ -118,11 +118,11 @@ class CustomDocument(AbstractDocument):
     author = models.CharField(max_length=100, verbose_name=_('Author'),  null=True, blank=True)
     author_profession = models.CharField(max_length=200, verbose_name=_('Author Profession'),  null=True, blank=True)
     validity_start = models.DateField(verbose_name=_('Validity Start'), default=datetime.now, null=True, blank=True)
-    validity_end = models.DateField(verbose_name=_('Validity End'), default=datetime.now, null=True, blank=True)
+    validity_end = models.DateField(verbose_name=_('Validity End'), null=True, blank=True)
     synthesis = models.TextField(verbose_name=_('Synthesis'), default="", null=True, blank=True)
     publication_at = models.DateTimeField(verbose_name=_('Publish At'), default=datetime.now, null=True, blank=True)
-    expiration_at = models.DateField(verbose_name=_('Publish End'), default=datetime.now, null=True, blank=True)
-    republication_at = models.DateTimeField(verbose_name=_('Republish At'), default=datetime.now, null=True, blank=True)
+    expiration_at = models.DateField(verbose_name=_('Publish End'), null=True, blank=True)
+    republication_at = models.DateTimeField(verbose_name=_('Republish At'), null=True, blank=True)
     created_at = models.DateTimeField(verbose_name=_('created at'), auto_now_add=True, db_index=True)
 
     admin_form_fields = (
@@ -200,11 +200,11 @@ class CustomImage(AbstractImage):
     author = models.CharField(max_length=100, verbose_name=_('Author'),  null=True, blank=True)
     author_profession = models.CharField(max_length=200, verbose_name=_('Author Profession'),  null=True, blank=True)
     validity_start = models.DateField(verbose_name=_('Validity Start'), default=datetime.now, null=True, blank=True)
-    validity_end = models.DateField(verbose_name=_('Validity End'), default=datetime.now, null=True, blank=True)
+    validity_end = models.DateField(verbose_name=_('Validity End'), null=True, blank=True)
     synthesis = models.TextField(verbose_name=_('Synthesis'), default="", null=True, blank=True)
     publication_at = models.DateTimeField(verbose_name=_('Publish At'), default=datetime.now, null=True, blank=True)
-    expiration_at = models.DateField(verbose_name=_('Publish End'), default=datetime.now, null=True, blank=True)
-    republication_at = models.DateTimeField(verbose_name=_('Republish At'), default=datetime.now, null=True, blank=True)
+    expiration_at = models.DateField(verbose_name=_('Publish End'), null=True, blank=True)
+    republication_at = models.DateTimeField(verbose_name=_('Republish At'), null=True, blank=True)
     created_at = models.DateTimeField(verbose_name=_('created at'), auto_now_add=True, db_index=True)
 
     admin_form_fields = (
