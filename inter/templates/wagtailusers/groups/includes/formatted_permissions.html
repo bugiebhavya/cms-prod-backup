@@ -56,7 +56,7 @@
         <tbody>
             {% for perm_tuple in other_perms %}
                 <tr>
-                    <td class="title"><label for="{{ perm_tuple.1.id_for_label }}" class="plain-checkbox-label">{% trans perm_tuple.0.name %}</label></td>
+                    <td class="title"><label for="{{ perm_tuple.1.id_for_label }}" class="plain-checkbox-label">{{ perm_tuple.0.name }}</label></td>
                     <td>
                         {{ perm_tuple.1.tag }}
                     </td>
@@ -65,4 +65,3 @@
         </tbody>
     </table>
 </fieldset>
- 

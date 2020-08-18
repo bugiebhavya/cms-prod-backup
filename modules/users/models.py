@@ -9,6 +9,8 @@ from django.core.exceptions import ValidationError
 from django.utils.html import mark_safe
 import pdb, os
 from unidecode import unidecode
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 def get_expiry_date():
 	return datetime.now()+timedelta(days=30)
@@ -95,6 +97,16 @@ class UserInterest(models.Model):
     name = models.CharField(verbose_name=_("Name"), unique=True, max_length=100)
     def __str__(self):
         return self.name
+
+@receiver(post_save, sender=UserInterest)
+def craeteEmptyInterests(sender, instance, **kwargs):
+    o = User.objects.all()
+    createList = []
+    for i in o:
+        createList.append(UserInterestPercent(interest=instance,user=i,percent = 0))
+    UserInterestPercent.objects.bulk_create(createList)    
+
+    
         
 class User(AbstractUser):
     class Meta:
@@ -150,6 +162,13 @@ class User(AbstractUser):
             full_path = os.path.join(folder_name, filename)
 
         return full_path
+
+class UserInterestPercent(models.Model):
+    class Meta:
+        ordering = ('interest',)
+    user = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name=_('User'), null = True)
+    interest = models.ForeignKey(UserInterest, on_delete=models.CASCADE, verbose_name=_('Interest'), null = False)
+    percent = models.IntegerField(null = False, max_length=3)
 
     
 

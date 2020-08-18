@@ -59,7 +59,25 @@
                         <div class="row">
                             <div class="col-sm-12 d-flex my-2">
                               <label for="staticEmail" class="col-form-label p-0"><strong>{% trans "Interest" %}:</strong></label>
-                              {{form.intrests}}
+                              <section id="interest" class="nice-padding">
+                <ul class="fields">
+                <div class='input' style="display:inline-block;width:60%;">
+                 Interests
+                </div>
+                <div class='input'  style="display:inline-block;">
+                 Percentage
+                </div>
+                {% for int in interestList %}
+                <div class='input' style="display:inline-block;width:60%;">
+                 <input style="width:60%;" name="interest-{{forloop.counter}}" type = 'text' value={{int.interest}} readonly ></input>
+                </div>
+                <div class='input'  style="display:inline-block;">
+                 <input onkeyup="changeHandler(this)" type="number" min="0" max="100" style="width:85%;" name="percent-{{forloop.counter}}"></input>
+                </div>
+                  <br><br>  
+                {% endfor %}
+                </ul>
+            </section>
                               
                             </div>
                         </div>
@@ -129,5 +147,17 @@
         $(document).ready(function() {
             $('#id_intrests').select2({minimumResultsForSearch: 5});
         })
+
+  function changeHandler(val)
+  {
+    if (Number(val.value) > 100)
+    {
+      val.value = 100
+    }
+    if (val.value.isInteger)
+    {
+      val.value = 0
+    }
+  }
     </script>
 {% endblock %}

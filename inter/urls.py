@@ -11,10 +11,10 @@ from modules.documents.views import MediaDetailView, FilterCatalogsView, WatchVi
 from modules.dashboard.notification import NotificationListView, RemoveNotificationView
 from modules.users.views import FavAlterView, ProfileUpdate, ChangePasswordView, ForgotPasswordView
 from django.conf.urls.i18n import i18n_patterns
+from wagtail.users.views.users import delete
 
 urlpatterns = i18n_patterns(
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^django-admin/', admin.site.urls),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search/', search_views.search, name='search'),

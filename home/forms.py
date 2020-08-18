@@ -6,7 +6,9 @@ from wagtail.users.forms import UserEditForm, UserCreationForm
 from modules.users.models import Associate
 
 from django.contrib.auth.models import User 
+from modules.users.models import User,UserInterestPercent
 from .models import Comment 
+from django.forms import inlineformset_factory
 
 class AdminLoginForm(forms.ModelForm):
 	class Meta:
@@ -33,3 +35,17 @@ class CustomUserCreationForm(UserCreationForm):
     position_held = forms.CharField(required=True, label=_("Position held"))
     associate = forms.ModelChoiceField(queryset=Associate.objects, required=True, label=_("Associate"))
     download_remain = forms.IntegerField(label=_('Downloads remain'), help_text=_('Number of media User can download'))
+
+class UserForm(forms.ModelForm):
+	position_held = forms.CharField(required=True, label=_("Position held"))
+	associate = forms.ModelChoiceField(queryset=Associate.objects, required=True, label=_("Associate"))
+	download_remain = forms.IntegerField(label=_('Downloads remain'), help_text=_('Number of media User can download'))
+	class Meta:
+		model = User
+		exclude = ()
+		ordered_field_names = ['username', 'password']
+		
+UserInterestFormSet = inlineformset_factory(
+    User, UserInterestPercent, form=UserForm,
+    fields=['interest', 'percent'], extra=1, can_delete=True
+    )

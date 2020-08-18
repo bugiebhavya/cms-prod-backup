@@ -1,4 +1,4 @@
-from .models import Favorite, User
+from .models import Favorite, User, UserInterest, UserInterestPercent
 from .forms import FavoriteForm, UserChangePassword
 from django.views.generic.edit import UpdateView
 from django.contrib.contenttypes.models import ContentType
@@ -76,10 +76,46 @@ class ProfileUpdate(UpdateView):
     model = User
     fields = ['username', 'email', 'profile_image','intrests',]
     template_name = 'dashboard/users/update.html'
+    success_url = '/users/dashboard/profile'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProfileUpdate, self).get_context_data(**kwargs)
+        allInterest = UserInterest.objects.all()
+        interestList = list(allInterest)
+        allInterestPercent = UserInterestPercent.objects.filter(user = self.get_object())
+        listInterestPercent = list(allInterestPercent)
+        listInterest = []
+        percentList = []
+        for i in range(len(listInterestPercent)):
+            percentList.append(listInterestPercent[i].percent)
+            listInterest.append(listInterestPercent[i].interest.name)
+        res = dict(zip(listInterest, percentList))
+        if self.request.POST:
+            data['interestList'] = listInterestPercent
+            data['percentDict'] = res
+            print(data['percentDict'])
+        else:
+            data['interestList'] = listInterestPercent
+            data['percentDict'] = res
+        return data
 
     def form_valid(self, form):
+        context = self.get_context_data()
         form.save()
-        return HttpResponseRedirect('/users/dashboard/profile/')
+        listObj = []
+        print('hello: ',context['percentDict'])
+        for i in range( len(context['interestList'])):
+            if context['percentDict'] != None:
+                print(context['interestList'][i].id,'    ',self.request.POST.get('percent-{}'.format(i+1)))
+                if context['interestList'][i].interest.name in [*context['percentDict'].keys()]:
+                    a = UserInterestPercent.objects.filter(id = context['interestList'][i].id).update(percent = self.request.POST.get('percent-{}'.format(i+1)))
+                    print(a)
+                else:
+                    listObj.append(UserInterestPercent(user = self.get_object(), interest = UserInterest.objects.get(name=self.request.POST.get('interest-{}'.format(i+1))),percent = self.request.POST.get('percent-{}'.format(i+1))))
+            else:
+                listObj.append(UserInterestPercent(user = self.get_object(), interest = UserInterest.objects.get(name=self.request.POST.get('interest-{}'.format(i+1))),percent = self.request.POST.get('percent-{}'.format(i+1))))
+        UserInterestPercent.objects.bulk_create(listObj)
+        return super(ProfileUpdate, self).form_valid(form)
 
     def get_object(self, queryset=None):
         return self.request.user
