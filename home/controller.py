@@ -123,9 +123,10 @@ class UserUpdate(UpdateView):
 			percentList.append(interestList[i].percent)
 		res = dict(zip(interestList, percentList))   
 		if self.request.POST:
-			data['form'] = UserCreationForm(self.request.POST)
+			data['form'] = UserEditForm(self.request.POST)
 			data['interestList'] = interestList
 			data['percentDict'] = self.request.POST.get('percentDict')
+			print(self.request.POST.get('percentDict'))
 			
 		else:
 			data['interestList'] = interestList
@@ -137,6 +138,7 @@ class UserUpdate(UpdateView):
 		context = self.get_context_data()
 		form.instance.created_by = self.request.user
 		self.object = form.save(commit=False)
+		print('heloooooo: ',context['interestList'],'      ',context['percentDict'])
 		if form.is_valid():
 			user = form.save()
 			listObj = []
