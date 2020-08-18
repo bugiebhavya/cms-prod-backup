@@ -13,7 +13,7 @@
         <li onclick = "newTab()"><a href="#interests">{% trans "Interests" %}</a></li>
     </ul>
 
-    <form action="{% url 'wagtailusers_users:index' %}" method="POST" novalidate{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+    <form method="POST" novalidate{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
         <div class="tab-content">
             {% csrf_token %}
             <section id="account" class="active nice-padding">
@@ -60,7 +60,7 @@
                  <input style="width:60%;" name="interest-{{forloop.counter}}" type = 'text' value={{int}} readonly ></input>
                 </div>
                 <div class='input'  style="display:inline-block;">
-                 <input onkeyup="changeHandler(this)" type="number" min="0" max="100" style="width:85%;" name="percent-{{forloop.counter}}"></input>
+                 <input onkeyup="changeHandler(this)" type="number" min="0" max="100" style="width:85%;" name="percent-{{forloop.counter}}" default='0'></input>
                 </div>
                   <br><br>  
                 {% endfor %}
