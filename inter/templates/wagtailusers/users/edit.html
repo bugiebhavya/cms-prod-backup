@@ -36,6 +36,7 @@
                         {% if form.password2 %}
                             {% include "wagtailadmin/shared/field_as_li.html" with field=form.password2 %}
                         {% endif %}
+			{% include "wagtailadmin/shared/field_as_li.html" with field=form.report_access %}
                         {% if form.is_active %}
                             {% include "wagtailadmin/shared/field_as_li.html" with field=form.is_active %}
                         {% endif %}

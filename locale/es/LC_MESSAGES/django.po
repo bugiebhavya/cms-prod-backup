@@ -962,3 +962,9 @@ msgstr "Porcetaje"
 
 msgid "Interest"
 msgstr "Intereses"
+
+msgid "Report Access"
+msgstr "Acceso a Reportes"
+
+msgid "Read Less"
+msgstr "Leer menos"

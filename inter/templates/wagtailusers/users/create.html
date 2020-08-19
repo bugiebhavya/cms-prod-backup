@@ -35,6 +35,7 @@
                         {% if form.password2 %}
                             {% include "wagtailadmin/shared/field_as_li.html" with field=form.password2 %}
                         {% endif %}
+			{% include "wagtailadmin/shared/field_as_li.html" with field=form.report_access %}
                     {% endblock fields %}
 
                     <li><a href="#roles" class="button lowpriority tab-toggle icon icon-arrow-right-after">{% trans "Roles" %}</a></li>

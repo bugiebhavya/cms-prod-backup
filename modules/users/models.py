@@ -118,6 +118,7 @@ class User(AbstractUser):
     intrests = models.ManyToManyField(UserInterest, blank=True, verbose_name=_('Interest'))
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
+    report_access = models.BooleanField(verbose_name=_('Report Access'), default=False)
 
     def __str__(self):
         return str(self.username)
