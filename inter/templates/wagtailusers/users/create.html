@@ -8,9 +8,9 @@
     {% include "wagtailadmin/shared/header.html" with title=add_user_str merged=1 tabbed=1 icon="user" %}
 
     <ul class="tab-nav merged">
-        <li class="active"><a href="#account">{% trans "Account" %}</a></li>
-        <li><a href="#roles">{% trans "Roles" %}</a></li>
-        <li onclick = "newTab()"><a href="#interests">{% trans "Interests" %}</a></li>
+        <li id = "accountsTab" class="active"><a href="#account">{% trans "Account" %}</a></li>
+        <li id = "rolesTab"><a href="#roles">{% trans "Roles" %}</a></li>
+        <li id = "interestsTab" onclick = "newTab()" ><a href="#interests" >{% trans "Interests" %}</a></li>
     </ul>
 
     <form method="POST" novalidate{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
@@ -44,16 +44,16 @@
                 <ul class="fields">
                     {% include "wagtailadmin/shared/field_as_li.html" with field=form.is_superuser %}
                     {% include "wagtailadmin/shared/field_as_li.html" with field=form.groups %}
-                    <li><button class="button">{% trans "Add user" %}</button></li>
+                    <li><a href="#interests" onclick = "newTab()" class="button lowpriority tab-toggle icon icon-arrow-right-after">{% trans "Interests" %}</a></li>
                 </ul>
             </section>
             <section id="interest" class="nice-padding">
                 <ul class="fields">
                 <div class='input' style="display:inline-block;width:60%;">
-                 <h1 style="width:30%;" >Interests</h1>
+                 <h1 style="width:30%;" >{% trans 'Interests' %}</h1>
                 </div>
                 <div class='input'  style="display:inline-block;">
-                 <h1 style="width:30%;">Percentage</h1>
+                 <h1 style="width:30%;">{% trans 'Percentage' %}</h1>
                 </div>
                 {% for int in interestList %}
                 <div class='input' style="display:inline-block;width:60%;">
@@ -85,7 +85,11 @@
 function newTab() {
     document.getElementById('interest').className = "active nice-padding"; 
     document.getElementById('account').className = "nice-padding"; 
-    document.getElementById('roles').className = 'nice-padding';
+    document.getElementById('roles').className = "nice-padding";
+    document.getElementById('interestsTab').className = "active"
+    document.getElementById('rolesTab').className = ""
+    document.getElementById('accountsTab').className = ""
+    
   
 }
 
