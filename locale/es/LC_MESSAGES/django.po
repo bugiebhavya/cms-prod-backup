@@ -981,3 +981,10 @@ msgstr "Administrar Cuenta"
 msgid "Select File..."
 msgstr "Seleccione Archivo"
 
+msgid "Report Access"
+msgstr "Acceso a Reportes"
+
+msgid "Read Less"
+msgstr "Leer menos"
+
+
