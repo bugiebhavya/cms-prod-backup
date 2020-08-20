@@ -969,6 +969,9 @@ msgstr "No, cancela borrado"
 msgid "Parameters"
 msgstr "Parámetros"
 
+msgid "Parameter"
+msgstr "Parámetro"
+
 msgid "Created"
 msgstr "Fecha Creación"
 
