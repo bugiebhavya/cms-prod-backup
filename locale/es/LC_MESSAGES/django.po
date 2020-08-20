@@ -975,6 +975,9 @@ msgstr "Parámetro"
 msgid "Created"
 msgstr "Fecha Creación"
 
+msgid "CREATED"
+msgstr "Fecha Creación"
+
 msgid "Add SubTema"
 msgstr "AGREGAR SUBTEMA"
 
@@ -1002,6 +1005,9 @@ msgstr "AGREGAR ASOCIADO"
 msgid "Add Sector"
 msgstr "AGREGAR SECTOR"
 
+msgid "Add SubTema"
+msgstr "AGREGAR SUBTEMAS"
+
 msgid "Add Tipo de Sociedad"
 msgstr "AGREGAR TIPO DE SOCIEDAD"
 
@@ -1019,3 +1025,5 @@ msgstr "Acceso a Reportes"
 
 msgid "Read Less"
 msgstr "Leer menos"
+
+
