@@ -993,9 +993,6 @@ msgstr "AGREGAR"
 msgid "add"
 msgstr "AGREGAR"
 
-msgid "Add"
-msgstr "AGREGAR"
-
 msgid "Manage account"
 msgstr "Administrar Cuenta"
 
