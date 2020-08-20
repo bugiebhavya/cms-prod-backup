@@ -191,7 +191,7 @@ msgstr "No hay comentarios aún"
 #: inter/templates/home/document_detail.html:129
 #: inter/templates/home/video_detail.html:125
 msgid "Next"
-msgstr "Sugerido"
+msgstr "Siguiente"
 
 #: inter/templates/home/document_detail.html:131
 #: inter/templates/home/video_detail.html:127
@@ -958,13 +958,26 @@ msgid "Interests"
 msgstr "Intereses"
 
 msgid "Percentage"
-msgstr "Porcetaje"
+msgstr "Porcentaje"
 
 msgid "Interest"
 msgstr "Intereses"
 
-msgid "Report Access"
-msgstr "Acceso a Reportes"
+msgid "No, Don't Delete"
+msgstr "No, cancela borrado"
 
-msgid "Read Less"
-msgstr "Leer menos"
+msgid "Parameters"
+msgstr "Parámetros"
+
+msgid "Created"
+msgstr "Fecha Creación"
+
+msgid "ADD"
+msgstr "AGREGAR"
+
+msgid "Manage Account"
+msgstr "Administrar Cuenta"
+
+msgid "Select File..."
+msgstr "Seleccione Archivo"
+
