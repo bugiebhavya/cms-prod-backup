@@ -30,7 +30,6 @@
             {% else %}
               <div class="col-lg-12">
             {% endif %}
-            {{ video.url }}  {{ video.thumbnail.url }}
               <video class="video-js" controls preload="auto" poster="{{ video.thumbnail.url }}" data-setup="{}">
                 <source src="{{ video.url }}" type="video/mp4">
               </video>
