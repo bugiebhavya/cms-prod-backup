@@ -981,7 +981,19 @@ msgstr "Parámetro"
 msgid "Created"
 msgstr "Fecha Creación"
 
+msgid "CREATED"
+msgstr "Fecha Creación"
+
+msgid "created"
+msgstr "Fecha Creación"
+
 msgid "ADD"
+msgstr "AGREGAR"
+
+msgid "add"
+msgstr "AGREGAR"
+
+msgid "Add"
 msgstr "AGREGAR"
 
 msgid "Manage account"
