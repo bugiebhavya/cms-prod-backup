@@ -1005,9 +1005,6 @@ msgstr "AGREGAR ASOCIADO"
 msgid "Add Sector"
 msgstr "AGREGAR SECTOR"
 
-msgid "Add SubTema"
-msgstr "AGREGAR SUBTEMAS"
-
 msgid "Add Tipo de Sociedad"
 msgstr "AGREGAR TIPO DE SOCIEDAD"
 
