@@ -964,13 +964,7 @@ msgid "Interest"
 msgstr "Intereses"
 
 msgid "No, don't delete it"
-msgstr "NO, CANCELA BORRADO"
-
-msgid "No, don't delete"
-msgstr "NO, CANCELA BORRADO"
-
-msgid "NO, DON'T DELETE"
-msgstr "NO, CANCELA BORRADO"
+msgstr "No, cancela borrado"
 
 msgid "Parameters"
 msgstr "Parámetros"
@@ -981,17 +975,41 @@ msgstr "Parámetro"
 msgid "Created"
 msgstr "Fecha Creación"
 
-msgid "CREATED"
-msgstr "Fecha Creación"
+msgid "Add SubTema"
+msgstr "AGREGAR SUBTEMA"
 
-msgid "created"
-msgstr "Fecha Creación"
+msgid "Add Parámetro"
+msgstr "AGREGAR PARAMETRO"
 
-msgid "ADD"
-msgstr "AGREGAR"
+msgid "Add Area"
+msgstr "AGREGAR AREA"
 
-msgid "add"
-msgstr "AGREGAR"
+msgid "Add Materia"
+msgstr "AGREGAR MATERIA"
+
+msgid "Add Tema"
+msgstr "AGREGAR TEMA"
+
+msgid "Add Naturaleza"
+msgstr "AGREGAR NATURALEZA"
+
+msgid "Add Nivel del Asociado"
+msgstr "AGREGAR NIVEL DEL ASOCIADO"
+
+msgid "Add Asociado"
+msgstr "AGREGAR ASOCIADO"
+
+msgid "Add Sector"
+msgstr "AGREGAR SECTOR"
+
+msgid "Add SubTema"
+msgstr "AGREGAR SUBTEMAS"
+
+msgid "Add Tipo de Sociedad"
+msgstr "AGREGAR TIPO DE SOCIEDAD"
+
+msgid "Add Intereses"
+msgstr "AGREGAR INTERESES"
 
 msgid "Manage account"
 msgstr "Administrar Cuenta"
@@ -1004,5 +1022,3 @@ msgstr "Acceso a Reportes"
 
 msgid "Read Less"
 msgstr "Leer menos"
-
-
