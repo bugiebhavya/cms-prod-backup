@@ -963,8 +963,8 @@ msgstr "Porcentaje"
 msgid "Interest"
 msgstr "Intereses"
 
-msgid "No, Don't Delete"
-msgstr "No, cancela borrado"
+msgid "NO, DON'T DELETE"
+msgstr "NO, CANCELA BORRADO"
 
 msgid "Parameters"
 msgstr "Parámetros"
