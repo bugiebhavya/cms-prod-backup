@@ -978,10 +978,10 @@ msgstr "Fecha Creación"
 msgid "ADD"
 msgstr "AGREGAR"
 
-msgid "Manage Account"
+msgid "Manage account"
 msgstr "Administrar Cuenta"
 
-msgid "Select File..."
+msgid "Select file"
 msgstr "Seleccione Archivo"
 
 msgid "Report Access"
