@@ -30,11 +30,13 @@ class CustomUserEditForm(UserEditForm):
     position_held = forms.CharField(required=True, label=_("Position held"))
     associate = forms.ModelChoiceField(queryset=Associate.objects, required=True, label=_("Associate"))
     download_remain = forms.IntegerField(label=_('Downloads remain'), help_text=_('Number of media User can download'))
+    report_access = forms.BooleanField(widget=forms.CheckboxInput, label=_('Report Access'))
 
 class CustomUserCreationForm(UserCreationForm):
     position_held = forms.CharField(required=True, label=_("Position held"))
     associate = forms.ModelChoiceField(queryset=Associate.objects, required=True, label=_("Associate"))
     download_remain = forms.IntegerField(label=_('Downloads remain'), help_text=_('Number of media User can download'))
+    report_access = forms.BooleanField(widget=forms.CheckboxInput, label=_('Report Access'))
 
 class UserForm(forms.ModelForm):
 	position_held = forms.CharField(required=True, label=_("Position held"))
