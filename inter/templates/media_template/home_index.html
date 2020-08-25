@@ -1,8 +1,6 @@
 {% load static %}
 {% load duration_field i18n %}
 {% load file_size %}
-{{ media.access }}
-{% if media.access == 'PUBLIC'%}
 <div class="col-md-6 videoBox">
 	<a href="{% if media.duration %}{% url 'video_detail' media.id %} {% else %}{% if media.is_image  %} {% url 'image_detail' media.id %} {% else %} {% url 'document_detail' media.id %}{% endif %}{% endif %}" class="video-block w-100">
 		<div class="video-part">
@@ -22,4 +20,3 @@
 		</div>
 	</a>
 </div>
-{% endif %}
