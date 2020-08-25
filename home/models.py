@@ -31,7 +31,7 @@ def create_carousel_doc(sender, instance, **kwargs):
     	cv = HomePageCarouselVideos.objects.create(carousel_document=instance.id)
 		cv.save()
 
-post_save.connect(create_carousel_doc, CustomDocument)
+post_save.connect(create_carousel_doc, Document)
 
 def create_carousel_img(sender, instance, **kwargs):
 	print('CasouselVideos')
@@ -39,7 +39,7 @@ def create_carousel_img(sender, instance, **kwargs):
     	cv = HomePageCarouselVideos.objects.create(carousel_image=instance.id)
 		cv.save()
 
-post_save.connect(create_carousel_img, CustomImage)
+post_save.connect(create_carousel_img, Images)
 
 def create_carousel_video(sender, instance, **kwargs):
 	print('CasouselVideos')
