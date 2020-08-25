@@ -23,16 +23,15 @@
           <div class="col-sm-12">
             <h2>Información Pública</h2>
             <div class="row">
-            {{self.carousel_media.all}}
                 {% for loop_cycle in self.carousel_media.all %}
-                  {% if loop_cycle.carousel_video %}
+                  {% if loop_cycle.carousel_video and loop_cycle.carousel_video.scope == 'PUBLIC'%}
                     {% include 'media_template/home_index.html' with media=loop_cycle.carousel_video %}
                   {% endif %}
-                  {% if loop_cycle.carousel_document %}
+                  {% if loop_cycle.carousel_document and loop_cycle.carousel_video.access == 'PUBLIC'%}
                     {% include 'media_template/home_index.html' with media=loop_cycle.carousel_document %}
                   {% endif %}
 
-                  {% if loop_cycle.carousel_image %}
+                  {% if loop_cycle.carousel_image and loop_cycle.carousel_video.access == 'PUBLIC'%}
                     {% include 'media_template/home_index.html' with media=loop_cycle.carousel_image %}
                   {% endif %}
 
