@@ -27,11 +27,11 @@
                   {% if loop_cycle.carousel_video and loop_cycle.carousel_video.scope == 'PUBLIC'%}
                     {% include 'media_template/home_index.html' with media=loop_cycle.carousel_video %}
                   {% endif %}
-                  {% if loop_cycle.carousel_document and loop_cycle.carousel_video.access == 'PUBLIC'%}
+                  {% if loop_cycle.carousel_document and loop_cycle.carousel_document.access == 'PUBLIC'%}
                     {% include 'media_template/home_index.html' with media=loop_cycle.carousel_document %}
                   {% endif %}
 
-                  {% if loop_cycle.carousel_image and loop_cycle.carousel_video.access == 'PUBLIC'%}
+                  {% if loop_cycle.carousel_image and loop_cycle.carousel_image.access == 'PUBLIC'%}
                     {% include 'media_template/home_index.html' with media=loop_cycle.carousel_image %}
                   {% endif %}
 
