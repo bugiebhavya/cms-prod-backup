@@ -24,11 +24,6 @@ from datetime import datetime
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-@receiver(post_save, sender=Video)
-def create_carousel_video(sender, instance, **kwargs):
-    obj = HomePageCarouselVideos.objects.create(carousel_video=instance.id)
-	obj.save()
-
 User = get_user_model()
 
 class HomePageCarouselVideos(Orderable):
