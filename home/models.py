@@ -25,29 +25,29 @@ from django.db.models.signals import post_save
 
 User = get_user_model()
 
-def create_carousel(sender, instance, **kwargs):
+def create_carousel_doc(sender, instance, **kwargs):
 	print('CasouselVideos')
 	if instance.access == 'PUBLIC':
     	cv = HomePageCarouselVideos.objects.create(carousel_document=instance.id)
 		cv.save()
 
-post_save.connect(add_thumbnail, CustomDocument)
+post_save.connect(create_carousel_doc, CustomDocument)
 
-def create_carousel(sender, instance, **kwargs):
+def create_carousel_img(sender, instance, **kwargs):
 	print('CasouselVideos')
 	if instance.access == 'PUBLIC':
     	cv = HomePageCarouselVideos.objects.create(carousel_image=instance.id)
 		cv.save()
 
-post_save.connect(add_thumbnail, CustomImage)
+post_save.connect(create_carousel_img, CustomImage)
 
-def create_carousel(sender, instance, **kwargs):
+def create_carousel_video(sender, instance, **kwargs):
 	print('CasouselVideos')
 	if instance.access == 'PUBLIC':
     	cv = HomePageCarouselVideos.objects.create(carousel_video=instance.id)
 		cv.save()
 
-post_save.connect(add_thumbnail, Video)
+post_save.connect(create_carousel_video, Video)
 
 class HomePageCarouselVideos(Orderable):
 	'''Between 1 and 5 imagges for the home carousel '''
