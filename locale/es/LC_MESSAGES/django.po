@@ -972,7 +972,7 @@ msgstr "Parámetros"
 msgid "Parameter"
 msgstr "Parámetro"
 
-msgid "Created"
+msgid "created"
 msgstr "Fecha Creación"
 
 msgid "CREATED"
