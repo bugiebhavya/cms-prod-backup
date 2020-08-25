@@ -21,8 +21,33 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib import messages
 from datetime import datetime
+from django.db.models.signals import post_save 
 
 User = get_user_model()
+
+def create_carousel(sender, instance, **kwargs):
+	print('CasouselVideos')
+	if instance.access == 'PUBLIC':
+    	cv = HomePageCarouselVideos.objects.create(carousel_document=instance.id)
+		cv.save()
+
+post_save.connect(add_thumbnail, CustomDocument)
+
+def create_carousel(sender, instance, **kwargs):
+	print('CasouselVideos')
+	if instance.access == 'PUBLIC':
+    	cv = HomePageCarouselVideos.objects.create(carousel_image=instance.id)
+		cv.save()
+
+post_save.connect(add_thumbnail, CustomImage)
+
+def create_carousel(sender, instance, **kwargs):
+	print('CasouselVideos')
+	if instance.access == 'PUBLIC':
+    	cv = HomePageCarouselVideos.objects.create(carousel_video=instance.id)
+		cv.save()
+
+post_save.connect(add_thumbnail, Video)
 
 class HomePageCarouselVideos(Orderable):
 	'''Between 1 and 5 imagges for the home carousel '''
