@@ -184,3 +184,18 @@ class Favorite(models.Model):
     
     def __str__(self):
         return str(self.user.username)
+
+class UserLog(models.Model):
+    class Meta:
+        verbose_name = _('User Log')
+        verbose_name_plural = _('User Logs')
+    action_types = [
+    ('LOGIN', _('LOGIN')),
+    ('CONSULT MEDIA', _('CONSULT MEDIA')),
+    ('DOWNLOAD MEDIA', _('DOWNLOaD MEDIA')),
+]
+    action = models.CharField(verbose_name=('Action Type'), choices=action_types, max_length=50, blank=False, null=False)
+    username = models.CharField(verbose_name=_('Username'), blank=False, null=False, max_length=50)
+    date = models.DateField(verbose_name=_('Date'), null=False, auto_now_add=True)
+    time = models.TimeField(verbose_name=_('Date'), null=False, auto_now_add=True)
+    media = models.CharField(verbose_name=_('Media'), blank=True, null=True, max_length=80)

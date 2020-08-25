@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from wagtailvideos.models import Video 
 from django.views.generic import View 
 from .forms import AdminLoginForm, CommentForm, UserCreationForm, UserEditForm
-from modules.users.models import User, UserInterest
+from modules.users.models import User, UserInterest, UserLog
 from django.shortcuts import render, reverse 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages 
@@ -33,6 +33,9 @@ class LoginView(View):
 				user_obj = users.first()
 				login(request, user_obj)
 				messages.success(request, "Login Successfully")
+				log = UserLog.objects.create(action='LOGIN', username=user_obj.username)
+				log.save()
+
 				return HttpResponseRedirect('/users/dashboard')
 			else:
 				message = "Unable to login with given credentials"

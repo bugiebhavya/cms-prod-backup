@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Area, Subject, Topic, SubTopic
 from django.shortcuts import render
+from modules.users.models import UserLog
 
 class MediaDetailView(LoginRequiredMixin, DetailView):
 	model = Document
@@ -56,6 +57,10 @@ class WatchVideoView(View):
 		commentable = True
 		category_videos = Video.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
 		
+		if not request.user.is_anonymous:
+			log = UserLog.objects.create(action='CONSULT MEDIA', username=request.user.username, media=media.title)
+			log.save()
+
 		return render(request, 'home/video_detail.html', {'video': media, 'commentable': commentable, 'comments': comments, 'category_videos': category_videos})
 
 class ReadDocumentView(View):
@@ -74,6 +79,11 @@ class ReadDocumentView(View):
 		comments = media.comments.all()
 		commentable = True
 		category_documents = Document.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
+
+		if not request.user.is_anonymous:
+			log = UserLog.objects.create(action='CONSULT MEDIA', username=request.user.username, media=media.title)
+			log.save()
+
 		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
 
 class ViewImageView(View):
@@ -92,6 +102,10 @@ class ViewImageView(View):
 		comments = media.comments.all()
 		commentable = True
 		category_documents = Images.objects.filter(Q(tags__in=media.tags.all()) | Q(channel=media.channel)).exclude(id=media.id).distinct()
+
+		if not request.user.is_anonymous:
+			log = UserLog.objects.create(action='CONSULT MEDIA', username=request.user.username, media=media.title)
+			log.save()
 		
 		return render(request, 'home/document_detail.html', {'base_url':settings.BASE_URL, 'document': media, 'commentable': commentable, 'comments': comments, 'category_documents': category_documents})
 
