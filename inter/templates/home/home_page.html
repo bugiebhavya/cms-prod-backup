@@ -23,6 +23,7 @@
           <div class="col-sm-12">
             <h2>Información Pública</h2>
             <div class="row">
+            {{self.carousel_media.all}}
                 {% for loop_cycle in self.carousel_media.all %}
                   {% if loop_cycle.carousel_video %}
                     {% include 'media_template/home_index.html' with media=loop_cycle.carousel_video %}
