@@ -24,6 +24,25 @@ from datetime import datetime
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
+@receiver(post_save, sender=Video)
+def create_carousel_video(sender, instance, **kwargs):
+	if not HomePageCarouselVideos.objects.filter(carousel_video=instance):
+		obj = HomePageCarouselVideos.objects.create(carousel_video=instance, page = HomePage.objects.first())
+		obj.save()
+
+@receiver(post_save, sender=Images)
+def create_carousel_image(sender, instance, **kwargs):
+	if not HomePageCarouselVideos.objects.filter(carousel_image=instance):
+		obj = HomePageCarouselVideos.objects.create(carousel_image=instance, page = HomePage.objects.first())
+		obj.save()
+
+@receiver(post_save, sender=Document)
+def create_carousel_document(sender, instance, **kwargs):
+	if not HomePageCarouselVideos.objects.filter(carousel_document=instance):
+		obj = HomePageCarouselVideos.objects.create(carousel_document=instance, page = HomePage.objects.first())
+		obj.save()
+
 User = get_user_model()
 
 class HomePageCarouselVideos(Orderable):
