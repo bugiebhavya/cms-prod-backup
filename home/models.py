@@ -21,6 +21,12 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib import messages
 from datetime import datetime
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=Video)
+def create_carousel_video(sender, instance, **kwargs):
+    print('hello')
 
 User = get_user_model()
 
