@@ -56,10 +56,13 @@
                     <div class="info-menu">
                       <div class="like-action channel-subscribe">
                         {% if user.is_authenticated %} 
-                        <!-- for unauthenticated users -->
-                        <div class="fav-btn {% get_fav_notation document user %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {%  get_fav document user %}</div>
-                        {% else %}
                         <!-- for authenticated users -->
+                        <button style="display:inline-flex" class="btn btn-outline-info">
+                            <a id="download" href="{{document.url}}" Download style="text-decoration:None" class="footer_link">Download<i class="fa fa-download"></i></a>
+                          </button>
+                        <div style="display:inline-flex" class="fav-btn {% get_fav_notation document user %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {%  get_fav document user %}</div>
+                        {% else %}
+                        <!-- for unauthenticated users -->
                         <div class="fav-btn {% get_nofav_notation document request %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {% get_fav_nouser document request %}</div>
                         {% endif %}
                       </div>
@@ -243,6 +246,19 @@
             xhr.send();
            {% endif %}
         })
+
+        $('#download').click(function(){
+      $.ajax({
+        url: "{% url 'document-download' %}",
+        data: {"title": "{{ document.title }}"},
+        type: 'POST',
+        success: function(response){
+          if(response.code == 200){
+            console.log('SUCCESS')
+          }
+        }
+      })
+    })
 
       </script> 
       {% endblock %}
