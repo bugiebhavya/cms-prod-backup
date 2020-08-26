@@ -53,7 +53,7 @@
                       {% if user.is_authenticated %} 
                           <!-- for authenticated users -->
                           <button style="display:inline-flex" class="btn btn-outline-info">
-                            <a id="download" href="{{video.url}}" Download style="text-decoration:None" class="footer_link">{% trans 'Download' %}<i class="fa fa-download"></i></a>
+                            <a id="download" href="{{video.url}}" Download style="text-decoration:None;padding-right:20%;color:black;" class="footer_link">{% trans 'Download' %}<i class="fa fa-download"></i></a>
                           </button>
                           <div style="display:inline-flex" class="fav-btn {% get_fav_notation video user %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {%  get_fav video user %}</div>
                       {% else %}
