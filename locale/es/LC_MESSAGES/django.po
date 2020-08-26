@@ -1023,4 +1023,7 @@ msgstr "Acceso a Reportes"
 msgid "Read Less"
 msgstr "Leer menos"
 
+msgid "Download"
+msgstr "Descargar"
+
 

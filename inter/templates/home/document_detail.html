@@ -58,7 +58,7 @@
                         {% if user.is_authenticated %} 
                         <!-- for authenticated users -->
                         <button style="display:inline-flex" class="btn btn-outline-info">
-                            <a id="download" href="{{document.file.url}}" Download style="text-decoration:None" class="footer_link">Download<i class="fa fa-download"></i></a>
+                            <a id="download" href="{{document.file.url}}" Download style="text-decoration:None" class="footer_link">{% trans 'Download' %}<i class="fa fa-download"></i></a>
                           </button>
                         <div style="display:inline-flex" class="fav-btn {% get_fav_notation document user %}"><i class="fas fa-heart"></i>{% get_fav_count document %} {%  get_fav document user %}</div>
                         {% else %}
