@@ -51,10 +51,13 @@
                     <div class="like-action channel-subscribe">
                       
                       {% if user.is_authenticated %} 
-                          <!-- for unauthenticated users -->
-                          <div class="fav-btn {% get_fav_notation video user %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {%  get_fav video user %}</div>
+                          <!-- for authenticated users -->
+                          <button style="display:inline-flex" class="btn btn-outline-info">
+                            <a id="download" href="{{video.url}}" Download style="text-decoration:None" class="footer_link">Download<i class="fa fa-download"></i></a>
+                          </button>
+                          <div style="display:inline-flex" class="fav-btn {% get_fav_notation video user %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {%  get_fav video user %}</div>
                       {% else %}
-                         <!-- for authenticated users -->
+                         <!-- for unauthenticated users -->
                          <div class="fav-btn {% get_nofav_notation video request %}"><i class="fas fa-heart"></i>{% get_fav_count video %} {% get_fav_nouser video request %}</div>
                       {% endif %}
 
@@ -200,6 +203,19 @@
             $('.comment-field').val('')
             var comments = parseInt($('.comment_counter').attr('data-count'))+1
             $('.comment_counter').text("Comment(s) "+comments)
+          }
+        }
+      })
+    })
+
+    $('#download').click(function(){
+      $.ajax({
+        url: "{% url 'video-download' %}",
+        data: {"title": "{{ video.title }}"},
+        type: 'POST',
+        success: function(response){
+          if(response.code == 200){
+            console.log('SUCCESS')
           }
         }
       })

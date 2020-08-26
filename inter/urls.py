@@ -27,6 +27,8 @@ urlpatterns = i18n_patterns(
 
     url(r'^us-login/', controller.LoginView.as_view(), name="us-login"), 
     url(r'^comment/$', controller.CommentView.as_view(), name="comment-add"),
+    url(r'^download/video/$', controller.DownloadVideo.as_view(), name="video-download"),
+    url(r'^download/document/$', controller.DownloadDocument.as_view(), name="document-download"),
     url(r'^medias/fav/$', FavAlterView.as_view(), name='fav-alter'),
     url(r'^api/notifications/$', NotificationListView.as_view(), name='notifications'),
     url(r'^api/notifications/(?P<pk>[-\w]+)/remove$', RemoveNotificationView.as_view(), name='notifications'),

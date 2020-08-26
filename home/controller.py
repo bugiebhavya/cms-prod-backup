@@ -62,6 +62,28 @@ class CommentView(LoginRequiredMixin,APIView):
 		except Exception as ex:
 			return Response({'code': 500, 'message': str(ex)})
 
+class DownloadVideo(LoginRequiredMixin,APIView):
+	def post(self, request, *args, **Kwargs):
+		print('In-Post')
+		print(request.data.get('title'))
+		log = UserLog.objects.create(action='DOWNLOAD MEDIA', username=request.user.username, media=request.data.get('title'))
+		log.save()
+		if log.id:
+			return Response({'message': 'Log Created', 'code': 200})
+
+
+class DownloadDocument(LoginRequiredMixin,APIView):
+	def post(self, request, *args, **Kwargs):
+		print('In-Post')
+		print(request.data.get('title'))
+		log = UserLog.objects.create(action='DOWNLOAD MEDIA', username=request.user.username, media=request.data.get('title'))
+		log.save()
+		if log.id:
+			return Response({'message': 'Log Created', 'code': 200})
+		
+
+
+
 from .models import *
 from .forms import *
 from django.views.generic.edit import CreateView, UpdateView
