@@ -69,6 +69,9 @@
             </div>
             <div class="user-link">
               <a href="/users/dashboard"><i class="fas fa-tachometer"></i> {% trans 'Dashboard' %}</a>
+              {% if request.user.report_access %}
+                <a href="/reports"><i class="fas fa-folder"></i> {% trans 'Reports' %}</a>
+              {% endif %}
               <a href="/users/dashboard/profile"><i class="fas fa-user"></i> {% trans 'Profile' %}</a>
               <a href="/users/dashboard/logout"><i class="fal fa-sign-out"></i> {% trans 'Logout' %}</a>
             </div>

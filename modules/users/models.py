@@ -33,6 +33,8 @@ class AssociatesLevel(models.Model):
         verbose_name_plural = _('Associate Levels')
     title = models.CharField(verbose_name=_('Level Title'),max_length=100, unique=True)
     allowed_users = models.PositiveIntegerField(default=0, verbose_name=_('Allowed users'))
+    access = models.PositiveIntegerField(default=0, verbose_name=_('Access'), help_text=_('Number of access allowed'))
+    consults = models.PositiveIntegerField(default=0, verbose_name=_('Consults'), help_text=_('Number of media User can view'))
     download = models.PositiveIntegerField(default=0, verbose_name=_('Downloads'), help_text=_('Number of media User can download'))
     notes = models.TextField(verbose_name=_('Notes'), default="")
     created = models.DateTimeField(auto_now_add=True, null=True)

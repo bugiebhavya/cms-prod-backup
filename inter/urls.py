@@ -9,7 +9,7 @@ from home import controller
 from search import views as search_views
 from modules.documents.views import MediaDetailView, FilterCatalogsView, WatchVideoView, ReadDocumentView, ViewImageView
 from modules.dashboard.notification import NotificationListView, RemoveNotificationView
-from modules.users.views import FavAlterView, ProfileUpdate, ChangePasswordView, ForgotPasswordView
+from modules.users.views import FavAlterView, ProfileUpdate, ChangePasswordView, ForgotPasswordView, CreateReportView
 from django.conf.urls.i18n import i18n_patterns
 from wagtail.users.views.users import delete
 
@@ -23,6 +23,7 @@ urlpatterns = i18n_patterns(
     url(r'^medias/image/(?P<media_id>[-\w]+)/', ViewImageView.as_view(), name='image_detail'),
     url(r'^profile/update$', ProfileUpdate.as_view(), name='profile-alter'),
     url(r'^profile/reset-password$', ChangePasswordView.as_view(), name='profile-reset-password'),
+    url(r'^reports$', CreateReportView.as_view(), name='generate-report'),
     url(r'^forgot-password$', ForgotPasswordView.as_view(), name='forgot-password'),
 
     url(r'^us-login/', controller.LoginView.as_view(), name="us-login"), 

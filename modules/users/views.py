@@ -180,3 +180,34 @@ class ForgotPasswordView(View):
             email.send()
         except:
             pass
+
+
+from docx.shared import Cm
+from docxtpl import DocxTemplate, InlineImage
+from io import StringIO, Bytes
+
+
+class CreateReportView(View):
+    def get(self, request, *args, **kwargs):
+        associate = User.objects.get(id=request.user.id).associate
+        return render(request, "home/generate_report.html", {"associate":associate})
+
+    def post(self, request, *args, **kwargs):
+        range = request.POST.get("range").split(' - ')
+        context = GetReportContext(range[0],range[1],request.user)
+        file = GenerateReport(context)
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+        response['Content-Disposition'] = 'attachment; filename="download.docx"'
+        document.save(response)
+        return response
+
+
+def GetReportContext(dt1, dt2, user):
+    return {'fullname': user.first_name+' '+user.last_name}
+
+def GenerateReport(context):
+    template = DocxTemplate('LOG REPORT STRUCTURE.docx')
+    target_file = BytesIO()
+    template.render(context)
+    template.save(target_file)
+    return target_file

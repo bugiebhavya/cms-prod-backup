@@ -1,0 +1,95 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+{% load duration_field %}
+{% load i18n %}
+{% block header %}
+<header class="login-header d-flex align-items-center">
+  {% include 'home_header.html' %}
+</header>
+{% endblock %}
+
+
+{% block body %}
+  {% if user.is_authenticated %} 
+    {% include 'dashboard_sidebar.html' %}
+    <div class="main-content">
+    <form action="{% url 'generate-report' %}" method='POST'>
+         
+       <div class="container-fluid" style="margin: auto;width: 45%;padding: 10px;">
+        <div style="text-align: center;">
+          <h1>{% trans 'Report Title'%}</h1>
+        </div>
+        <div class="form-group">
+          <h3>{% trans 'Associate'%}: </h3>
+          {% csrf_token %}
+          <input id="Associate" class="form-control form-control-lg" type="text" value="{{ associate }}" readonly>
+          <BR>
+          <h3>{% trans 'Date Range'%}: </h3>
+          <input id="date-range" name="range" class="form-control form-control-lg" type="text" value="">
+          <BR>
+          
+          <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <input id="datetimepicker1" type="text" >
+            </div>
+            <div class="col-sm">
+              <input id="datetimepicker2" type="text" >
+            </div>
+          </div>
+        </div>
+        <BR><BR>
+        <button style="float: right;" type="submit" class="btn btn-primary">Generate Report</button>
+        </div>
+    </form>
+
+    </div>
+    
+  {% endif %}
+  
+{% endblock %}
+
+  {% block script %} 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+
+<script>
+jQuery('#datetimepicker1').datetimepicker({
+  format:'d.m.Y H:i',
+  inline:true,
+  lang:'ru'
+});
+
+jQuery('#datetimepicker2').datetimepicker({
+  format:'d.m.Y H:i',
+  inline:true,
+  lang:'ru'
+});
+$('#datetimepicker1, #datetimepicker2').on('change', function setRange(){
+  var inputVal1 = document.getElementById("datetimepicker1").value;
+    console.log(inputVal1)
+
+  var inputVal2 = document.getElementById("datetimepicker2").value;
+    console.log(inputVal2)
+
+  document.getElementById('date-range').value = inputVal1+' - '+inputVal2
+  });
+
+
+  function generate($this){
+    console.log("button clicked");
+    var range = document.getElementById('date-range').value;
+    console.log("data: " + range);
+    $.ajax({
+        url: '{% url "generate-report" %}',
+        data : { range: range},
+        success : function(json) {
+            
+            console.log("requested access complete");
+        }
+    })
+}
+
+ 
+</script>  
+{% endblock %}
