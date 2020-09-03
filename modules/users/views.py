@@ -184,7 +184,7 @@ class ForgotPasswordView(View):
 
 from docx.shared import Cm
 from docxtpl import DocxTemplate, InlineImage
-from io import StringIO, Bytes
+from io import StringIO, BytesIO
 
 
 class CreateReportView(View):
@@ -194,11 +194,11 @@ class CreateReportView(View):
 
     def post(self, request, *args, **kwargs):
         range = request.POST.get("range").split(' - ')
-        context = GetReportContext(range[0],range[1],request.user)
+        context = GetReportContext(range[0], range[1], request.user)
         file = GenerateReport(context)
-        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+        file.seek(0)
+        response = HttpResponse(file,content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
         response['Content-Disposition'] = 'attachment; filename="download.docx"'
-        document.save(response)
         return response
 
 
