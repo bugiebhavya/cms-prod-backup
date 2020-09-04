@@ -1,4 +1,4 @@
-from .models import Favorite, User, UserInterest, UserInterestPercent
+from .models import Favorite, User, UserInterest, UserInterestPercent, Associate,AssociatesLevel, UserLog
 from .forms import FavoriteForm, UserChangePassword
 from django.views.generic.edit import UpdateView
 from django.contrib.contenttypes.models import ContentType
@@ -185,6 +185,7 @@ class ForgotPasswordView(View):
 from docx.shared import Cm
 from docxtpl import DocxTemplate, InlineImage
 from io import StringIO, BytesIO
+from datetime import date, datetime
 
 
 class CreateReportView(View):
@@ -203,7 +204,65 @@ class CreateReportView(View):
 
 
 def GetReportContext(dt1, dt2, user):
-    return {'fullname': user.first_name+' '+user.last_name}
+    dtc1 = datetime(int(dt1[6:10]), int(dt1[3:5]), int(dt1[0:2]), int(dt1[11:13]), int(dt1[14:16]), 0)
+    dtc2 = datetime(int(dt2[6:10]), int(dt2[3:5]), int(dt2[0:2]), int(dt2[11:13]), int(dt2[14:16]), 0)
+    print(dtc1,dtc2)
+    context = {}
+    context['full_name'] = user.username+' '+user.last_name
+    associateLevel = AssociatesLevel.objects.get(id = user.associate.associate_level.id)
+    context['Table1'] = {"header":user.associate.company,
+                            "d1":associateLevel.title,
+                            "d2":associateLevel.allowed_users,
+                            "d3":associateLevel.access,
+                            "d4":associateLevel.consults,
+                            "d5":associateLevel.download,
+                            "d6":int(associateLevel.access/associateLevel.allowed_users),
+                            "d7":int(associateLevel.consults/associateLevel.allowed_users),
+                            "d8":int(associateLevel.download/associateLevel.allowed_users),}
+
+    userInfo = User.objects.filter(associate=user.associate.id).order_by('first_name')
+    userLogs = UserLog.objects.filter(created__gte = dtc1, created__lte = dtc2).order_by('created')
+    context['Table2'] = []
+    context['Table3'] = []
+    for user in userInfo:
+        context['Table2'].append({"full_name": user.username+' '+user.last_name,
+                                    "email": user.email,
+                                    "position": user.position_held,
+                                    "created": user.created,
+                                    "inactivated":''
+                                    })
+        context['Table3'].append({"full_name": user.username+' '+user.last_name,
+                                    "Access": UserLog.objects.filter(action = 'LOGIN' , username=user.username, created__gte = dtc1, created__lte = dtc2).count(),
+                                    "Consults": UserLog.objects.filter(action = 'CONSULT MEDIA' , username=user.username, created__gte = dtc1, created__lte = dtc2).count(),
+                                    "Downloads": UserLog.objects.filter(action = 'DOWNLOAD MEDIA' , username=user.username, created__gte = dtc1, created__lte = dtc2).count(),
+                                    })
+
+    
+    context['Table4'] = []
+    context['Table5'] = []
+    context['Table6'] = []
+    for log in userLogs:
+        if log.action == 'LOGIN':
+            context['Table4'].append({"date_time": log.created,
+                                    "full_name": log.username+' '+User.objects.get(username=log.username).last_name,
+                                    })
+        if log.action == 'CONSULT MEDIA':
+            context['Table5'].append({"date_time": log.created,
+                                    "full_name": user.username+' '+User.objects.get(username=log.username).last_name,
+                                    "media_name": log.media,
+                                    })
+        if log.action == 'DOWNLOAD MEDIA':
+            context['Table6'].append({"date_time": log.created,
+                                    "full_name": user.username+' '+User.objects.get(username=log.username).last_name,
+                                    "media_name": log.media,
+                                    })
+             
+    print(context['Table4'])
+    print(context['Table5'])
+    print(context['Table6'])
+
+    # logs = UserLogs.objects.filter(username = user.username)
+    # return context
 
 def GenerateReport(context):
     template = DocxTemplate('LOG REPORT STRUCTURE.docx')
